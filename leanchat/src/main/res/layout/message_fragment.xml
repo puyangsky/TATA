@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_header_layout" />
+
+    <include layout="@layout/chat_client_state_view" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/fragment_conversation_srl_pullrefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/fragment_chat_inputbottombar">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fragment_conversation_srl_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>
