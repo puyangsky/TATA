@@ -65,6 +65,7 @@
     <string name="contact_detailInfo">详细资料</string>
     <string name="contact_male">男</string>
     <string name="contact_female">女</string>
+    <string name="profile_person">个人中心</string>
     <string name="profile_notifySetting">提醒设置</string>
     <string name="profile_notifyWhenNews">接收新消息通知</string>
     <string name="conversation_group">群组</string>

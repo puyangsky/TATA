@@ -120,6 +120,10 @@
             android:name=".activity.ConversationAddMembersActivity"
             android:label="@string/conversation_inviteMembers"
             android:theme="@style/ChatMainTheme" />
+        <activity
+            android:name=".activity.PersonViewActivity"
+            android:label="@string/profile_person"
+            android:theme="@style/ChatMainTheme" />
 
         <service
             android:name="com.baidu.location.f"
