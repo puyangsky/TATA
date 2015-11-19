@@ -51,6 +51,19 @@
                 <View style="@style/DividerLine.Horizontal"/>
 
                 <TextView
+                    android:id="@+id/profile_person_view"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="@dimen/setting_item_height"
+                    android:text="@string/profile_person"
+                    android:background="@drawable/btn_selector"
+                    android:paddingLeft="@dimen/common_horizontal_margin"
+                    android:paddingRight="@dimen/common_horizontal_margin"
+                    android:drawableRight="@drawable/common_view_right_arrow_pic"/>
+
+                <View style="@style/DividerLine.Horizontal"/>
+
+                <TextView
                     android:id="@+id/profile_notifysetting_view"
                     android:layout_width="match_parent"
                     android:gravity="center_vertical"

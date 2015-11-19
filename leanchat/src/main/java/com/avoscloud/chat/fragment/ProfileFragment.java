@@ -19,6 +19,7 @@ import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avoscloud.chat.R;
+import com.avoscloud.chat.activity.PersonViewActivity;
 import com.avoscloud.chat.activity.ProfileNotifySettingActivity;
 import com.avoscloud.chat.service.PushManager;
 import com.avoscloud.chat.service.UpdateService;
@@ -76,6 +77,12 @@ public class ProfileFragment extends BaseFragment {
   public void onCheckUpdateClick() {
     UpdateService updateService = UpdateService.getInstance(getActivity());
     updateService.showSureUpdateDialog();
+  }
+
+  @OnClick(R.id.profile_person_view)
+  public void onShowPersonViewClick() {
+    Intent intent = new Intent(ctx, PersonViewActivity.class);
+    ctx.startActivity(intent);
   }
 
   @OnClick(R.id.profile_notifysetting_view)
