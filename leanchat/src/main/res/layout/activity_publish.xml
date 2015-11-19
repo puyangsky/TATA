@@ -22,8 +22,8 @@
             android:src="@drawable/icon"/>
 
         <EditText
-            android:id="@+id/activity_login_et_username"
-            style="@style/EditText.UserName"
+            android:id="@+id/activity_publish_et_name"
+            style="@style/EditText.Publish_Username"
             android:layout_width="match_parent"
             android:layout_height="@dimen/base_action_bar_height"
             android:layout_marginTop="40dp"
@@ -37,15 +37,17 @@
             android:textColorHint="#ffdddddd"/>
 
         <EditText
-            android:id="@+id/activity_login_et_password"
-            style="@style/EditText.Password"
+            android:id="@+id/activity_publish_et_age"
+            style="@style/EditText.Publish_Age"
             android:layout_width="match_parent"
             android:layout_height="@dimen/base_action_bar_height"
             android:drawableLeft="@drawable/login_icon_password"
             android:drawablePadding="25dip"
             android:hint="@string/publish_age"
-            android:inputType="textPassword"
             android:paddingLeft="15dip"
+            android:shadowDx="0.0"
+            android:shadowDy="1.0"
+            android:shadowRadius="1.0"
             android:textColorHint="#ffdddddd"/>
 
         <LinearLayout
@@ -53,7 +55,7 @@
             android:layout_height="100dp"
             android:gravity="center">
             <ImageView
-                android:id="@+id/profile_avatar_view"
+                android:id="@+id/publish_avatar_view"
                 android:layout_width="50dp"
                 android:layout_height="100dp"
                 android:src="@drawable/chat_default_user_avatar" />

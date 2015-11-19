@@ -1,6 +1,8 @@
 package com.avoscloud.leanchatlib.model;
 
 
+import android.util.Log;
+
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVGeoPoint;
