@@ -41,7 +41,7 @@ public class PublishActivity extends Activity {
     @InjectView(R.id.activity_publish_btn)
     public Button publish_btn;
 
-    @OnClick
+    @OnClick(R.id.activity_publish_btn)
     public void onPublish_Btn_Click() {
         //上传发布的信息
         uploade_publish_content();
