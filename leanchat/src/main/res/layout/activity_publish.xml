@@ -1,103 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingTop="@dimen/activity_publish_top"
+    android:paddingBottom="@dimen/activity_publish_bottom"
     android:background="@drawable/login_bg"
     tools:context="com.avoscloud.chat.activity.PublishActivity">
+
+    <TextView
+        android:id="@+id/publish_content_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:textSize="18sp"
+        android:text="输入你对朋友的介绍吧:">
+    </TextView>
+
     <LinearLayout
+        android:id="@+id/activity_publish_content"
+        android:layout_below="@id/publish_content_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingRight="@dimen/common_horizontal_margin"
-        android:paddingLeft="@dimen/common_horizontal_margin">
+        android:background="@color/publish_content">
+
+        <EditText
+            android:id="@+id/activity_publish_text"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_publish_content_text"
+            android:layout_marginTop="0dp"
+            android:inputType="textMultiLine"
+            android:hint="@string/publish_content"
+            android:gravity="top|left"
+            android:maxLines="4"
+            android:textColor="#000"
+            android:textSize="@dimen/text_size_large"
+            android:background="@null"
+            android:textColorHint="#ffdddddd"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/publish_avatars_view"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/activity_publish_content"
+        android:paddingTop="10dp"
+        android:gravity="left">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="80dp"
-            android:src="@drawable/icon"/>
-
-        <EditText
-            android:id="@+id/activity_publish_et_name"
-            style="@style/EditText.Publish_Username"
+            android:id="@+id/publish_addbutton_view"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/base_action_bar_height"
-            android:layout_marginTop="40dp"
-            android:drawableLeft="@drawable/login_icon_account"
-            android:drawablePadding="25dip"
-            android:hint="@string/publish_name"
-            android:paddingLeft="15dip"
-            android:shadowDx="0.0"
-            android:shadowDy="1.0"
-            android:shadowRadius="1.0"
-            android:textColorHint="#ffdddddd"/>
+            android:layout_height="match_parent"
+            android:src="@drawable/chat_default_user_avatar"
+            android:contentDescription="@string/publish_picture_hint" />
 
-        <EditText
-            android:id="@+id/activity_publish_et_age"
-            style="@style/EditText.Publish_Age"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/base_action_bar_height"
-            android:drawableLeft="@drawable/login_icon_password"
-            android:drawablePadding="25dip"
-            android:hint="@string/publish_age"
-            android:paddingLeft="15dip"
-            android:shadowDx="0.0"
-            android:shadowDy="1.0"
-            android:shadowRadius="1.0"
-            android:textColorHint="#ffdddddd"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:gravity="center">
-            <ImageView
-                android:id="@+id/publish_avatar_view"
-                android:layout_width="50dp"
-                android:layout_height="100dp"
-                android:src="@drawable/chat_default_user_avatar" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/activity_login_btn_login"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/base_action_bar_height"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@drawable/common_btn"
-            android:gravity="center"
-            android:text="@string/publish"
-            android:textColor="@color/chat_base_color_text_white"
-            android:textSize="@dimen/text_size_large"/>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="48dp"
-            android:gravity="center"
-            android:layout_marginTop="40dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:gravity="center_vertical"
-                android:text="@string/publish_note"
-                android:textColor="@color/base_color_text_gray"
-                android:textSize="20sp"/>
-
-            <!--<TextView-->
-                <!--android:id="@+id/activity_login_btn_register"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="fill_parent"-->
-                <!--android:layout_marginLeft="5dp"-->
-                <!--android:gravity="center_vertical"-->
-                <!--android:text="@string/register_rightnow"-->
-                <!--android:textColor="@color/entry_blue"-->
-                <!--android:textSize="20sp"/>-->
-        </LinearLayout>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/activity_publish_btn"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/base_action_bar_height"
+        android:paddingBottom="2dp"
+        android:background="@drawable/common_btn"
+        android:gravity="center"
+        android:text="@string/publish"
+        android:textColor="@color/chat_base_color_text_white"
+        android:textSize="@dimen/text_size_large"/>
+
 </RelativeLayout>
 
 

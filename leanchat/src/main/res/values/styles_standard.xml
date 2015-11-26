@@ -26,9 +26,9 @@
         <item name="android:inputType">textPassword</item>
     </style>
 
-    <style name="EditText.Publish_Username">
-        <item name="android:singleLine">true</item>
-        <item name="android:maxLength">30</item>
+    <style name="EditText.Publish_content">
+        <item name="android:singleLine">false</item>
+        <!--<item name="android:maxLength">200</item>-->
     </style>
 
     <style name="EditText.Publish_Age">

@@ -252,4 +252,9 @@ public class MainActivity extends BaseActivity {
       }
     }
   }
+    //进入发布界面，提交发布信息后，回来处理
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

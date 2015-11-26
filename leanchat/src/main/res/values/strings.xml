@@ -28,7 +28,8 @@
     <string name="publish_friend_title">发布</string>
 
     <string name="login_username_hint">请输入用户名</string>
-    <string name="publish_name">请输入姓名</string>
+    <string name="publish_content"></string>
+    <string name="publish_picture_hint">照片</string>
     <string name="ensurePasswordHint">请在此输入密码</string>
     <string name="login_password_hint">请输入密码</string>
     <string name="publish_age">请输入年龄</string>

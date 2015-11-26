@@ -6,7 +6,9 @@
     <dimen name="base_line_width_1">1dip</dimen>
     <dimen name="base_action_bar_height">48.0dip</dimen>
     <dimen name="register_margin">10.0dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">40dp</dimen>
+    <dimen name="activity_publish_top">20dp</dimen>
+    <dimen name="activity_publish_bottom">20dp</dimen>
 
     <dimen name="text_size_large">18sp</dimen>
     <dimen name="registerLeftWidth">100dp</dimen>
@@ -18,4 +20,7 @@
     <dimen name="myspace_margin_left">10dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
+
+    <!--publish content dimen-->
+    <dimen name="activity_publish_content_text">120.0sp</dimen>
 </resources>
