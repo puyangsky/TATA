@@ -8,6 +8,7 @@ import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVUser;
 import com.avoscloud.chat.model.AddRequest;
+import com.avoscloud.chat.model.Moment;
 import com.avoscloud.chat.model.UpdateInfo;
 import com.avoscloud.chat.service.ConversationManager;
 import com.avoscloud.chat.service.PushManager;
@@ -33,14 +34,6 @@ public class App extends Application {
     ctx = this;
     Utils.fixAsyncTaskBug();
 
-//    String publicId = "g7gz9oazvrubrauf5xjmzp3dl12edorywm0hy8fvlt6mjb1y";
-//    String publicKey = "01p70e67aet6dvkcaag9ajn5mff39s1d5jmpyakzhd851fhx";
-//
-//    String testAppId = "xcalhck83o10dntwh8ft3z5kvv0xc25p6t3jqbe5zlkkdsib";
-//    String testAppKey = "m9fzwse7od89gvcnk1dmdq4huprjvghjtiug1u2zu073zn99";
-
-//    String appId = "x3o016bxnkpyee7e9pa5pre6efx2dadyerdlcez0wbzhw25g";
-//    String appKey = "057x24cfdzhffnl3dzk14jh9xo2rq6w1hy1fdzt5tv46ym78";
 
     //初始化ID和Key
     String appId = "DDQ2nIzsXRqsNYGt5FHpfpgK";
@@ -54,6 +47,7 @@ public class App extends Application {
 
     AVObject.registerSubclass(AddRequest.class);
     AVObject.registerSubclass(UpdateInfo.class);
+    AVObject.registerSubclass(Moment.class);
     // 节省流量
     AVOSCloud.setLastModifyEnabled(true);
 
