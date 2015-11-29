@@ -76,7 +76,7 @@ public class ListItemAdapter extends BaseAdapter {
         holder.tv_content.setText(itemEntity.getContent());
         holder.tv_position.setText(itemEntity.getPosition());
         holder.tv_time.setText(itemEntity.getPublishTime());
-        DisplayImageOptions options = new DisplayImageOptions.Builder()//
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.ic)
                 .showImageOnFail(R.drawable.ic)
                 .cacheInMemory(true)

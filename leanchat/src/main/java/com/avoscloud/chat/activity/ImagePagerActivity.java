@@ -90,6 +90,5 @@ public class ImagePagerActivity extends FragmentActivity {
 			String url = fileList.get(position);
 			return ImageDetailFragment.newInstance(url);
 		}
-
 	}
 }
