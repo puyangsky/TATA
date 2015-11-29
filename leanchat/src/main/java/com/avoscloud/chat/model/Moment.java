@@ -1,12 +1,18 @@
 package com.avoscloud.chat.model;
 
+import android.util.Log;
+
 import com.avos.avoscloud.AVClassName;
+import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVGeoPoint;
 import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.im.v2.Conversation;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 
+import com.avoscloud.chat.model.MomentFileArray;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -21,9 +27,47 @@ public class Moment extends AVObject{
 
     private String user = "user";       //对应到leanCloud上的属性列
     private String content = "content";
-    private String imageUrls = "imageUrls";
+//    private String imageUrls = "imageUrls";
     private String position = "position";
+//    private String momentFileArray = "momentFileArray";         //对应图片的url
     //    private String createdAt; 在AVObject已经存在
+
+    //获取该Moment的所有图片的urls
+    public List<String> getFileUrls(){
+        final List<String> urls = new ArrayList<String>();
+        AVQuery<MomentFileArray> query = AVObject.getQuery(MomentFileArray.class);
+        query.whereEqualTo("moment", getObjectId());
+        query.findInBackground(new FindCallback<MomentFileArray>() {
+            @Override
+            public void done(List<MomentFileArray> results, AVException e) {
+                if (e == null){
+                    // ...
+                    for (MomentFileArray a : results){
+                        if(a != null){
+                            urls.add(a.getFile().getUrl());
+                        }
+                    }
+                }else{
+                    Log.e("MomentArrayFile", "not find");
+                }
+            }
+        });
+        return urls;
+    }
+
+//    public MomentFileArray getMomentFileArray(){
+//        MomentFileArray array = null;
+//        try {
+//            array =  getAVObject(momentFileArray, MomentFileArray.class);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return array;
+//    }
+
+//    public void setMomentFileArray(MomentFileArray m){
+//        put(momentFileArray, m);
+//    }
 
     public AVUser getUser() {
         return getAVUser(user);
@@ -34,20 +78,20 @@ public class Moment extends AVObject{
     }
 
     public String getContent() {
-        return content;
+        return getString(content);
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setContent(String publish_content) {
+        put(content, publish_content);
     }
 
-    public List<String> getImageUrls() {
-        return getList(imageUrls);
-    }
-
-    public void setImageUrls(List<String> imageUrls) {
-        put(this.imageUrls, imageUrls);
-    }
+//    public List<String> getImageUrls() {
+//        return getList(imageUrls);
+//    }
+//
+//    public void setImageUrls(List<String> images) {
+//        put(imageUrls, images);
+//    }
 
     public AVGeoPoint getPosition() {
         return getAVGeoPoint(position);

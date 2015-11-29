@@ -14,6 +14,8 @@ import android.media.ExifInterface;
 import android.media.ThumbnailUtils;
 import com.avoscloud.leanchatlib.utils.LogUtils;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -60,6 +62,17 @@ public class PhotoUtils {
 
   public static void saveBitmap(String filePath,
                                 Bitmap bitmap) {
+    //设置合适的压缩比
+    int options = 100;
+//    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//    bitmap.compress(Bitmap.CompressFormat.PNG, options, baos);
+//    while(baos.toByteArray().length / 1024 > 100){
+//      baos.reset();;
+//      options -= 10;
+//      bitmap.compress(Bitmap.CompressFormat.PNG, options, baos);
+//    }
+
+    //生成file文件
     File file = new File(filePath);
     if (!file.getParentFile().exists()) {
       file.getParentFile().mkdirs();
@@ -67,7 +80,8 @@ public class PhotoUtils {
     FileOutputStream out = null;
     try {
       out = new FileOutputStream(file);
-      if (bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)) {
+      if (bitmap.compress(Bitmap.CompressFormat.PNG, options, out)) {
+//        out.write(baos.toByteArray());
         out.flush();
       }
     } catch (FileNotFoundException e) {

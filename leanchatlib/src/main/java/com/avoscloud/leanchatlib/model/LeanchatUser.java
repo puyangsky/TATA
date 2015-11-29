@@ -28,11 +28,21 @@ public class LeanchatUser extends AVUser {
   public static final String AVATAR = "avatar";
   public static final String LOCATION = "location";
   public static final String INSTALLATION = "installation";
+  public static final String publishPicNum = "publishPicNum";
+
+  public  int getPublishPicNum() {
+    return getInt(publishPicNum);
+  }
+
+  public void setPublishPicNum (int num){
+    put(publishPicNum, num);
+  }
 
   public String getAvatarUrl() {
     AVFile avatar = getAVFile(AVATAR);
     if (avatar != null) {
       return avatar.getUrl();
+
     } else {
       return null;
     }
@@ -80,6 +90,7 @@ public class LeanchatUser extends AVUser {
   public void setGeoPoint(AVGeoPoint point) {
     put(LOCATION, point);
   }
+
 
   public static void signUpByNameAndPwd(String name, String password, SignUpCallback callback) {
     AVUser user = new AVUser();

@@ -8,6 +8,8 @@ import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVUser;
 import com.avoscloud.chat.model.AddRequest;
+import com.avoscloud.chat.model.Moment;
+import com.avoscloud.chat.model.MomentFileArray;
 import com.avoscloud.chat.model.UpdateInfo;
 import com.avoscloud.chat.service.ConversationManager;
 import com.avoscloud.chat.service.PushManager;
@@ -47,13 +49,18 @@ public class App extends Application {
     String appKey = "i9rVBhIdlPrGr0vxL2QX0HuH";
 
     AVUser.alwaysUseSubUserClass(LeanchatUser.class);
+      AVObject.registerSubclass(AddRequest.class);
+      AVObject.registerSubclass(UpdateInfo.class);
+
+      AVObject.registerSubclass(Moment.class);      //发布信息类
+      AVObject.registerSubclass(MomentFileArray.class);      //发布信息类
+
 
     AVOSCloud.initialize(this, appId, appKey);
     //AVOSCloud.initialize(this, publicId,publicKey);
     //AVOSCloud.initialize(this, testAppId, testAppKey);
 
-    AVObject.registerSubclass(AddRequest.class);
-    AVObject.registerSubclass(UpdateInfo.class);
+
     // 节省流量
     AVOSCloud.setLastModifyEnabled(true);
 

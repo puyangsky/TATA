@@ -12,8 +12,15 @@ import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVGeoPoint;
 import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.SaveCallback;
 import com.avoscloud.chat.R;
+import com.avoscloud.chat.model.Moment;
+import com.avoscloud.chat.model.MomentFileArray;
 import com.avoscloud.chat.util.PathUtils;
 import com.avoscloud.chat.util.PhotoUtils;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
@@ -21,6 +28,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -38,6 +47,9 @@ public class PublishActivity extends Activity {
     //选择提交的图片
     private Bitmap bitmap = null;
 
+    //图片的url
+    private String urlpath = "";
+
     @InjectView(R.id.activity_publish_btn)
     public Button publish_btn;
 
@@ -50,7 +62,7 @@ public class PublishActivity extends Activity {
     }
 
     @InjectView(R.id.activity_publish_text)
-    public EditText text;
+    public EditText publish_text;
 
     @InjectView(R.id.publish_addbutton_view)
     public ImageView imageView;
@@ -69,39 +81,19 @@ public class PublishActivity extends Activity {
         ButterKnife.inject(this);
     }
 
-
-    private void refresh(String path) {
-//        LeanchatUser curUser = (LeanchatUser)AVUser.getCurrentUser();
-//        userNameView.setText(curUser.getUsername());
-//        ImageLoader.getInstance().displayImage(path+".png", imageView, com.avoscloud.leanchatlib.utils.PhotoUtils.avatarImageOptions);
-
-        Bitmap bitmap = BitmapFactory.decodeFile(path);
-        imageView.setImageBitmap(bitmap);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == IMAGE_PICK_REQUEST) {
                 Uri uri = data.getData();
-
                 ContentResolver resolver = getContentResolver();
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(resolver, uri);
                 } catch (IOException e) {
                     Log.e("TAG", e.toString());
                 }
-                imageView.setImageBitmap(bitmap);
-//                startImageCrop(uri, 200, 200, CROP_REQUEST);
-//            } else if (requestCode == CROP_REQUEST) {
-//                final String path = saveCropAvatar(data);
-////                Log.i(null, "image path = "+path, null);
-//                Log.i("image = ", path);
-//                refresh(path);
-
-//                LeanchatUser user = (LeanchatUser) AVUser.getCurrentUser();
-//                user.saveAvatar(path, null);
+                imageView.setImageBitmap(bitmap);       //更新本地图片，这里没有更改压缩图片，下一步更新
             }
         }
     }
@@ -146,6 +138,106 @@ public class PublishActivity extends Activity {
     }
 
     private void uploade_publish_content() {
+        Moment moment = new Moment();
+        moment.setUser(LeanchatUser.getCurrentUser());//当前用户
+        moment.setContent(publish_text.getText().toString());//文字信息
+        moment.setPosition(LeanchatUser.getCurrentUser().getGeoPoint());//坐标
 
+        //保存Moment
+        try {
+            moment.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(AVException e) {
+                    if (null == e){
+                        //保存成功
+                        Log.e("Moment", "OK");
+                    }else {
+                        //保存失败
+                        Log.e("Moment", "No");
+                    }
+                }
+            });
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        //本地存储照片，并释放bitmap内存
+        String path = "";
+        if (bitmap != null) {
+            path = PathUtils.getAvatarCropPath();
+            PhotoUtils.saveBitmap(path, bitmap);
+            if (bitmap != null && bitmap.isRecycled() == false) {
+                bitmap.recycle();
+            }
+        }
+
+        //保存AVFile
+        AVFile file = null;
+        if(!path.equals("")){
+            file = saveAVFile(path, null);
+        }
+
+
+
+        //保存meomentFileArray
+        //新建moment对应的momentFileArray, 存储已经上传的AVFile
+        saveMomentFileArray(moment, file);
     }
+
+    /*
+        存储图片，并返回对应的AVFile类
+     */
+    public AVFile saveAVFile(String path, final SaveCallback saveCallback) {
+        AVFile file = null;
+
+        int picNum = 0;
+        //发布的图片数量加1,更改并获取最新的图片数量
+        final LeanchatUser user = (LeanchatUser)AVUser.getCurrentUser();
+        user.setFetchWhenSave(true);
+        user.increment("publishPicNum");
+        user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(AVException e) {
+                Log.e("publishPicNum", "" + user.getPublishPicNum());
+            }
+        });
+        picNum = user.getPublishPicNum();
+        try {
+            String fileName = user.getUsername()+"publishPic"+user.getPublishPicNum()+".png";
+            file = AVFile.withAbsoluteLocalPath(fileName, path);
+            file.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(AVException e) {
+                    if (null == e) {        //上传成功
+                        Log.e("savePic", "Yes");
+                    } else {
+                        Log.e("savePic", "No");
+                    }
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+    /*
+        保存Moment对应的MomentFileArray
+     */
+    public void saveMomentFileArray(Moment m, AVFile file){
+        Log.e("saveMoment", "start");
+        MomentFileArray momentFileArray = new MomentFileArray();
+        momentFileArray.setMoment(m);
+        momentFileArray.setFile(file);
+        momentFileArray.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(AVException e) {
+                if (e == null) {
+                    Log.e("MomentFileArray", "save done");
+                } else {
+                    Log.e("MomentFileArray", "save not done");
+                }
+            }
+        });
+    }
+
 }
