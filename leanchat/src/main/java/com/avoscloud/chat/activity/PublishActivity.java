@@ -3,8 +3,6 @@ package com.avoscloud.chat.activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
@@ -14,21 +12,17 @@ import android.widget.EditText;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
-import com.avos.avoscloud.AVGeoPoint;
 import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.SaveCallback;
 import com.avoscloud.chat.R;
 import com.avoscloud.chat.model.Moment;
-import com.avoscloud.chat.model.MomentFileArray;
 import com.avoscloud.chat.util.PathUtils;
 import com.avoscloud.chat.util.PhotoUtils;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -37,7 +31,6 @@ import butterknife.OnClick;
 
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class PublishActivity extends Activity {
 
@@ -143,6 +136,27 @@ public class PublishActivity extends Activity {
         moment.setContent(publish_text.getText().toString());//文字信息
         moment.setPosition(LeanchatUser.getCurrentUser().getGeoPoint());//坐标
 
+        //本地存储照片，并释放bitmap内存
+        String path = "";
+        if (bitmap != null) {
+            path = PathUtils.getAvatarCropPath();
+            PhotoUtils.saveBitmap(path, bitmap);
+            if (bitmap != null && bitmap.isRecycled() == false) {
+                bitmap.recycle();
+            }
+        }
+
+        //保存AVFile
+        AVFile file = null;
+        if(!path.equals("")){
+            file = saveAVFile(path, null);
+        }
+
+        //AVFileList
+        List<AVFile> list = new LinkedList<AVFile>();
+        list.add(file);
+        moment.setFileList(list);
+
         //保存Moment
         try {
             moment.saveInBackground(new SaveCallback() {
@@ -160,28 +174,6 @@ public class PublishActivity extends Activity {
         } catch (Exception e){
             e.printStackTrace();
         }
-
-        //本地存储照片，并释放bitmap内存
-        String path = "";
-        if (bitmap != null) {
-            path = PathUtils.getAvatarCropPath();
-            PhotoUtils.saveBitmap(path, bitmap);
-            if (bitmap != null && bitmap.isRecycled() == false) {
-                bitmap.recycle();
-            }
-        }
-
-        //保存AVFile
-        AVFile file = null;
-        if(!path.equals("")){
-            file = saveAVFile(path, null);
-        }
-
-
-
-        //保存meomentFileArray
-        //新建moment对应的momentFileArray, 存储已经上传的AVFile
-        saveMomentFileArray(moment, file);
     }
 
     /*
@@ -219,25 +211,6 @@ public class PublishActivity extends Activity {
             e.printStackTrace();
         }
         return file;
-    }
-    /*
-        保存Moment对应的MomentFileArray
-     */
-    public void saveMomentFileArray(Moment m, AVFile file){
-        Log.e("saveMoment", "start");
-        MomentFileArray momentFileArray = new MomentFileArray();
-        momentFileArray.setMoment(m);
-        momentFileArray.setFile(file);
-        momentFileArray.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(AVException e) {
-                if (e == null) {
-                    Log.e("MomentFileArray", "save done");
-                } else {
-                    Log.e("MomentFileArray", "save not done");
-                }
-            }
-        });
     }
 
 }

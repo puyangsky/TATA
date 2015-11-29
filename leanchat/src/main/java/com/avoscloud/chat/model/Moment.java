@@ -4,15 +4,13 @@ import android.util.Log;
 
 import com.avos.avoscloud.AVClassName;
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVGeoPoint;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
-import com.avos.avoscloud.im.v2.Conversation;
-import com.avoscloud.leanchatlib.model.LeanchatUser;
 
-import com.avoscloud.chat.model.MomentFileArray;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -29,6 +27,8 @@ public class Moment extends AVObject{
     private String content = "content";
 //    private String imageUrls = "imageUrls";
     private String position = "position";
+    private String fileList = "fileList";
+
 //    private String momentFileArray = "momentFileArray";         //对应图片的url
     //    private String createdAt; 在AVObject已经存在
 
@@ -55,19 +55,13 @@ public class Moment extends AVObject{
         return urls;
     }
 
-//    public MomentFileArray getMomentFileArray(){
-//        MomentFileArray array = null;
-//        try {
-//            array =  getAVObject(momentFileArray, MomentFileArray.class);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return array;
-//    }
+    public List<AVFile> getFileList(){
+        return getList("fileList");
+    }
 
-//    public void setMomentFileArray(MomentFileArray m){
-//        put(momentFileArray, m);
-//    }
+    public void setFileList(List<AVFile> list){
+        addAll(fileList, list);
+    }
 
     public AVUser getUser() {
         return getAVUser(user);
