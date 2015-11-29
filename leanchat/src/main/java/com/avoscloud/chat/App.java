@@ -44,7 +44,6 @@ public class App extends Application {
       AVObject.registerSubclass(UpdateInfo.class);
 
       AVObject.registerSubclass(Moment.class);      //发布信息类
-      AVObject.registerSubclass(MomentFileArray.class);      //发布信息类
 
 
     AVOSCloud.initialize(this, appId, appKey);

@@ -12,6 +12,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.media.ExifInterface;
 import android.media.ThumbnailUtils;
+import android.util.Log;
+
 import com.avoscloud.leanchatlib.utils.LogUtils;
 
 import java.io.ByteArrayInputStream;
@@ -63,14 +65,16 @@ public class PhotoUtils {
   public static void saveBitmap(String filePath,
                                 Bitmap bitmap) {
     //设置合适的压缩比
-    int options = 100;
+    int options = 10;
 //    ByteArrayOutputStream baos = new ByteArrayOutputStream();
 //    bitmap.compress(Bitmap.CompressFormat.PNG, options, baos);
-//    while(baos.toByteArray().length / 1024 > 100){
-//      baos.reset();;
+//    while(baos.toByteArray().length / 1024 > 500){
+//      baos.reset();
 //      options -= 10;
+//      Log.e("options", "" + options);
 //      bitmap.compress(Bitmap.CompressFormat.PNG, options, baos);
 //    }
+
 
     //生成file文件
     File file = new File(filePath);

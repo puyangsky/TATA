@@ -32,29 +32,6 @@ public class Moment extends AVObject{
 //    private String momentFileArray = "momentFileArray";         //对应图片的url
     //    private String createdAt; 在AVObject已经存在
 
-    //获取该Moment的所有图片的urls
-    public List<String> getFileUrls(){
-        final List<String> urls = new ArrayList<String>();
-        AVQuery<MomentFileArray> query = AVObject.getQuery(MomentFileArray.class);
-        query.whereEqualTo("moment", getObjectId());
-        query.findInBackground(new FindCallback<MomentFileArray>() {
-            @Override
-            public void done(List<MomentFileArray> results, AVException e) {
-                if (e == null){
-                    // ...
-                    for (MomentFileArray a : results){
-                        if(a != null){
-                            urls.add(a.getFile().getUrl());
-                        }
-                    }
-                }else{
-                    Log.e("MomentArrayFile", "not find");
-                }
-            }
-        });
-        return urls;
-    }
-
     public List<AVFile> getFileList(){
         return getList("fileList");
     }
