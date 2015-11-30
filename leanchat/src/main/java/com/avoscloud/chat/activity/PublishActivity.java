@@ -1,11 +1,16 @@
 package com.avoscloud.chat.activity;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +37,8 @@ import butterknife.OnClick;
 import android.util.Log;
 import android.widget.ImageView;
 
+import javax.security.auth.login.LoginException;
+
 public class PublishActivity extends Activity {
 
     private static final int IMAGE_PICK_REQUEST = 1;
@@ -41,7 +48,7 @@ public class PublishActivity extends Activity {
     private Bitmap bitmap = null;
 
     //图片的url
-    private String urlpath = "";
+    private String picPath = "";
 
     @InjectView(R.id.activity_publish_btn)
     public Button publish_btn;
@@ -80,12 +87,17 @@ public class PublishActivity extends Activity {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == IMAGE_PICK_REQUEST) {
                 Uri uri = data.getData();
-                ContentResolver resolver = getContentResolver();
-                try {
-                    bitmap = MediaStore.Images.Media.getBitmap(resolver, uri);
-                } catch (IOException e) {
-                    Log.e("TAG", e.toString());
-                }
+//                ContentResolver resolver = getContentResolver();
+//                try {
+//                    bitmap = MediaStore.Images.Media.getBitmap(resolver, uri);
+//                } catch (IOException e) {
+//                    Log.e("TAG", e.toString());
+//                }
+//                picPath = getPicPath(uri);              //获取图片path
+                picPath = PhotoUtils.getImageAbsolutePath(this, uri);
+                Log.e("picPath", picPath);
+                bitmap = PhotoUtils.getImageThumbnail(picPath, 300, 300);  //压缩图片,压缩比需要调整
+                Log.e("compress bitmap", "done");
                 imageView.setImageBitmap(bitmap);       //更新本地图片，这里没有更改压缩图片，下一步更新
             }
         }
@@ -140,7 +152,7 @@ public class PublishActivity extends Activity {
         String path = "";
         if (bitmap != null) {
             path = PathUtils.getAvatarCropPath();
-            PhotoUtils.saveBitmap(path, bitmap);
+            PhotoUtils.saveBitmap(path, bitmap);                //这里是压缩之后的bitmap
             if (bitmap != null && bitmap.isRecycled() == false) {
                 bitmap.recycle();
             }
@@ -149,7 +161,7 @@ public class PublishActivity extends Activity {
         //保存AVFile
         AVFile file = null;
         if(!path.equals("")){
-            file = saveAVFile(path, null);
+            file = saveAVFile(path, null);          //这里下载之后的大小还是那么大
         }
 
         //AVFileList
@@ -211,6 +223,47 @@ public class PublishActivity extends Activity {
             e.printStackTrace();
         }
         return file;
+    }
+
+    /**
+     * 根据uri获取图片路径
+     * @param selectedImage
+     * @return
+     */
+    public String getPicPath(Uri selectedImage){
+//        String picturePath = null;
+//        if(selectedImage!=null){
+//            String uriStr=selectedImage.toString();
+//            String path=uriStr.substring(10,uriStr.length());
+//            if(path.startsWith("com.sec.android.gallery3d")){
+//                Log.e("tag", "It's auto backup pic path:"+selectedImage.toString());
+//                return null;
+//            }
+//        }
+//        String[] filePathColumn = { MediaStore.Images.Media.DATA };
+//        Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+//        cursor.moveToFirst();
+//        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//        picturePath = cursor.getString(columnIndex);
+//        cursor.close();
+//        return picturePath;
+
+        //获取图片路径，这种方式已经被抛弃了
+        try{
+            String[] proj = {MediaStore.Images.Media.DATA};
+            //好像是android多媒体数据库的封装接口，具体的看Android文档
+            Cursor cursor = managedQuery(selectedImage, proj, null, null, null);
+            //按我个人理解 这个是获得用户选择的图片的索引值
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            //将光标移至开头 ，这个很重要，不小心很容易引起越界
+            cursor.moveToFirst();
+            //最后根据索引值获取图片路径
+            return cursor.getString(column_index);
+        }catch (Exception e){
+            Log.e("cursor", "error");
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
