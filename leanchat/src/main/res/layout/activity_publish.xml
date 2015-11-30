@@ -44,18 +44,36 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/publish_avatars_view"
+        android:id="@+id/publish_chooose_layout"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:orientation="horizontal"
         android:layout_below="@+id/activity_publish_content"
         android:paddingTop="10dp"
         android:gravity="left">
 
         <ImageView
+            android:id="@+id/publish_chooose_view"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/chat_default_user_avatar"
+            android:contentDescription="@string/publish_picture_hint" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/publish_avatars_view"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:layout_above="@+id/activity_publish_btn"
+        android:gravity="center">
+
+        <ImageView
             android:id="@+id/publish_addbutton_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:paddingBottom="10dp"
             android:src="@drawable/chat_default_user_avatar"
             android:contentDescription="@string/publish_picture_hint" />
 
@@ -66,7 +84,6 @@
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/base_action_bar_height"
-        android:paddingBottom="2dp"
         android:background="@drawable/common_btn"
         android:gravity="center"
         android:text="@string/publish"

@@ -87,13 +87,6 @@ public class PublishActivity extends Activity {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == IMAGE_PICK_REQUEST) {
                 Uri uri = data.getData();
-//                ContentResolver resolver = getContentResolver();
-//                try {
-//                    bitmap = MediaStore.Images.Media.getBitmap(resolver, uri);
-//                } catch (IOException e) {
-//                    Log.e("TAG", e.toString());
-//                }
-//                picPath = getPicPath(uri);              //获取图片path
                 picPath = PhotoUtils.getImageAbsolutePath(this, uri);
                 Log.e("picPath", picPath);
                 bitmap = PhotoUtils.getImageThumbnail(picPath, 300, 300);  //压缩图片,压缩比需要调整
@@ -223,47 +216,6 @@ public class PublishActivity extends Activity {
             e.printStackTrace();
         }
         return file;
-    }
-
-    /**
-     * 根据uri获取图片路径
-     * @param selectedImage
-     * @return
-     */
-    public String getPicPath(Uri selectedImage){
-//        String picturePath = null;
-//        if(selectedImage!=null){
-//            String uriStr=selectedImage.toString();
-//            String path=uriStr.substring(10,uriStr.length());
-//            if(path.startsWith("com.sec.android.gallery3d")){
-//                Log.e("tag", "It's auto backup pic path:"+selectedImage.toString());
-//                return null;
-//            }
-//        }
-//        String[] filePathColumn = { MediaStore.Images.Media.DATA };
-//        Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
-//        cursor.moveToFirst();
-//        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//        picturePath = cursor.getString(columnIndex);
-//        cursor.close();
-//        return picturePath;
-
-        //获取图片路径，这种方式已经被抛弃了
-        try{
-            String[] proj = {MediaStore.Images.Media.DATA};
-            //好像是android多媒体数据库的封装接口，具体的看Android文档
-            Cursor cursor = managedQuery(selectedImage, proj, null, null, null);
-            //按我个人理解 这个是获得用户选择的图片的索引值
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            //将光标移至开头 ，这个很重要，不小心很容易引起越界
-            cursor.moveToFirst();
-            //最后根据索引值获取图片路径
-            return cursor.getString(column_index);
-        }catch (Exception e){
-            Log.e("cursor", "error");
-            e.printStackTrace();
-        }
-        return null;
     }
 
 }
