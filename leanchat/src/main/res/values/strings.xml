@@ -4,7 +4,7 @@
     <string name="invitation_action">com.avoscloud.chat.INVITATION_ACTION</string>
 
 
-    <string name="app_name">LeanChat</string>
+    <string name="app_name">TATA</string>
 
 
     <string name="update_service_versionIsAlreadyNew">已经是最新版本了</string>
@@ -28,7 +28,7 @@
     <string name="publish_friend_title">发布</string>
 
     <string name="login_username_hint">请输入用户名</string>
-    <string name="publish_content"></string>
+    <string name="publish_text_hint">说点什么吧...</string>
     <string name="publish_picture_hint">照片</string>
     <string name="ensurePasswordHint">请在此输入密码</string>
     <string name="login_password_hint">请输入密码</string>
@@ -106,5 +106,17 @@
     <string name="message_when_agree_request">我们已经是好友了，来聊天吧</string>
     <string name="title_activity_publish">PublishActivity</string>
     <string name="viewpager_indicator">%1$d/%2$d</string>
+
+
+    <!-- 图片浏览 -->
+    <string name="only_choose_num">超出可选图片张数</string>
+    <string name="finish">完成</string>
+    <string name="invalidSD">sdcard无效或没有插入！</string>
+    <string name="photo">选择相册</string>
+    <string name="album">相册</string>
+    <string name="preview">预览</string>
+    <string name="unfinished">完成</string>
+    <string name="camera_cancel">取消</string>
+    <string name="no_photo">相册没有图片</string>
 
 </resources>

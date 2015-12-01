@@ -147,6 +147,32 @@
             android:name=".activity.PublishActivity"
             android:label="@string/title_activity_publish" >
         </activity>
+
+        <!--<activity-->
+            <!--android:name="com.avoscloud.chat.activity.ImageGridActivity" android:screenOrientation="portrait" >-->
+        <!--</activity>-->
+        <!--<activity-->
+            <!--android:name="com.avoscloud.chat.activity.TestPicActivity"-->
+            <!--android:configChanges="orientation|keyboardHidden"-->
+            <!--android:screenOrientation="portrait" />-->
+        <!--<activity-->
+            <!--android:name="com.avoscloud.chat.activity.PhotoActivity"-->
+            <!--android:screenOrientation="portrait" />-->
+
+        <activity
+            android:name="com.avoscloud.chat.activity.AlbumActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.avoscloud.chat.activity.ImageFile" >
+        </activity>
+        <activity
+            android:name="com.avoscloud.chat.activity.ShowAllPhoto" >
+        </activity>
+        <activity
+            android:name="com.avoscloud.chat.activity.GalleryActivity">
+        </activity>
+
     </application>
 
 </manifest>

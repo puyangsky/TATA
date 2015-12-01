@@ -22,5 +22,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
 
     <!--publish content dimen-->
-    <dimen name="activity_publish_content_text">120.0sp</dimen>
+    <dimen name="publish_text_height">100dp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <!--<dimen name="activity_horizontal_margin">16dp</dimen>-->
+    <!--<dimen name="activity_vertical_margin">16dp</dimen>-->
+    <dimen name="ui_10_dip">10dip</dimen>
 </resources>
