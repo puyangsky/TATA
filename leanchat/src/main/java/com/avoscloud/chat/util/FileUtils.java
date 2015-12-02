@@ -13,11 +13,13 @@ public class FileUtils {
 	public static String SDPATH = Environment.getExternalStorageDirectory()
 			+ "/Photo_LJ/";
 
-	public static void saveBitmap(Bitmap bm, String picName) {
+	public static String saveBitmap(Bitmap bm, String picName) {
+		String path = null;
 		try {
 			if (!isFileExist("")) {
 				File tempf = createSDDir("");
 			}
+			path = SDPATH + picName + ".JPEG";
 			File f = new File(SDPATH, picName + ".JPEG"); 
 			if (f.exists()) {
 				f.delete();
@@ -31,6 +33,7 @@ public class FileUtils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return path;
 	}
 
 	public static File createSDDir(String dirName) throws IOException {

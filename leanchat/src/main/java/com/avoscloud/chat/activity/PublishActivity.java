@@ -97,7 +97,10 @@ public class PublishActivity extends Activity {
         //上传发布的信息
         uploade_publish_content();
         //结束发布activity，回到主界面
-        this.finish();
+        for(Activity act : PublicWay.activityList){
+            act.finish();
+        }
+//        this.finish();
     }
 
     @InjectView(R.id.activity_publish_text)
@@ -145,10 +148,11 @@ public class PublishActivity extends Activity {
 
                     String fileName = String.valueOf(System.currentTimeMillis());
                     Bitmap bm = (Bitmap) data.getExtras().get("data");
-                    FileUtils.saveBitmap(bm, fileName);
+                    String filePath = FileUtils.saveBitmap(bm, fileName);
 
                     ImageItem takePhoto = new ImageItem();
                     takePhoto.setBitmap(bm);
+                    takePhoto.setImagePath(filePath);
                     Bimp.tempSelectBitmap.add(takePhoto);
                 }
                 break;
@@ -210,16 +214,27 @@ public class PublishActivity extends Activity {
             }
         }
 
-        //保存AVFile
-        AVFile file = null;
-        if(!path.equals("")){
-            file = saveAVFile(path, null);          //这里下载之后的大小还是那么大
-        }
-
-        //AVFileList
+        //添加图片文件
         List<AVFile> list = new LinkedList<AVFile>();
-        list.add(file);
+        for(ImageItem item : Bimp.tempSelectBitmap){
+//            Log.e("ImageItem Path", item.getImagePath());
+            if(item.getImagePath() != null){
+                AVFile file = saveAVFile(item.getImagePath(), null);
+                list.add(file);
+            }
+        }
         moment.setFileList(list);
+
+//        //保存AVFile
+//        AVFile file = null;
+//        if(!path.equals("")){
+//            file = saveAVFile(path, null);          //这里下载之后的大小还是那么大
+//        }
+//
+//        //AVFileList
+//        List<AVFile> list = new LinkedList<AVFile>();
+//        list.add(file);
+//        moment.setFileList(list);
 
         //保存Moment
         try {
