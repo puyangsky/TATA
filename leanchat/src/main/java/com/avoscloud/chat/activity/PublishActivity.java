@@ -103,8 +103,11 @@ public class PublishActivity extends Activity {
 //        this.finish();
     }
 
+
     @InjectView(R.id.activity_publish_text)
     public EditText publish_text;
+
+    public static String text = "";
 
 //    @InjectView(R.id.publish_addbutton_view)
 //    public ImageView imageView;
@@ -176,6 +179,7 @@ public class PublishActivity extends Activity {
         intent.putExtra("return-data", true);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         intent.putExtra("noFaceDetection", false); // face detection
+        saveOldConfigument();
         startActivityForResult(intent, requestCode);
         return outputUri;
     }
@@ -338,6 +342,7 @@ public class PublishActivity extends Activity {
                 Intent intent = new Intent(PublishActivity.this,
                         AlbumActivity.class);
                 Log.e("bt2 intent", "start");
+                saveOldConfigument();
                 startActivity(intent);
                 Log.e("bt2 intent", "end");
                 overridePendingTransition(R.anim.activity_translate_in, R.anim.activity_translate_out);
@@ -370,6 +375,7 @@ public class PublishActivity extends Activity {
                             GalleryActivity.class);
                     intent.putExtra("position", "1");
                     intent.putExtra("ID", arg2);
+                    saveOldConfigument();
                     startActivity(intent);
                 }
             }
@@ -494,6 +500,7 @@ public class PublishActivity extends Activity {
         return path;
     }
 
+    @Override
     protected void onRestart() {
         adapter.update();
         super.onRestart();
@@ -501,7 +508,21 @@ public class PublishActivity extends Activity {
 
     public void photo() {
         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        saveOldConfigument();
         startActivityForResult(openCameraIntent, TAKE_PICTURE);
     }
 
+    public void saveOldConfigument() {
+        text = publish_text.getText().toString();
+    }
+
+    public void recoverConfigument() {
+        publish_text.setText(text);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        recoverConfigument();
+    }
 }
