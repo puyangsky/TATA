@@ -16,6 +16,7 @@ import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.SaveCallback;
 import com.avoscloud.chat.R;
 import com.avoscloud.chat.App;
+import com.avoscloud.chat.fragment.SquareFragment;
 import com.avoscloud.chat.service.CacheService;
 import com.avoscloud.chat.service.PreferenceMap;
 import com.avoscloud.chat.service.UpdateService;
@@ -52,9 +53,10 @@ public class MainActivity extends BaseActivity {
   private static final String FRAGMENT_TAG_CONTACT = "contact";
   private static final String FRAGMENT_TAG_PUBLISH = "publish"; //发布好友
   private static final String FRAGMENT_TAG_DISCOVER = "discover";
+  private static final String FRAGMENT_TAG_SQUARE = "square";//广场
   private static final String FRAGMENT_TAG_PROFILE = "profile";
   private static final String[] fragmentTags = new String[]{FRAGMENT_TAG_CONVERSATION, FRAGMENT_TAG_CONTACT,
-      FRAGMENT_TAG_DISCOVER, FRAGMENT_TAG_PROFILE}; //这里是对应一个fragment，发布好友对应一个Activity
+      FRAGMENT_TAG_SQUARE, FRAGMENT_TAG_PROFILE}; //这里是对应一个fragment，发布好友对应一个Activity
 
   public LocationClient locClient;
   public MyLocationListener locationListener;
@@ -62,6 +64,7 @@ public class MainActivity extends BaseActivity {
   View fragmentContainer;
   ContactFragment contactFragment;
   DiscoverFragment discoverFragment;
+  SquareFragment squareFragment;
   ConversationRecentFragment conversationRecentFragment;
   ProfileFragment profileFragment;  //没有publish Fragment
   Button[] tabs;
@@ -154,11 +157,16 @@ public class MainActivity extends BaseActivity {
       }
       transaction.show(contactFragment);
     } else if (id == R.id.btn_discover) {
-      if (discoverFragment == null) {
-        discoverFragment = new DiscoverFragment();
-        transaction.add(R.id.fragment_container, discoverFragment, FRAGMENT_TAG_DISCOVER);
+//      if (discoverFragment == null) {
+//        discoverFragment = new DiscoverFragment();
+//        transaction.add(R.id.fragment_container, discoverFragment, FRAGMENT_TAG_DISCOVER);
+//      }
+//      transaction.show(discoverFragment);
+      if(squareFragment == null) {
+        squareFragment = new SquareFragment();
+        transaction.add(R.id.fragment_container, squareFragment, FRAGMENT_TAG_SQUARE);
       }
-      transaction.show(discoverFragment);
+      transaction.show(squareFragment);
     } else if (id == R.id.btn_my_space) {
       if (profileFragment == null) {
         profileFragment = new ProfileFragment();

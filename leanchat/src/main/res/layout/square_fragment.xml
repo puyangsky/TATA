@@ -5,15 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/recommends"
-        android:layout_width="wrap_content"
-        android:layout_height="180dp" />
-
-    <View style="@style/Divider"/>
+    <include layout="@layout/common_header_layout" />
 
     <ListView
-        android:id="@+id/list_item"
+        android:id="@+id/square_list_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp" />

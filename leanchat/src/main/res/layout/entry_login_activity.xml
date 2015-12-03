@@ -31,7 +31,8 @@
             android:shadowDx="0.0"
             android:shadowDy="1.0"
             android:shadowRadius="1.0"
-            android:textColorHint="#ffdddddd"/>
+            android:textColorHint="#ffdddddd"
+            android:background="#d1e7190e" />
 
         <EditText
             android:id="@+id/activity_login_et_password"
@@ -43,7 +44,9 @@
             android:hint="@string/login_password_hint"
             android:inputType="textPassword"
             android:paddingLeft="15dip"
-            android:textColorHint="#ffdddddd"/>
+            android:textColorHint="#ffdddddd"
+            android:background="#d1e7191f"
+            android:layout_marginTop="5dp" />
 
         <Button
             android:id="@+id/activity_login_btn_login"
@@ -64,21 +67,13 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:gravity="center_vertical"
-                android:text="@string/not_have_account"
-                android:textColor="@color/base_color_text_gray"
-                android:textSize="20sp"/>
-
-            <TextView
                 android:id="@+id/activity_login_btn_register"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="5dp"
                 android:gravity="center_vertical"
                 android:text="@string/register_rightnow"
-                android:textColor="@color/entry_blue"
+                android:textColor="#f5f3f6"
                 android:textSize="20sp"/>
         </LinearLayout>
     </LinearLayout>
