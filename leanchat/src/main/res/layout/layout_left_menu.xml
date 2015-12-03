@@ -1,134 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00000000" >
+    android:orientation="vertical"
+    android:background="#222222">
+
+    <RelativeLayout
+        android:id="@+id/drawer_header_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/header_bg"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/person_avatar_view"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ia"/>
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/person_avatar_view"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="puyangsky"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+    </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/drawer_main_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_centerVertical="true"
-        android:orientation="vertical" >
-
+        android:layout_marginTop="40dp">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_person">
 
             <ImageView
-                android:id="@+id/one"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:id="@+id/ic_person"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/ic" />
+                android:layout_marginTop="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_person" />
 
             <TextView
-                android:layout_width="fill_parent"
+                android:id="@+id/profile_person_tv"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@id/one"
-                android:text="第1个Item"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/ic_person"
+                android:text="@string/profile_person"
                 android:textColor="#f0f0f0"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ccc"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
             <ImageView
-                android:id="@+id/two"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:id="@+id/settings"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/id" />
+                android:layout_marginTop="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_settings" />
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@id/two"
-                android:text="第2个Item"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/settings"
+                android:text="设置"
                 android:textColor="#f0f0f0"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
         </RelativeLayout>
 
-        <RelativeLayout
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <ImageView
-                android:id="@+id/three"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/ig" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@id/three"
-                android:text="第3个Item"
-                android:textColor="#f0f0f0"
-                android:textSize="20sp" />
-        </RelativeLayout>
+            android:layout_height="1dp"
+            android:background="#ccc"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
             <ImageView
-                android:id="@+id/four"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:id="@+id/search"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/ie" />
+                android:layout_marginTop="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_search" />
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@id/four"
-                android:text="第4个Item"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/search"
+                android:text="搜索"
                 android:textColor="#f0f0f0"
-                android:textSize="20sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <ImageView
-                android:id="@+id/five"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/ia" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@id/five"
-                android:text="第5个Item"
-                android:textColor="#f0f0f0"
-                android:textSize="20sp" />
+                android:textSize="15sp"
+                android:textAppearance="?android:attr/textAppearanceMediumInverse"/>
         </RelativeLayout>
     </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

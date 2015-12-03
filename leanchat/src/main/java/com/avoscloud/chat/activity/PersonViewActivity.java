@@ -45,6 +45,7 @@ public class PersonViewActivity extends BaseActivity {
         listView.setAdapter(new ListItemAdapter(ctx, itemEntities));
 
         initView();
+        initActionBar(R.string.profile_person);
     }
 
     private void initData() {
