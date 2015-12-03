@@ -69,7 +69,7 @@
                 android:src="@drawable/ic_person" />
 
             <TextView
-                android:id="@+id/profile_person_tv"
+                android:id="@+id/tv_profile_person"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -99,12 +99,13 @@
                 android:src="@drawable/ic_settings" />
 
             <TextView
+                android:id="@+id/tv_settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/settings"
-                android:text="设置"
+                android:text="settings"
                 android:textColor="#f0f0f0"
                 android:textSize="15sp" />
         </RelativeLayout>
@@ -128,6 +129,7 @@
                 android:src="@drawable/ic_search" />
 
             <TextView
+                android:id="@+id/tv_check_update"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

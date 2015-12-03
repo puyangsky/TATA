@@ -23,7 +23,6 @@ import com.avoscloud.chat.service.UpdateService;
 import com.avoscloud.chat.event.LoginFinishEvent;
 import com.avoscloud.chat.fragment.ContactFragment;
 import com.avoscloud.chat.fragment.ConversationRecentFragment;
-import com.avoscloud.chat.fragment.DiscoverFragment;
 import com.avoscloud.chat.fragment.ProfileFragment;
 import com.avoscloud.chat.util.Logger;
 import com.avoscloud.chat.util.Utils;
@@ -36,7 +35,6 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import de.greenrobot.event.EventBus;
 
-import com.avoscloud.chat.activity.PublishActivity;
 import com.nineoldandroids.view.ViewHelper;
 
 /**
@@ -47,7 +45,6 @@ public class MainActivity extends BaseActivity {
   public static final int CONVERSATION_STATUS = 1;
   public static final int CONTACT_STATUS = 2;
   public static final int SQUARE_STATUS = 3;
-  public static final int PROFILE_STATUS = 4;
   private int status = CONVERSATION_STATUS;
 
   public static final int[] tabsNormalBackIds = new int[]{R.drawable.tabbar_chat,
@@ -58,7 +55,6 @@ public class MainActivity extends BaseActivity {
   private static final String FRAGMENT_TAG_CONVERSATION = "conversation";
   private static final String FRAGMENT_TAG_CONTACT = "contact";
   private static final String FRAGMENT_TAG_PUBLISH = "publish"; //发布好友
-  private static final String FRAGMENT_TAG_DISCOVER = "discover";
   private static final String FRAGMENT_TAG_SQUARE = "square";//广场
   private static final String FRAGMENT_TAG_PROFILE = "profile";
   private static final String[] fragmentTags = new String[]{FRAGMENT_TAG_CONVERSATION, FRAGMENT_TAG_CONTACT,
@@ -66,10 +62,9 @@ public class MainActivity extends BaseActivity {
 
   public LocationClient locClient;
   public MyLocationListener locationListener;
-  Button conversationBtn, contactBtn, publishBtn, discoverBtn, mySpaceBtn;  //增加一个按钮
+  Button conversationBtn, contactBtn, publishBtn, squareBtn;  //增加一个按钮
   View fragmentContainer;
   ContactFragment contactFragment;
-  DiscoverFragment discoverFragment;
   SquareFragment squareFragment;
   ConversationRecentFragment conversationRecentFragment;
   ProfileFragment profileFragment;  //没有publish Fragment
@@ -133,15 +128,14 @@ public class MainActivity extends BaseActivity {
   }
 
   private void init() {
-    tabs = new Button[]{conversationBtn, contactBtn, publishBtn, discoverBtn, mySpaceBtn};
+    tabs = new Button[]{conversationBtn, contactBtn, publishBtn, squareBtn};
   }
 
   private void findView() {
     conversationBtn = (Button) findViewById(R.id.btn_message);
     contactBtn = (Button) findViewById(R.id.btn_contact);
     publishBtn = (Button)  findViewById(R.id.btn_publish_friend);//加入发布好友按钮
-    discoverBtn = (Button) findViewById(R.id.btn_discover);
-    mySpaceBtn = (Button) findViewById(R.id.btn_my_space);
+    squareBtn = (Button) findViewById(R.id.btn_square);
     fragmentContainer = findViewById(R.id.fragment_container);
     recentTips = findViewById(R.id.iv_recent_tips);
     contactTips = findViewById(R.id.iv_contact_tips);
@@ -167,20 +161,13 @@ public class MainActivity extends BaseActivity {
         transaction.add(R.id.fragment_container, contactFragment, FRAGMENT_TAG_CONTACT);
       }
       transaction.show(contactFragment);
-    } else if (id == R.id.btn_discover) {
+    } else if (id == R.id.btn_square) {
       status = SQUARE_STATUS;
       if(squareFragment == null) {
         squareFragment = new SquareFragment();
         transaction.add(R.id.fragment_container, squareFragment, FRAGMENT_TAG_SQUARE);
       }
       transaction.show(squareFragment);
-    } else if (id == R.id.btn_my_space) {
-      status = PROFILE_STATUS;
-      if (profileFragment == null) {
-        profileFragment = new ProfileFragment();
-        transaction.add(R.id.fragment_container, profileFragment, FRAGMENT_TAG_PROFILE);
-      }
-      transaction.show(profileFragment);
     } else if (id == R.id.btn_publish_friend){
         Intent intent = new Intent(this, PublishActivity.class);
         this.startActivity(intent);
@@ -341,13 +328,9 @@ public class MainActivity extends BaseActivity {
         conversationBtn.performClick();
         onTabSelect(conversationBtn);
         break;
-      case PROFILE_STATUS:
-        mySpaceBtn.performClick();
-        onTabSelect(mySpaceBtn);
-        break;
       case SQUARE_STATUS:
-        discoverBtn.performClick();
-        onTabSelect(discoverBtn);
+        squareBtn.performClick();
+        onTabSelect(squareBtn);
         break;
       case CONTACT_STATUS:
         contactBtn.performClick();

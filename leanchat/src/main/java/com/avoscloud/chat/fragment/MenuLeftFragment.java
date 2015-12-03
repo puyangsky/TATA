@@ -14,7 +14,10 @@ import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avoscloud.chat.R;
 import com.avoscloud.chat.activity.EntryLoginActivity;
+import com.avoscloud.chat.activity.PersonViewActivity;
+import com.avoscloud.chat.activity.ProfileNotifySettingActivity;
 import com.avoscloud.chat.service.PushManager;
+import com.avoscloud.chat.service.UpdateService;
 import com.avoscloud.leanchatlib.controller.ChatManager;
 
 
@@ -22,7 +25,7 @@ import com.avoscloud.leanchatlib.controller.ChatManager;
  * Created by Administrator on 2015/11/30.
  */
 public class MenuLeftFragment extends Fragment {
-    private TextView logoutView;
+    private TextView logoutView, checkUpdateView, personProfileView, settingsView;
     ChatManager chatManager;
 
     @Override
@@ -34,13 +37,24 @@ public class MenuLeftFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        chatManager = ChatManager.getInstance();
+        //avatar
 
+        //person profile
+        personProfileView = (TextView) getView().findViewById(R.id.tv_profile_person);
+        personProfileView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PersonViewActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        //log out
         logoutView = (TextView) getView().findViewById(R.id.tv_log_out);
+        chatManager = ChatManager.getInstance();
         logoutView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(getActivity(), "FUCK", Toast.LENGTH_SHORT).show();
                 chatManager.closeWithCallback(new AVIMClientCallback() {
                     @Override
                     public void done(AVIMClient avimClient, AVIMException e) {
@@ -53,5 +67,26 @@ public class MenuLeftFragment extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
+
+        //check update
+        checkUpdateView = (TextView) getView().findViewById(R.id.tv_check_update);
+        checkUpdateView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UpdateService updateService = UpdateService.getInstance(getActivity());
+                updateService.showSureUpdateDialog();
+            }
+        });
+
+        //settings
+        settingsView = (TextView) getView().findViewById(R.id.tv_settings);
+        settingsView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ProfileNotifySettingActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
     }
 }
