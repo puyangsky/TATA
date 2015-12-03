@@ -44,6 +44,12 @@ import com.nineoldandroids.view.ViewHelper;
  */
 public class MainActivity extends BaseActivity {
   public static final int FRAGMENT_N = 5;
+  public static final int CONVERSATION_STATUS = 1;
+  public static final int CONTACT_STATUS = 2;
+  public static final int SQUARE_STATUS = 3;
+  public static final int PROFILE_STATUS = 4;
+  private int status = CONVERSATION_STATUS;
+
   public static final int[] tabsNormalBackIds = new int[]{R.drawable.tabbar_chat,
       R.drawable.tabbar_contacts, R.drawable.contact_new_friends_icon, R.drawable.tabbar_discover, R.drawable.tabbar_me};
   public static final int[] tabsActiveBackIds = new int[]{R.drawable.tabbar_chat_active,
@@ -61,6 +67,7 @@ public class MainActivity extends BaseActivity {
   public LocationClient locClient;
   public MyLocationListener locationListener;
   Button conversationBtn, contactBtn, publishBtn, discoverBtn, mySpaceBtn;  //增加一个按钮
+
   View fragmentContainer;
   ContactFragment contactFragment;
   DiscoverFragment discoverFragment;
@@ -91,7 +98,8 @@ public class MainActivity extends BaseActivity {
     init();
 
     initDrawer();
-    //mySpaceBtn.performClick();
+//    mySpaceBtn.performClick();
+    onTabSelect(conversationBtn);
     //contactBtn.performClick();
     conversationBtn.performClick();
     //discoverBtn.performClick();
@@ -105,6 +113,7 @@ public class MainActivity extends BaseActivity {
     super.onResume();
     UpdateService updateService = UpdateService.getInstance(this);
     updateService.checkUpdate();
+    recoverConfig();
   }
 
   private void initBaiduLocClient() {
@@ -145,18 +154,21 @@ public class MainActivity extends BaseActivity {
     hideFragments(manager, transaction);
     setNormalBackgrounds();
     if (id == R.id.btn_message) {
+      status = CONVERSATION_STATUS;
       if (conversationRecentFragment == null) {
         conversationRecentFragment = new ConversationRecentFragment();
         transaction.add(R.id.fragment_container, conversationRecentFragment, FRAGMENT_TAG_CONVERSATION);
       }
       transaction.show(conversationRecentFragment);
     } else if (id == R.id.btn_contact) {
+      status = CONTACT_STATUS;
       if (contactFragment == null) {
         contactFragment = new ContactFragment();
         transaction.add(R.id.fragment_container, contactFragment, FRAGMENT_TAG_CONTACT);
       }
       transaction.show(contactFragment);
     } else if (id == R.id.btn_discover) {
+      status = SQUARE_STATUS;
 //      if (discoverFragment == null) {
 //        discoverFragment = new DiscoverFragment();
 //        transaction.add(R.id.fragment_container, discoverFragment, FRAGMENT_TAG_DISCOVER);
@@ -168,6 +180,7 @@ public class MainActivity extends BaseActivity {
       }
       transaction.show(squareFragment);
     } else if (id == R.id.btn_my_space) {
+      status = PROFILE_STATUS;
       if (profileFragment == null) {
         profileFragment = new ProfileFragment();
         transaction.add(R.id.fragment_container, profileFragment, FRAGMENT_TAG_PROFILE);
@@ -268,26 +281,23 @@ public class MainActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
   private void initDrawer()
   {
     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-    mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener()
-    {
+    mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
       @Override
-      public void onDrawerStateChanged(int newState)
-      {
+      public void onDrawerStateChanged(int newState) {
       }
 
       @Override
-      public void onDrawerSlide(View drawerView, float slideOffset)
-      {
+      public void onDrawerSlide(View drawerView, float slideOffset) {
         View mContent = mDrawerLayout.getChildAt(0);
         View mMenu = drawerView;
         float scale = 1 - slideOffset;
         float rightScale = 0.8f + scale * 0.2f;
 
-        if (drawerView.getTag().equals("LEFT"))
-        {
+        if (drawerView.getTag().equals("LEFT")) {
 
           float leftScale = 1 - 0.3f * scale;
 
@@ -302,8 +312,7 @@ public class MainActivity extends BaseActivity {
           mContent.invalidate();
           ViewHelper.setScaleX(mContent, rightScale);
           ViewHelper.setScaleY(mContent, rightScale);
-        } else
-        {
+        } else {
           ViewHelper.setTranslationX(mContent,
                   -mMenu.getMeasuredWidth() * slideOffset);
           ViewHelper.setPivotX(mContent, mContent.getMeasuredWidth());
@@ -317,14 +326,33 @@ public class MainActivity extends BaseActivity {
       }
 
       @Override
-      public void onDrawerOpened(View drawerView)
-      {
+      public void onDrawerOpened(View drawerView) {
       }
 
       @Override
-      public void onDrawerClosed(View drawerView)
-      {
+      public void onDrawerClosed(View drawerView) {
       }
     });
+  }
+
+  public void recoverConfig(){
+    switch (status){
+      case CONVERSATION_STATUS:
+        conversationBtn.performClick();
+        onTabSelect(conversationBtn);
+        break;
+      case PROFILE_STATUS:
+        mySpaceBtn.performClick();
+        onTabSelect(mySpaceBtn);
+        break;
+      case CONTACT_STATUS:
+        contactBtn.performClick();
+        onTabSelect(contactBtn);
+        break;
+      case SQUARE_STATUS:
+        discoverBtn.performClick();
+        onTabSelect(discoverBtn);
+        break;
+    }
   }
 }
