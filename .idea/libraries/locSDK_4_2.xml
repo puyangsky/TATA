@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="locSDK_4.2">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/leanchat/libs/locSDK_4.2.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
