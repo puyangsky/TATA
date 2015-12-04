@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/chat_setmode_keyboard_btn_pressed" android:state_pressed="true" />
+    <item android:drawable="@drawable/chat_setmode_keyboard_btn_normal" />
+</selector><!-- From: file:/C:/Users/Administrator/AndroidStudioProjects/tmp/leanchatlib/src/main/res/drawable/chat_btn_keyboard.xml --><!-- From: file:/C:/Users/Administrator/AndroidStudioProjects/tmp/leanchatlib/build/intermediates/bundles/debug/res/drawable/chat_btn_keyboard.xml -->

@@ -1,0 +1,355 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:2:1-178:12
+	package
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:3:5-33
+		INJECTED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml
+	android:versionName
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:5:5-32
+	android:versionCode
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:4:5-29
+		INJECTED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:2:11-69
+uses-sdk
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:7:5-44
+MERGED from [com.android.support:multidex:1.0.1] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\multidex\1.0.1\AndroidManifest.xml:18:5-42
+MERGED from [tmp:leanchatlib:unspecified] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\tmp\leanchatlib\unspecified\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:multidex:1.0.1] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\multidex\1.0.1\AndroidManifest.xml:18:5-42
+MERGED from [cn.leancloud.android:avoscloud-push:v3.8] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\cn.leancloud.android\avoscloud-push\v3.8\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:appcompat-v7:22.2.1] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.1\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.0.1] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:cardview-v7:21.0.3] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\cardview-v7\21.0.3\AndroidManifest.xml:15:5-42
+MERGED from [com.android.support:recyclerview-v7:21.0.3] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\21.0.3\AndroidManifest.xml:15:5-42
+MERGED from [com.android.support:support-v4:23.0.1] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:20:5-43
+MERGED from [cn.leancloud.android:avoscloud-statistics:v3.4.5] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\cn.leancloud.android\avoscloud-statistics\v3.4.5\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:appcompat-v7:22.2.1] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.1\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.0.1] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:20:5-43
+MERGED from [com.commit451:PhotoView:1.2.4] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.commit451\PhotoView\1.2.4\AndroidManifest.xml:8:5-10:41
+MERGED from [com.android.support:support-v4:23.0.1] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.0.1] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:20:5-43
+MERGED from [com.bm.photoview:library:1.3.6] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.bm.photoview\library\1.3.6\AndroidManifest.xml:7:5-9:41
+	android:targetSdkVersion
+		INJECTED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:7:15-41
+		INJECTED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:9:5-67
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:9:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:10:5-79
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:10:22-76
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:11:5-81
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:11:22-78
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:12:5-76
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:12:22-73
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:13:5-71
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:13:22-68
+uses-permission#android.permission.READ_LOGS
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:14:5-68
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:14:22-65
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:15:5-81
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:15:22-78
+uses-permission#android.permission.VIBRATE
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:16:5-66
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:16:22-63
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:17:5-75
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:17:22-72
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:18:5-78
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:18:22-75
+uses-permission#android.permission.GET_TASKS
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:19:5-68
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:19:22-65
+uses-permission#com.android.alarm.permission.SET_ALARM
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:20:5-78
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:20:22-75
+uses-permission#com.android.launcher.permission.READ_SETTINGS
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:23:5-85
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:23:22-82
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:24:5-76
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:24:22-73
+uses-permission#android.permission.BROADCAST_STICKY
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:25:5-75
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:25:22-72
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:26:5-73
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:26:22-70
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:30:5-81
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:30:22-78
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:32:5-79
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:32:22-76
+uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:34:5-84
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:34:22-81
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:36:5-80
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:36:22-77
+application
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:37:5-176:19
+MERGED from [tmp:leanchatlib:unspecified] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\tmp\leanchatlib\unspecified\AndroidManifest.xml:11:5-14:19
+MERGED from [com.android.support:appcompat-v7:22.2.1] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.1\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.0.1] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:cardview-v7:21.0.3] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\cardview-v7\21.0.3\AndroidManifest.xml:16:5-19
+MERGED from [com.android.support:recyclerview-v7:21.0.3] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\21.0.3\AndroidManifest.xml:17:5-19:19
+MERGED from [com.android.support:support-v4:23.0.1] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:22.2.1] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.1\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.0.1] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.0.1] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.0.1] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:22:5-20
+MERGED from [com.bm.photoview:library:1.3.6] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.bm.photoview\library\1.3.6\AndroidManifest.xml:11:5-12:19
+	android:label
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:40:9-41
+	android:icon
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:39:9-38
+	android:allowBackup
+		ADDED from [tmp:leanchatlib:unspecified] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\tmp\leanchatlib\unspecified\AndroidManifest.xml:12:9-35
+	android:theme
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:41:9-68
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:38:9-28
+activity#com.avoscloud.chat.activity.ChatRoomActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:42:9-46:52
+	android:label
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:44:13-29
+	android:launchMode
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:45:13-44
+	android:theme
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:46:13-49
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:43:13-54
+receiver#com.avoscloud.chat.service.LeanchatReceiver
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:48:9-55:20
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:48:19-59
+intent-filter#android.intent.action.BOOT_COMPLETED+android.intent.action.USER_PRESENT+android.net.conn.CONNECTIVITY_CHANGE+com.avoscloud.chat.INVITATION_ACTION
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:49:13-54:29
+action#android.intent.action.BOOT_COMPLETED
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:50:17-79
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:50:25-76
+action#android.intent.action.USER_PRESENT
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:51:17-77
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:51:25-74
+action#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:52:17-79
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:52:25-76
+action#com.avoscloud.chat.INVITATION_ACTION
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:53:17-79
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:53:25-76
+service#com.avos.avoscloud.PushService
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:57:9-66
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:57:18-63
+receiver#com.avos.avoscloud.AVBroadcastReceiver
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:59:9-64:20
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:59:19-72
+intent-filter#android.intent.action.BOOT_COMPLETED+android.intent.action.USER_PRESENT
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:60:13-63:29
+receiver#com.avoscloud.chat.service.NotificationBroadcastReceiver
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:65:9-69:20
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:65:19-72
+intent-filter#com.avoscloud.chat.intent.client_notification
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:66:13-68:29
+action#com.avoscloud.chat.intent.client_notification
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:67:17-88
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:67:25-85
+activity#com.avoscloud.chat.activity.MainActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:71:9-79:20
+	android:launchMode
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:73:13-44
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:72:13-50
+intent-filter#android.intent.category.DEFAULT+com.avos.leanchart.MAIN_ACTIVITY
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:74:13-78:29
+action#com.avos.leanchart.MAIN_ACTIVITY
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:75:17-75
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:75:25-72
+category#android.intent.category.DEFAULT
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:77:17-76
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:77:27-73
+activity#com.avoscloud.chat.activity.UpdateContentActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:80:9-82:52
+	android:theme
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:82:13-49
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:81:13-59
+activity#com.avoscloud.chat.activity.EntrySplashActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:83:9-91:20
+	android:theme
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:85:13-83
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:84:13-57
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:86:13-90:29
+action#android.intent.action.MAIN
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:87:17-69
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:87:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:89:17-77
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:89:27-74
+activity#com.avoscloud.chat.activity.ImageBrowserActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:92:9-67
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:92:19-64
+activity#com.avoscloud.chat.activity.LocationActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:93:9-95:52
+	android:theme
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:95:13-49
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:94:13-54
+activity#com.avoscloud.chat.activity.EntryLoginActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:96:9-65
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:96:19-62
+activity#com.avoscloud.chat.activity.EntryRegisterActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:97:9-99:52
+	android:theme
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:99:13-49
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:98:13-59
+activity#com.avoscloud.chat.activity.ContactNewFriendActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:100:9-102:52
+	android:theme
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:102:13-49
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:101:13-62
+activity#com.avoscloud.chat.activity.ContactAddFriendActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:103:9-105:52
+	android:theme
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:105:13-49
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:104:13-62
+activity#com.avoscloud.chat.activity.ContactPersonInfoActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:106:9-108:52
+	android:theme
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:108:13-49
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:107:13-63
+activity#com.avoscloud.chat.activity.ProfileNotifySettingActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:109:9-111:52
+	android:theme
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:111:13-49
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:110:13-66
+activity#com.avoscloud.chat.activity.ConversationGroupListActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:112:9-115:52
+	android:label
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:114:13-55
+	android:theme
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:115:13-49
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:113:13-67
+activity#com.avoscloud.chat.activity.ConversationDetailActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:116:9-118:52
+	android:theme
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:118:13-49
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:117:13-64
+activity#com.avoscloud.chat.activity.ConversationAddMembersActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:119:9-122:52
+	android:label
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:121:13-63
+	android:theme
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:122:13-49
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:120:13-68
+activity#com.avoscloud.chat.activity.PersonViewActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:123:9-126:52
+	android:label
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:125:13-51
+	android:theme
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:126:13-49
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:124:13-56
+activity#com.avoscloud.chat.activity.ImagePagerActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:127:9-64
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:127:19-62
+service#com.baidu.location.f
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:129:9-132:41
+	android:enabled
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:131:13-35
+	android:process
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:132:13-38
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:130:13-48
+meta-data#com.baidu.lbsapi.API_KEY
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:136:9-138:56
+	android:value
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:138:13-53
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:137:13-52
+activity#com.avoscloud.chat.activity.PublishActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:146:9-149:20
+	android:label
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:148:13-59
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:147:13-53
+activity#com.avoscloud.chat.activity.AlbumActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:162:9-165:20
+	android:screenOrientation
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:164:13-49
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:163:13-69
+activity#com.avoscloud.chat.activity.ImageFile
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:166:9-168:20
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:167:13-65
+activity#com.avoscloud.chat.activity.ShowAllPhoto
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:169:9-171:20
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:170:13-68
+activity#com.avoscloud.chat.activity.GalleryActivity
+ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:172:9-174:20
+	android:name
+		ADDED from C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\src\main\AndroidManifest.xml:173:13-71
+activity#android.support.v7.widget.TestActivity
+ADDED from [com.android.support:recyclerview-v7:21.0.3] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\21.0.3\AndroidManifest.xml:18:9-115
+	android:label
+		ADDED from [com.android.support:recyclerview-v7:21.0.3] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\21.0.3\AndroidManifest.xml:18:19-59
+	android:name
+		ADDED from [com.android.support:recyclerview-v7:21.0.3] C:\Users\Administrator\AndroidStudioProjects\tmp\leanchat\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\21.0.3\AndroidManifest.xml:18:60-113

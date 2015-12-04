@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="PhotoView-1.2.4">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/leanchat/build/intermediates/exploded-aar/com.commit451/PhotoView/1.2.4/res" />
+      <root url="jar://$PROJECT_DIR$/leanchat/build/intermediates/exploded-aar/com.commit451/PhotoView/1.2.4/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

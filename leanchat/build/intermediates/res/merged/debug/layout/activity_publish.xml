@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    tools:context="com.avoscloud.chat.activity.PublishActivity">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:background="#ffffff"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/gray" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="写动态"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/activity_selectimg_send"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:text="发送"
+                android:textColor="@drawable/text_while"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/activity_publish_text"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/publish_text_height"
+            android:layout_marginTop="0dp"
+            android:gravity="left|top"
+            android:hint="@string/publish_text_hint"
+            android:textColorHint="#ffdddddd"
+            android:textSize="@dimen/text_size_large"
+            android:inputType="textMultiLine"
+            android:maxLines="4"
+            android:background="@null" >
+        </EditText>
+
+        <GridView
+            android:id="@+id/noScrollgridview"
+            android:layout_width="290dp"
+            android:layout_height="350dp"
+            android:layout_marginLeft="5dp"
+            android:horizontalSpacing="3dp"
+            android:numColumns="4"
+            android:scrollbars="none"
+            android:verticalSpacing="5dp" >
+        </GridView>
+    </LinearLayout>
+
+
+    <!--原来的图片-->
+    <!--<LinearLayout-->
+        <!--android:id="@+id/publish_chooose_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="250dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:paddingTop="10dp"-->
+        <!--android:gravity="left">-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/publish_chooose_view"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:src="@drawable/chat_default_user_avatar"-->
+            <!--android:contentDescription="@string/publish_picture_hint" />-->
+
+    <!--</LinearLayout>-->
+
+    <!--&lt;!&ndash;原来的添加图片按钮&ndash;&gt;-->
+    <!--<LinearLayout-->
+        <!--android:id="@+id/publish_avatars_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_above="@+id/activity_publish_btn"-->
+        <!--android:gravity="center">-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/publish_addbutton_view"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:src="@drawable/chat_default_user_avatar"-->
+            <!--android:contentDescription="@string/publish_picture_hint" />-->
+
+    <!--</LinearLayout>-->
+
+    <Button
+        android:id="@+id/activity_publish_btn"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/base_action_bar_height"
+        android:background="@drawable/common_btn"
+        android:gravity="center"
+        android:text="@string/publish"
+        android:textColor="@color/chat_base_color_text_white"
+        android:textSize="@dimen/text_size_large"/>
+
+</RelativeLayout>
+
+
+
+<!-- From: file:/C:/Users/Administrator/AndroidStudioProjects/tmp/leanchat/src/main/res/layout/activity_publish.xml -->

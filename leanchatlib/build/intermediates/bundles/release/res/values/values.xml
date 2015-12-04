@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Users/Administrator/AndroidStudioProjects/tmp/leanchatlib/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="chat_LeftText">#000</color>
+    <color name="chat_base_color_text_black">#3e3e39</color>
+    <color name="chat_base_color_text_white">#fff</color>
+    <color name="chat_common_blue">#2C97E8</color>
+    <color name="chat_common_guide_color">#898989</color>
+    <color name="chat_common_white">#fff</color>
+    <color name="chat_msg_emote_divider">#ffa1a1a1</color>
+    <color name="chat_record_btn_red">#f00</color>
+    <color name="chat_transparent">#ffff</color>
+    <color name="contact_num_sort_bg">#66ffffff</color>
+    <declare-styleable name="ChatPlayBtn"><attr format="boolean" name="left"/></declare-styleable>
+    <!-- From: file:/C:/Users/Administrator/AndroidStudioProjects/tmp/leanchatlib/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="chat_BottomBtnMargin">5dp</dimen>
+    <dimen name="chat_BottomBtnSize">30dp</dimen>
+    <dimen name="chat_BottomHeight">50dp</dimen>
+    <dimen name="chat_ContentMaxWidth">200dp</dimen>
+    <dimen name="chat_ImageWidth">150dp</dimen>
+    <dimen name="chat_ItemMarginTop">5dp</dimen>
+    <dimen name="chat_MaxNameWidth">50dp</dimen>
+    <dimen name="chat_avatarSize">50dp</dimen>
+    <dimen name="chat_bottom_more_height">140dp</dimen>
+    <dimen name="chat_horizontal_big_margin">40dp</dimen>
+    <dimen name="chat_horizontal_margin">15dp</dimen>
+    <dimen name="chat_item_base_left_marginToUsername">5dp</dimen>
+    <dimen name="chat_playBtnWidth">30dp</dimen>
+    <dimen name="chat_style_avatar_userHead">45dp</dimen>
+    <!-- From: file:/C:/Users/Administrator/AndroidStudioProjects/tmp/leanchatlib/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">LeanChatLib</string>
+    <string name="chat_activity_loadMessagesFinish">聊天记录加载完毕</string>
+    <string name="chat_activity_select_picture">选择图片</string>
+    <string name="chat_audio">语音</string>
+    <string name="chat_base_list_view_listEmptyHint">无数据</string>
+    <string name="chat_base_list_view_noMore">已无更多</string>
+    <string name="chat_bottom_camera">拍摄</string>
+    <string name="chat_bottom_location">位置</string>
+    <string name="chat_bottom_picture">照片</string>
+    <string name="chat_bottom_record_layout_pressToRecord">按住录音</string>
+    <string name="chat_cancelRecord">取消录音</string>
+    <string name="chat_cannotFindResult">抱歉，未能找到结果</string>
+    <string name="chat_cloudCodeNotDeployTips">云代码未部署，请到项目主页根据说明来部署</string>
+    <string name="chat_common_avatar">头像</string>
+    <string name="chat_common_cancel">取消</string>
+    <string name="chat_common_change_title">{0}</string>
+    <string name="chat_common_emptyStr"/>
+    <string name="chat_common_nickname">昵称</string>
+    <string name="chat_common_please_input_hint">请输入{0}</string>
+    <string name="chat_common_username">用户名</string>
+    <string name="chat_emotion">表情</string>
+    <string name="chat_failed">失败</string>
+    <string name="chat_image">图片</string>
+    <string name="chat_newMessage">新的消息</string>
+    <string name="chat_pleaseCheckNetwork">请检查网络</string>
+    <string name="chat_position">位置</string>
+    <string name="chat_pull_to_refresh">下拉可以刷新</string>
+    <string name="chat_received">已接收</string>
+    <string name="chat_record_button_haveRead">已阅读</string>
+    <string name="chat_record_button_pleaseSayMore">说多点吧～</string>
+    <string name="chat_record_button_releaseToCancel">松开手指，取消录音</string>
+    <string name="chat_record_button_slideUpToCancel">手指上滑，取消发送</string>
+    <string name="chat_refreshing">正在刷新…</string>
+    <string name="chat_release_to_refresh">释放立即刷新</string>
+    <string name="chat_sending">发送中</string>
+    <string name="chat_sent">已发送</string>
+    <string name="chat_sessionPausedTips">会话暂停，等网络良好</string>
+    <string name="chat_utils_hardLoading">努力加载中...</string>
+    <string name="chat_utils_please_choose">请选择</string>
+    <string name="chat_utils_right">好的</string>
+    <string name="chat_utils_share">分享</string>
+    <string name="chat_utils_tips">提示</string>
+    <string name="message_is_null">消息不能为空</string>
+    <string name="unspport_message_type">暂不支持此消息类型</string>
+    <!-- From: file:/C:/Users/Administrator/AndroidStudioProjects/tmp/leanchatlib/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="chat_avatar">
+        <item name="android:layout_width">@dimen/chat_style_avatar_userHead</item>
+        <item name="android:layout_height">@dimen/chat_style_avatar_userHead</item>
+        <item name="android:clickable">true</item>
+        <item name="android:visibility">visible</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:src">@drawable/chat_default_user_avatar</item>
+    </style>
+    <style name="chat_item_inner_layout">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="chat_item_inner_left_layout" parent="chat_item_inner_layout">
+        <item name="android:layout_marginLeft">5dp</item>
+    </style>
+    <style name="chat_item_inner_right_layout" parent="chat_item_inner_layout">
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+    <style name="chat_item_layout">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="chat_play_btn">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="chat_record_button_toast_dialog_style">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@drawable/chat_record_button_round_background</item>
+    </style>
+    <style name="chat_text_date_style">
+        <item name="android:padding">2dp</item>
+        <item name="android:paddingTop">2dip</item>
+        <item name="android:paddingBottom">2dip</item>
+        <item name="android:paddingLeft">12dip</item>
+        <item name="android:paddingRight">12dip</item>
+        <item name="android:textColor">@color/chat_base_color_text_white</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:background">@drawable/chat_time_block</item>
+    </style>
+    <style name="chat_text_name_style">
+        <item name="android:textColor">#818181</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+</resources>

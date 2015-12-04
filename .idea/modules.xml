@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/leanchat/leanchat.iml" filepath="$PROJECT_DIR$/leanchat/leanchat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/leanchatlib/leanchatlib.iml" filepath="$PROJECT_DIR$/leanchatlib/leanchatlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/leanchatlib-demo/leanchatlib-demo.iml" filepath="$PROJECT_DIR$/leanchatlib-demo/leanchatlib-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tmp.iml" filepath="$PROJECT_DIR$/tmp.iml" />
+    </modules>
+  </component>
+</project>
