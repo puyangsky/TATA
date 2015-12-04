@@ -41,7 +41,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:text="puyangsky"
+                android:text="username"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"/>
         </RelativeLayout>
