@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/theme_bg_color"
-    android:orientation="vertical">
+    android:background="#fff69b0e"
+    android:orientation="vertical"
+    android:gravity="center_vertical">
 
     <LinearLayout style="@style/Register_Input">
 

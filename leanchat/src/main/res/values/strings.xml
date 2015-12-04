@@ -20,7 +20,7 @@
     <string name="entry_register_activity_password">密码</string>
     <string name="login">登录</string>
     <string name="publish">发布</string>
-    <string name="conversation_messages">会话</string>
+    <string name="conversation_messages">聊天</string>
     <string name="contact">联系人</string>
     <string name="profile_settings">Settings</string>
     <string name="profile_title">我</string>
@@ -119,5 +119,10 @@
     <string name="unfinished">完成</string>
     <string name="camera_cancel">取消</string>
     <string name="no_photo">相册没有图片</string>
+
+    <!-- 侧栏菜单 -->
+    <string name="settings">设置</string>
+    <string name="check_update">检查更新</string>
+    <string name="logout">注销</string>
 
 </resources>

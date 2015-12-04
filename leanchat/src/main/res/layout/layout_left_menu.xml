@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_centerVertical="true"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="20dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
                 android:src="@drawable/ic_person" />
 
             <TextView
-                android:id="@+id/profile_person_tv"
+                android:id="@+id/tv_profile_person"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -99,12 +99,13 @@
                 android:src="@drawable/ic_settings" />
 
             <TextView
+                android:id="@+id/tv_settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/settings"
-                android:text="设置"
+                android:text="settings"
                 android:textColor="#f0f0f0"
                 android:textSize="15sp" />
         </RelativeLayout>
@@ -119,7 +120,7 @@
             android:layout_height="wrap_content" >
 
             <ImageView
-                android:id="@+id/search"
+                android:id="@+id/check_update"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_centerVertical="true"
@@ -128,15 +129,48 @@
                 android:src="@drawable/ic_search" />
 
             <TextView
+                android:id="@+id/tv_check_update"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/search"
-                android:text="搜索"
+                android:layout_toRightOf="@id/check_update"
+                android:text="@string/check_update"
                 android:textColor="#f0f0f0"
                 android:textSize="15sp"
                 android:textAppearance="?android:attr/textAppearanceMediumInverse"/>
         </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ccc"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/img_log_out"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_logout" />
+
+            <TextView
+                android:id="@+id/tv_log_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/img_log_out"
+                android:text="@string/logout"
+                android:textColor="#f0f0f0"
+                android:textSize="15sp"
+                android:textAppearance="?android:attr/textAppearanceMediumInverse"/>
+        </RelativeLayout>
+
     </LinearLayout>
 </LinearLayout>
