@@ -34,7 +34,7 @@
                 android:src="@drawable/ia"/>
 
             <TextView
-                android:id="@+id/user_name"
+                android:id="@+id/tv_current_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/person_avatar_view"
@@ -105,7 +105,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/settings"
-                android:text="settings"
+                android:text="@string/settings"
                 android:textColor="#f0f0f0"
                 android:textSize="15sp" />
         </RelativeLayout>

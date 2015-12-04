@@ -1,11 +1,16 @@
 package com.avoscloud.chat.fragment;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVUser;
@@ -18,14 +23,23 @@ import com.avoscloud.chat.activity.PersonViewActivity;
 import com.avoscloud.chat.activity.ProfileNotifySettingActivity;
 import com.avoscloud.chat.service.PushManager;
 import com.avoscloud.chat.service.UpdateService;
+import com.avoscloud.chat.util.PathUtils;
+import com.avoscloud.chat.util.PhotoUtils;
 import com.avoscloud.leanchatlib.controller.ChatManager;
+import com.avoscloud.leanchatlib.model.LeanchatUser;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.io.File;
 
 
 /**
  * Created by Administrator on 2015/11/30.
  */
 public class MenuLeftFragment extends Fragment {
-    private TextView logoutView, checkUpdateView, personProfileView, settingsView;
+    private static final int IMAGE_PICK_REQUEST = 1;
+    private static final int CROP_REQUEST = 2;
+    private TextView logoutView, checkUpdateView, personProfileView, settingsView, userNameView;
+    private ImageView personAvatarView;
     ChatManager chatManager;
 
     @Override
@@ -38,6 +52,18 @@ public class MenuLeftFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         //avatar
+        personAvatarView = (ImageView) getView().findViewById(R.id.person_avatar_view);
+        personAvatarView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, null);
+                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent, IMAGE_PICK_REQUEST);
+            }
+        });
+
+        //username
+        userNameView = (TextView) getView().findViewById(R.id.tv_current_username);
 
         //person profile
         personProfileView = (TextView) getView().findViewById(R.id.tv_profile_person);
@@ -87,6 +113,69 @@ public class MenuLeftFragment extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
+    }
+
+    private void refresh() {
+        LeanchatUser curUser = (LeanchatUser)AVUser.getCurrentUser();
+        userNameView.setText(curUser.getUsername());
+        ImageLoader.getInstance().displayImage(curUser.getAvatarUrl(), personAvatarView, com.avoscloud.leanchatlib.utils.PhotoUtils.avatarImageOptions);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == IMAGE_PICK_REQUEST) {
+                Uri uri = data.getData();
+                startImageCrop(uri, 200, 200, CROP_REQUEST);
+            } else if (requestCode == CROP_REQUEST) {
+                final String path = saveCropAvatar(data);
+                LeanchatUser user = (LeanchatUser)AVUser.getCurrentUser();
+                user.saveAvatar(path, null);
+            }
+        }
+    }
+    public Uri startImageCrop(Uri uri, int outputX, int outputY,
+                              int requestCode) {
+        Intent intent = null;
+        intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", outputX);
+        intent.putExtra("outputY", outputY);
+        intent.putExtra("scale", true);
+        String outputPath = PathUtils.getAvatarTmpPath();
+        Uri outputUri = Uri.fromFile(new File(outputPath));
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
+        intent.putExtra("return-data", true);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("noFaceDetection", false); // face detection
+        startActivityForResult(intent, requestCode);
+        return outputUri;
+    }
+
+    private String saveCropAvatar(Intent data) {
+        Bundle extras = data.getExtras();
+        String path = null;
+        if (extras != null) {
+            Bitmap bitmap = extras.getParcelable("data");
+            if (bitmap != null) {
+                bitmap = PhotoUtils.toRoundCorner(bitmap, 10);
+                path = PathUtils.getAvatarCropPath();
+                PhotoUtils.saveBitmap(path, bitmap);
+                if (bitmap != null && bitmap.isRecycled() == false) {
+                    bitmap.recycle();
+                }
+            }
+        }
+        return path;
     }
 }
