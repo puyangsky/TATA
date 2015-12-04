@@ -11,3 +11,5 @@ manifest-merger-release-report.txt
 gradle.properties
 leanchat/build
 leanchatlib/build
+leanchat/*.iml
+leanchatlib/*.iml
