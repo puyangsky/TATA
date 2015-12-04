@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="#ffffffff" android:state_pressed="true" />
-    <item android:color="#ff777777" />
-</selector>
-<!-- From: file:/C:/Users/Administrator/AndroidStudioProjects/tmp/leanchat/src/main/res/drawable/recent_message_text_color_selector.xml -->

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<TextView
-    android:id="@+id/locationView"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/chat_item_location_default"
-    android:textColor="@android:color/white" /><!-- From: file:/C:/Users/Administrator/AndroidStudioProjects/tmp/leanchatlib/src/main/res/layout/chat_item_location.xml --><!-- From: file:/C:/Users/Administrator/AndroidStudioProjects/tmp/leanchatlib/build/intermediates/bundles/debug/res/layout/chat_item_location.xml -->

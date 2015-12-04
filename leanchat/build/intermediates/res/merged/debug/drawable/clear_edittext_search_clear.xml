@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/clear_edit_search_clear_pressed" android:state_pressed="true" />
-    <item android:drawable="@drawable/clear_edit_search_clear_normal" />
-</selector><!-- From: file:/C:/Users/Administrator/AndroidStudioProjects/tmp/leanchat/src/main/res/drawable/clear_edittext_search_clear.xml -->
