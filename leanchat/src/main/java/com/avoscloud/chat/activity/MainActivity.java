@@ -23,7 +23,6 @@ import com.avoscloud.chat.service.UpdateService;
 import com.avoscloud.chat.event.LoginFinishEvent;
 import com.avoscloud.chat.fragment.ContactFragment;
 import com.avoscloud.chat.fragment.ConversationRecentFragment;
-import com.avoscloud.chat.fragment.ProfileFragment;
 import com.avoscloud.chat.util.Logger;
 import com.avoscloud.chat.util.Utils;
 import com.avoscloud.leanchatlib.controller.ChatManager;
@@ -67,7 +66,6 @@ public class MainActivity extends BaseActivity {
   ContactFragment contactFragment;
   SquareFragment squareFragment;
   ConversationRecentFragment conversationRecentFragment;
-  ProfileFragment profileFragment;  //没有publish Fragment
   Button[] tabs;
   View recentTips, contactTips;
   DrawerLayout mDrawerLayout;

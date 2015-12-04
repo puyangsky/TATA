@@ -11,7 +11,6 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/leanchat" />
             <option value="$PROJECT_DIR$/leanchatlib" />
-            <option value="$PROJECT_DIR$/leanchatlib-demo" />
           </set>
         </option>
       </GradleProjectSettings>
