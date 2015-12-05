@@ -75,12 +75,11 @@
                 android:layout_marginTop="4dp"/>
             <!-- 点赞的按钮 -->
             <ImageView
-                android:id="@+id/moment_comment"
+                android:id="@+id/iv_zan"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/zan"
-                android:onClick="dianzan"
                 android:layout_marginRight="10dp"
                 android:scaleType="centerInside"/>
         </RelativeLayout>

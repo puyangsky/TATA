@@ -50,7 +50,7 @@ public class ListItemAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        final ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
             //填充 convertView
@@ -67,15 +67,37 @@ public class ListItemAdapter extends BaseAdapter {
                     .findViewById(R.id.tv_position);
             holder.tv_time = (TextView) convertView
                     .findViewById(R.id.tv_time);
+            holder.iv_zan = (ImageView) convertView
+                    .findViewById(R.id.iv_zan);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        ItemEntity itemEntity = items.get(position);
+        final ItemEntity itemEntity = items.get(position);
         holder.tv_username.setText(itemEntity.getUsername());
         holder.tv_content.setText(itemEntity.getContent());
         holder.tv_position.setText(itemEntity.getPosition());
         holder.tv_time.setText(itemEntity.getPublishTime());
+        if(itemEntity.getZanFlag() < 0)
+        {
+            holder.iv_zan.setImageResource(R.drawable.zan);
+        }else {
+            holder.iv_zan.setImageResource(R.drawable.yizan);
+        }
+        //点赞事件
+        holder.iv_zan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(itemEntity.getZanFlag() < 0){
+                    holder.iv_zan.setImageResource(R.drawable.yizan);
+                    itemEntity.setZanFlag(itemEntity.getZanFlag() * (-1));
+                }else {
+                    holder.iv_zan.setImageResource(R.drawable.zan);
+                    itemEntity.setZanFlag(itemEntity.getZanFlag() * (-1));
+                }
+            }
+        });
+
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.ic)
                 .showImageOnFail(R.drawable.ic)
@@ -122,6 +144,7 @@ public class ListItemAdapter extends BaseAdapter {
         private TextView tv_content;
         private TextView tv_time;
         private TextView tv_position;
+        private ImageView iv_zan;
         private NoScrollGridView gridview;
     }
 }

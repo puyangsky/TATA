@@ -51,6 +51,7 @@ public class MainActivity extends BaseActivity {
   public static final int[] tabsActiveBackIds = new int[]{R.drawable.tabbar_chat_active,
       R.drawable.tabbar_contacts_active, R.drawable.contact_new_friends_icon, R.drawable.tabbar_discover_active,
       R.drawable.tabbar_me_active};
+
   private static final String FRAGMENT_TAG_CONVERSATION = "conversation";
   private static final String FRAGMENT_TAG_CONTACT = "contact";
   private static final String FRAGMENT_TAG_PUBLISH = "publish"; //发布好友

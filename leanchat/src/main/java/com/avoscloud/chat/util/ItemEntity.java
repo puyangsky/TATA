@@ -12,8 +12,10 @@ public class ItemEntity {
     private ArrayList<String> imageUrls; // 九宫格图片的URL集合
     private String position;  //地点
     private String publishTime;   //发布时间
+    private int zanFlag;   //点赞
 
-    public ItemEntity(String avatar, String username, String content, ArrayList<String> imageUrls, String position, String publishTime) {
+    public ItemEntity(String avatar, String username, String content,
+                      ArrayList<String> imageUrls, String position, String publishTime, int zanFlag) {
         super();
         this.avatar = avatar;
         this.username = username;
@@ -21,6 +23,7 @@ public class ItemEntity {
         this.imageUrls = imageUrls;
         this.position = position;
         this.publishTime = publishTime;
+        this.zanFlag = zanFlag;
     }
 
     public String getPosition() {
@@ -76,5 +79,12 @@ public class ItemEntity {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+    public int getZanFlag() {
+        return zanFlag;
+    }
+
+    public void setZanFlag(int zanFlag) {
+        this.zanFlag = zanFlag;
     }
 }
