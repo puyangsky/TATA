@@ -13,3 +13,4 @@ leanchat/build
 leanchatlib/build
 leanchat/*.iml
 leanchatlib/*.iml
+*.iml
