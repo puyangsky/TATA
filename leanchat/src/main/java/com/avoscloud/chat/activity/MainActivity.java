@@ -7,8 +7,10 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVGeoPoint;
@@ -28,6 +30,7 @@ import com.avoscloud.chat.util.Utils;
 import com.avoscloud.leanchatlib.controller.ChatManager;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 import com.avoscloud.leanchatlib.utils.LogUtils;
+import com.avoscloud.leanchatlib.view.PlayButton;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -47,10 +50,9 @@ public class MainActivity extends BaseActivity {
   private int status = CONVERSATION_STATUS;
 
   public static final int[] tabsNormalBackIds = new int[]{R.drawable.tabbar_chat,
-      R.drawable.tabbar_contacts, R.drawable.contact_new_friends_icon, R.drawable.tabbar_discover, R.drawable.tabbar_me};
+      R.drawable.tabbar_contacts, R.drawable.contact_new_friends_icon, R.drawable.tabbar_discover};
   public static final int[] tabsActiveBackIds = new int[]{R.drawable.tabbar_chat_active,
-      R.drawable.tabbar_contacts_active, R.drawable.contact_new_friends_icon, R.drawable.tabbar_discover_active,
-      R.drawable.tabbar_me_active};
+      R.drawable.tabbar_contacts_active, R.drawable.contact_new_friends_icon, R.drawable.tabbar_discover_active};
 
   private static final String FRAGMENT_TAG_CONVERSATION = "conversation";
   private static final String FRAGMENT_TAG_CONTACT = "contact";
@@ -69,7 +71,7 @@ public class MainActivity extends BaseActivity {
   ConversationRecentFragment conversationRecentFragment;
   Button[] tabs;
   View recentTips, contactTips;
-  DrawerLayout mDrawerLayout;
+  public static DrawerLayout mDrawerLayout;
   public static void goMainActivityFromActivity(Activity fromActivity) {
     EventBus eventBus = EventBus.getDefault();
     eventBus.post(new LoginFinishEvent());
@@ -96,7 +98,6 @@ public class MainActivity extends BaseActivity {
     //mySpaceBtn.performClick();
     //contactBtn.performClick();
     conversationBtn.performClick();
-    //discoverBtn.performClick();
     initBaiduLocClient();
 
     CacheService.registerUser((LeanchatUser) AVUser.getCurrentUser());
@@ -307,14 +308,11 @@ public class MainActivity extends BaseActivity {
           ViewHelper.setScaleX(mContent, rightScale);
           ViewHelper.setScaleY(mContent, rightScale);
         }
-
       }
-
       @Override
       public void onDrawerOpened(View drawerView)
       {
       }
-
       @Override
       public void onDrawerClosed(View drawerView)
       {
@@ -336,5 +334,8 @@ public class MainActivity extends BaseActivity {
         onTabSelect(contactBtn);
         break;
     }
+  }
+  public static void openDrawer() {
+    mDrawerLayout.openDrawer(Gravity.LEFT);
   }
 }

@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="#2C97E8"
+    android:background="#F69B0E"
     android:orientation="horizontal">
 
     <LinearLayout
