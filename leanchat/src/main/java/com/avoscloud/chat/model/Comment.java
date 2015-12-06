@@ -10,20 +10,20 @@ import com.avoscloud.leanchatlib.model.LeanchatUser;
  */
 @AVClassName("Comment")
 public class Comment extends AVObject{
-    private String user = "user";
-    private String content = "content";
-    private String reply = "reply";
+    public static final String user = "user";
+    public static final String content = "content";
+    public static final String reply = "reply";
 
-    private AVRelation<Reply> getReply(){
+    public AVRelation<Reply> getReply(){
         return getRelation(reply);
     }
 
-    private void addReply(Reply reply){
+    public void addReply(Reply reply){
         AVRelation<Reply> relation = getReply();
         relation.add(reply);
     }
 
-    private void removeReply(Reply reply){
+    public void removeReply(Reply reply){
         AVRelation<Reply> relation = getReply();
         relation.remove(reply);
     }

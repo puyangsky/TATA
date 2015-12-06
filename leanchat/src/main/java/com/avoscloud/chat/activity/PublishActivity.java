@@ -131,6 +131,8 @@ public class PublishActivity extends Activity {
         setContentView(parentView);
         ButterKnife.inject(this);
         InitPopWindow();
+
+        Moment.getMomentByUser(LeanchatUser.getCurrentUser());
     }
 
     @Override

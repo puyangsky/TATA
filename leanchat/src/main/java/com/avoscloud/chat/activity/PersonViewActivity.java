@@ -14,7 +14,9 @@ import com.avoscloud.chat.adapter.ListItemAdapter;
 import com.avoscloud.chat.fragment.ChatMainTabFragment;
 import com.avoscloud.chat.fragment.ContactMainTabFragment;
 import com.avoscloud.chat.fragment.FriendMainTabFragment;
+import com.avoscloud.chat.model.Moment;
 import com.avoscloud.chat.util.ItemEntity;
+import com.avoscloud.leanchatlib.model.LeanchatUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +49,8 @@ public class PersonViewActivity extends BaseActivity {
 
         initView();
         initActionBar(R.string.profile_person);
+
+
     }
 
     private void initData() {

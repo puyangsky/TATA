@@ -9,8 +9,8 @@ import com.avoscloud.leanchatlib.model.LeanchatUser;
  */
 @AVClassName("Reply")
 public class Reply extends AVObject{
-    private String user = "user";
-    private String content = "content";
+    public static final String user = "user";
+    public static final String content = "content";
 
     public LeanchatUser getUser(){
         return getAVUser(user);
