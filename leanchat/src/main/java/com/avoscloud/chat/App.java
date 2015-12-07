@@ -9,6 +9,7 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVUser;
 import com.avoscloud.chat.model.AddRequest;
 import com.avoscloud.chat.model.Comment;
+import com.avoscloud.chat.model.Image;
 import com.avoscloud.chat.model.Moment;
 import com.avoscloud.chat.model.Reply;
 import com.avoscloud.chat.model.UpdateInfo;
@@ -48,6 +49,7 @@ public class App extends Application {
       AVObject.registerSubclass(Moment.class);      //发布信息类
       AVObject.registerSubclass(Comment.class);      //评论类
       AVObject.registerSubclass(Reply.class);      //评论类
+      AVObject.registerSubclass(Image.class);       //图片类
 
 
     AVOSCloud.initialize(this, appId, appKey);

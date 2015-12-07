@@ -32,8 +32,10 @@ import android.widget.EditText;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.LogUtil;
 import com.avos.avoscloud.SaveCallback;
 import com.avoscloud.chat.R;
+import com.avoscloud.chat.model.Image;
 import com.avoscloud.chat.model.Moment;
 import com.avoscloud.chat.util.Bimp;
 import com.avoscloud.chat.util.FileUtils;
@@ -46,6 +48,7 @@ import com.avoscloud.leanchatlib.model.LeanchatUser;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -132,6 +135,8 @@ public class PublishActivity extends Activity {
         ButterKnife.inject(this);
         InitPopWindow();
 
+//        Moment moment = new Moment();
+//        moment.getFileList();
         Moment.getMomentByUser(LeanchatUser.getCurrentUser());
     }
 
@@ -205,7 +210,7 @@ public class PublishActivity extends Activity {
     }
 
     private void uploade_publish_content() {
-        Moment moment = new Moment();
+        final Moment moment = new Moment();
         moment.setUser(LeanchatUser.getCurrentUser());//当前用户
         moment.setContent(publish_text.getText().toString());//文字信息
         moment.setPosition(LeanchatUser.getCurrentUser().getGeoPoint());//坐标
@@ -220,16 +225,90 @@ public class PublishActivity extends Activity {
             }
         }
 
-        //添加图片文件
-        List<AVFile> list = new LinkedList<AVFile>();
-        for(ImageItem item : Bimp.tempSelectBitmap){
-//            Log.e("ImageItem Path", item.getImagePath());
-            if(item.getImagePath() != null){
-                AVFile file = saveAVFile(item.getImagePath(), null);
-                list.add(file);
-            }
+        try {
+            moment.save();
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        moment.setFileList(list);
+
+        //添加图片文件
+//        List<Image> list = new LinkedList<Image>();
+        for(final ImageItem item : Bimp.tempSelectBitmap){
+            if(item.getImagePath() != null){
+//                AVFile file = saveAVFile(item.getImagePath(), null);
+                final LeanchatUser user = (LeanchatUser)AVUser.getCurrentUser();
+//                user.setFetchWhenSave(true);
+//                user.increment("publishPicNum");
+//                user.saveInBackground(new SaveCallback() {
+//                    @Override
+//                    public void done(AVException e) {
+//                        if(e != null){
+//                            Log.e("user num", "save error");
+//                            return;
+//                        }
+//                        Log.e("publishPicNum", "" + user.getPublishPicNum());
+//                        int picNum = user.getPublishPicNum();
+                        try {
+//                            String fileName = user.getUsername()+"publishPic"+user.getPublishPicNum()+".png";
+                            String fileName = user.getUsername()+"publishPic"+".png";
+                            final AVFile avfile = AVFile.withAbsoluteLocalPath(fileName, item.getImagePath());
+                            avfile.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(AVException e1) {
+                                    if (null == e1) {        //上传成功
+                                        Log.e("savePic", "Yes");
+                                        if(avfile == null){
+                                            Log.e("file", "save null");
+                                            return;
+                                        }
+                                        final Image image = new Image();
+                                        image.setFile(avfile);
+                                        image.saveInBackground(new SaveCallback() {
+                                            @Override
+                                            public void done(AVException e2) {
+                                                if (null != e2) {
+                                                    Log.e("image", "save error");
+                                                    return;
+                                                } else {
+                                                    Log.e("image", "save ok");
+                                                    if (image == null) {
+                                                        Log.e("image", "null");
+                                                        return;
+                                                    }
+                                                    moment.addFile(image);
+                                                    //保存Moment
+                                                    try {
+                                                        moment.saveInBackground(new SaveCallback() {
+                                                            @Override
+                                                            public void done(AVException e3) {
+                                                                if (null == e3) {
+                                                                    //保存成功
+                                                                    Log.e("Moment", "OK");
+                                                                } else {
+                                                                    //保存失败
+                                                                    Log.e("Moment", "No");
+                                                                }
+                                                            }
+                                                        });
+                                                    } catch (Exception e4) {
+                                                        e4.printStackTrace();
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    } else {
+                                        Log.e("savePic", "No");
+                                    }
+                                }
+                            });
+                        } catch (Exception e5) {
+                            e5.printStackTrace();
+                        }
+                    }
+//                });
+//            }
+        }
+//        moment.setFileList(list);
 
 //        //保存AVFile
 //        AVFile file = null;
@@ -242,60 +321,64 @@ public class PublishActivity extends Activity {
 //        list.add(file);
 //        moment.setFileList(list);
 
-        //保存Moment
-        try {
-            moment.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(AVException e) {
-                    if (null == e){
-                        //保存成功
-                        Log.e("Moment", "OK");
-                    }else {
-                        //保存失败
-                        Log.e("Moment", "No");
-                    }
-                }
-            });
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+
     }
 
     /*
         存储图片，并返回对应的AVFile类
      */
     public AVFile saveAVFile(String path, final SaveCallback saveCallback) {
-        AVFile file = null;
-
+//        String file = new String();
+        AVFile avfile = null;
         int picNum = 0;
         //发布的图片数量加1,更改并获取最新的图片数量
         final LeanchatUser user = (LeanchatUser)AVUser.getCurrentUser();
         user.setFetchWhenSave(true);
         user.increment("publishPicNum");
+//        try {
+//            user.save();
+//        } catch (AVException e) {
+//            e.printStackTrace();
+//        }
         user.saveInBackground(new SaveCallback() {
             @Override
             public void done(AVException e) {
+                if(e != null){
+                    Log.e("user num", "save error");
+                    return;
+                }
                 Log.e("publishPicNum", "" + user.getPublishPicNum());
+
             }
         });
         picNum = user.getPublishPicNum();
         try {
             String fileName = user.getUsername()+"publishPic"+user.getPublishPicNum()+".png";
-            file = AVFile.withAbsoluteLocalPath(fileName, path);
-            file.saveInBackground(new SaveCallback() {
+            avfile = AVFile.withAbsoluteLocalPath(fileName, path);
+//            avfile.save();
+            avfile.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(AVException e) {
                     if (null == e) {        //上传成功
                         Log.e("savePic", "Yes");
+//                        if (avfile.getUrl() != null) {
+//                            Log.e("url=", avfile.getUrl());
+//                            list.add(avfile.getUrl());
+////                            file = avfile.getUrl();
+//                        }
                     } else {
                         Log.e("savePic", "No");
                     }
                 }
             });
-        } catch (IOException e) {
+//            return avfile.getUrl();
+//            Log.e("fileUrl=", avfile.getUrl());
+//            file = avfile.getUrl();
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return file;
+        return avfile;
+//        return file;
     }
 
     /**
