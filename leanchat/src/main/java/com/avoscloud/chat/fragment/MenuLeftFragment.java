@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,6 +126,7 @@ public class MenuLeftFragment extends Fragment {
         LeanchatUser curUser = (LeanchatUser)AVUser.getCurrentUser();
         userNameView.setText(curUser.getUsername());
         ImageLoader.getInstance().displayImage(curUser.getAvatarUrl(), personAvatarView, com.avoscloud.leanchatlib.utils.PhotoUtils.avatarImageOptions);
+        Log.d("pyt", "头像url: " + curUser.getAvatarUrl());
     }
 
     @Override
