@@ -1,14 +1,21 @@
 package com.avoscloud.chat.activity;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.FindCallback;
 import com.avoscloud.chat.R;
 import com.avoscloud.chat.adapter.ListItemAdapter;
 import com.avoscloud.chat.fragment.ChatMainTabFragment;
@@ -18,6 +25,7 @@ import com.avoscloud.chat.model.Moment;
 import com.avoscloud.chat.util.ItemEntity;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,45 +57,60 @@ public class PersonViewActivity extends BaseActivity {
 
         initView();
         initActionBar(R.string.profile_person);
-
-
     }
 
-    private void initData() {
-        itemEntities = new ArrayList<ItemEntity>();
+    public void initData() {
+        itemEntities = new ArrayList<>();
+        try {
+            final LeanchatUser currentUser = (LeanchatUser) AVUser.getCurrentUser();
+            AVQuery<Moment> query = new AVQuery<>("Moment");
+            query.whereEqualTo("user", currentUser);
+            query.findInBackground(new FindCallback<Moment>() {
+                @Override
+                public void done(List<Moment> list, AVException e) {
+                    if(e == null) {
+                        Log.d("pyt", "找到" + list.size() + "条记录");
+                        for(Moment moment : list) {
+                            ArrayList<String> imageUrls = new ArrayList<>();
+                            try {
+                                for (AVFile image : moment.getFileList()) {
+                                    imageUrls.add(image.getUrl());
+                                }
+                            } catch (Exception ex) {
+                                Log.d("pyt", "失败:" + ex.getMessage());
+                            }
+                            Log.d("pyt", "\n头像url : " + currentUser.getAvatarUrl() +
+                                            "\n用户名:" + currentUser.getUsername() +
+                                            "\n内容:" + moment.getContent() +
+                                            "\n时间:" + new SimpleDateFormat("MM-dd HH:mm").format(moment.getCreatedAt()) +
+                                            "\n地点:" + moment.getPosition().getLatitude() + " : " +
+                                            moment.getPosition().getLongitude() +
+                                            "\n图片url:" + moment.getFileList()
+                            );
+                            try {
+                                ItemEntity entity = new ItemEntity(
+                                        currentUser.getAvatarUrl(),
+                                        currentUser.getUsername(),
+                                        moment.getContent(),
+                                        imageUrls,
+                                        "北京",
+                                        new SimpleDateFormat("MM-dd HH:mm").format(moment.getCreatedAt()),
+                                        -1
+                                );
+                                itemEntities.add(entity);
+                            }catch (Exception e2) {
+                                Log.d("pyt", "失败:" + e2.getMessage());
+                            }
 
-        ItemEntity entity1 = new ItemEntity(
-                "http://pic14.nipic.com/20110522/7411759_164157418126_2.jpg", "王尼玛", "今天暴走大事件开播啦，大家快来上优酷观看最新一期视频吧~~", null,
-                "广州", "18:10", -1);
-        itemEntities.add(entity1);
-
-        ArrayList<String> urls_1 = new ArrayList<String>();
-        urls_1.add("http://pic.nipic.com/2007-11-09/2007119122519868_2.jpg");
-        ItemEntity entity2 = new ItemEntity(
-                "http://pic2.ooopic.com/01/03/51/25b1OOOPIC19.jpg", "哈士奇", "今天的狗粮真难吃！！！", urls_1,
-                "上海", "17:10", -1);
-        itemEntities.add(entity2);
-
-        ArrayList<String> urls_2 = new ArrayList<String>();
-        urls_2.add("http://pic.nipic.com/2007-11-09/200711912453162_2.jpg");
-        urls_2.add("http://down.tutu001.com/d/file/20101129/2f5ca0f1c9b6d02ea87df74fcc_560.jpg");
-        urls_2.add("http://pica.nipic.com/2008-03-19/2008319183523380_2.jpg");
-        ItemEntity entity3 = new ItemEntity(
-                "http://pic.nipic.com/2007-11-09/200711912230489_2.jpg", "萨摩耶", "伦家是萌萌的小公举~", urls_2,
-                "北京", "13:10", -1);
-        itemEntities.add(entity3);
-
-        ArrayList<String> urls_3 = new ArrayList<String>();
-        urls_3.add("http://www.photophoto.cn/m6/018/030/0180300271.jpg");
-        urls_3.add("http://pic24.nipic.com/20121022/9252150_193011306000_2.jpg");
-        urls_3.add("http://anquanweb.com/uploads/userup/913/1322O9102-2596.jpg");
-        urls_3.add("http://pic1.nipic.com/2008-08-12/200881211331729_2.jpg");
-        urls_3.add("http://imgsrc.baidu.com/forum/pic/item/3ac79f3df8dcd1004e9102b8728b4710b9122f1e.jpg");
-        urls_3.add("http://pica.nipic.com/2008-01-09/200819134250665_2.jpg");
-        ItemEntity entity4 = new ItemEntity(
-                "http://ppt360.com/background/UploadFiles_6733/201012/2010122016291897.jpg", "拉布拉多", "又带铲屎的出来浪，看我拍的美照！", urls_3,
-                "长沙", "10:30", -1);
-        itemEntities.add(entity4);
+                        }
+                    }else {
+                        Log.d("pyt", "失败:" + e.getMessage());
+                    }
+                }
+            });
+        }catch (Exception e1) {
+            Log.d("pyt", "失败:" + e1.getMessage());
+        }
     }
 
     private void initView() {
