@@ -109,9 +109,11 @@ public class App extends Application {
     ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
         context)
         .threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 2)
-            //.memoryCache(new WeakMemoryCache())
         .denyCacheImageMultipleSizesInMemory()
         .tasksProcessingOrder(QueueProcessingType.LIFO)
+        .diskCacheSize(50*1024*1024)
+        .diskCacheFileCount(100)
+        .writeDebugLogs()
         .build();
     ImageLoader.getInstance().init(config);
   }
