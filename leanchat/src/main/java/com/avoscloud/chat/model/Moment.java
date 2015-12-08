@@ -50,7 +50,8 @@ public class Moment extends AVObject{
     public static List<Moment> getMomentByUser(LeanchatUser findUser){
         final List<Moment> list = new LinkedList<Moment>();
         AVQuery<Moment> query = AVObject.getQuery(Moment.class);
-        query.orderByDescending("createAt");
+        query.orderByDescending("createdAt");
+        query.include("createdAt");
         query.include(user);
         query.include(content);
         query.include(position);

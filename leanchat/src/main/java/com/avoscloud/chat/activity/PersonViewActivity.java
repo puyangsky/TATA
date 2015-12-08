@@ -159,9 +159,10 @@ public class PersonViewActivity extends BaseActivity {
         itemEntities = new ArrayList<>();
         final LeanchatUser currentUser = (LeanchatUser) AVUser.getCurrentUser();
         AVQuery<Moment> query = AVObject.getQuery(Moment.class);
-        query.orderByDescending("createAt");
+        query.orderByDescending("createdAt");
         query.include("user");
         query.include("content");
+        query.include("createdAt");
         query.include("position");
         query.include("fileList");          //这里include一个类的数据，会自动填充
         query.include("zan");

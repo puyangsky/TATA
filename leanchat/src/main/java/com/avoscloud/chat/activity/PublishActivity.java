@@ -203,14 +203,14 @@ public class PublishActivity extends Activity {
         moment.setPosition(LeanchatUser.getCurrentUser().getGeoPoint());//坐标
 
         //本地存储照片，并释放bitmap内存
-        String path = "";
-        if (bitmap != null) {
-            path = PathUtils.getAvatarCropPath();
-            PhotoUtils.saveBitmap(path, bitmap);                //这里是压缩之后的bitmap
-            if (bitmap != null && bitmap.isRecycled() == false) {
-                bitmap.recycle();
-            }
-        }
+//        String path = "";
+//        if (bitmap != null) {
+//            path = PathUtils.getAvatarCropPath();
+//            PhotoUtils.saveBitmap(path, bitmap);                //这里是压缩之后的bitmap
+//            if (bitmap != null && bitmap.isRecycled() == false) {
+//                bitmap.recycle();
+//            }
+//        }
 
         try {
             moment.save();
@@ -222,6 +222,12 @@ public class PublishActivity extends Activity {
 //        List<Image> list = new LinkedList<Image>();
         for(final ImageItem item : Bimp.tempSelectBitmap){
             if(item.getImagePath() != null){
+//                Log.e("ImageItem path", item.getImagePath());
+//                if(item.getThumbnailPath() != null){
+//                    Log.e("ImageItem yasuo path", item.getThumbnailPath());
+//                }else{
+//                    Log.e("ImageItem yasuo path", " = null");
+//                }
 //                AVFile file = saveAVFile(item.getImagePath(), null);
                 final LeanchatUser user = (LeanchatUser)AVUser.getCurrentUser();
 //                user.setFetchWhenSave(true);
@@ -238,7 +244,13 @@ public class PublishActivity extends Activity {
                         try {
 //                            String fileName = user.getUsername()+"publishPic"+user.getPublishPicNum()+".png";
                             String fileName = user.getUsername()+"publishPic"+".png";
-                            final AVFile avfile = AVFile.withAbsoluteLocalPath(fileName, item.getImagePath());
+                            String path = "";
+                            if(item.getThumbnailPath() != null){
+                                path = item.getThumbnailPath();
+                            }else{
+                                path = item.getImagePath();
+                            }
+                            final AVFile avfile = AVFile.withAbsoluteLocalPath(fileName, path);
                             avfile.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(AVException e1) {
@@ -434,7 +446,7 @@ public class PublishActivity extends Activity {
                 Intent intent = new Intent(PublishActivity.this,
                         AlbumActivity.class);
                 Log.e("bt2 intent", "start");
-                saveOldConfigument();
+                saveOldConfigument();           //保存进入Album之前的状态
                 startActivity(intent);
                 Log.e("bt2 intent", "end");
                 overridePendingTransition(R.anim.activity_translate_in, R.anim.activity_translate_out);
