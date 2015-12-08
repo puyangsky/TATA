@@ -305,9 +305,27 @@ public class PublishActivity extends Activity {
                             e5.printStackTrace();
                         }
                     }
+
 //                });
 //            }
         }
+        //保存Moment
+//        try {
+//            moment.saveInBackground(new SaveCallback() {
+//                @Override
+//                public void done(AVException e3) {
+//                    if (null == e3) {
+//                        //保存成功
+//                        Log.e("Moment", "OK");
+//                    } else {
+//                        //保存失败
+//                        Log.e("Moment", "No");
+//                    }
+//                }
+//            });
+//        } catch (Exception e4) {
+//            e4.printStackTrace();
+//        }
 //        moment.setFileList(list);
 
 //        //保存AVFile

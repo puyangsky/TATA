@@ -51,8 +51,14 @@ public class Moment extends AVObject{
      * @return
      */
     public static List<Moment> getMomentByUser(LeanchatUser findUser){
-        final List<Moment> list = new LinkedList<>();
+        final List<Moment> list = new LinkedList<Moment>();
         AVQuery<Moment> query = AVObject.getQuery(Moment.class);
+        query.orderByDescending("createAt");
+        query.include(user);
+        query.include(content);
+        query.include(position);
+        query.include(fileList);
+        query.include(zan);
         query.whereEqualTo(user, findUser);
         query.findInBackground(new FindCallback<Moment>() {
             @Override
@@ -63,12 +69,18 @@ public class Moment extends AVObject{
                 for (Moment moment : results) {
                     list.add(moment);
                     List<Image> fileList = moment.getFileList();
-                    Log.e("fileUrl = ", fileList.get(0).getFile().getUrl());
-//                    LogUtil.log.d("content = " + moment.getContent());
-//                    List<AVFile> list = moment.getFileList();
-//                    for (AVFile file : list) {
-//                        LogUtil.log.d("url = " + file.getUrl());
-//                    }
+                    if(fileList == null){
+                        Log.e("fileList = ", "null");
+                        continue;
+                    }
+                    for(Image file : fileList){
+                        Log.e("Image", "search start");
+                        if(file.getFile()!= null){
+                            Log.e("fileUrl = ", file.getFile().getUrl());
+                        }else{
+                            Log.e("fileUrl = ", "null");
+                        }
+                    }
                 }
             }
         });
@@ -108,8 +120,9 @@ public class Moment extends AVObject{
 //        addAll(fileList, list);
 //    }
 
+    @SuppressWarnings("unchecked")
     public List<Image> getFileList(){
-        return (List<Image>)getList(fileList, Image.class);
+        return (List<Image>)getList(fileList);
     }
 
     public void setFileList(List<Image> list){
