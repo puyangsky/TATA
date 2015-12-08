@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
@@ -21,12 +22,14 @@ import com.avoscloud.chat.adapter.ListItemAdapter;
 import com.avoscloud.chat.fragment.ChatMainTabFragment;
 import com.avoscloud.chat.fragment.ContactMainTabFragment;
 import com.avoscloud.chat.fragment.FriendMainTabFragment;
+import com.avoscloud.chat.model.Image;
 import com.avoscloud.chat.model.Moment;
 import com.avoscloud.chat.util.ItemEntity;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -52,7 +55,7 @@ public class PersonViewActivity extends BaseActivity {
         ctx = PersonViewActivity.this;
 
         listView = (ListView) findViewById(R.id.list_item);
-        initData();
+        initData1();
         listView.setAdapter(new ListItemAdapter(ctx, itemEntities));
 
         initView();
@@ -60,7 +63,6 @@ public class PersonViewActivity extends BaseActivity {
     }
 
     public void initData() {
-        itemEntities = new ArrayList<>();
         try {
             final LeanchatUser currentUser = (LeanchatUser) AVUser.getCurrentUser();
             AVQuery<Moment> query = new AVQuery<>("Moment");
@@ -73,8 +75,8 @@ public class PersonViewActivity extends BaseActivity {
                         for(Moment moment : list) {
                             ArrayList<String> imageUrls = new ArrayList<>();
                             try {
-                                for (AVFile image : moment.getFileList()) {
-                                    imageUrls.add(image.getUrl());
+                                for (Image image : moment.getFileList()) {
+                                    imageUrls.add(image.getFile().getUrl());
                                 }
                             } catch (Exception ex) {
                                 Log.d("pyt", "失败:" + ex.getMessage());
@@ -151,5 +153,55 @@ public class PersonViewActivity extends BaseActivity {
             public void onPageScrollStateChanged(int i) {
             }
         });
+    }
+
+    public void initData1(){
+        itemEntities = new ArrayList<>();
+        final LeanchatUser currentUser = (LeanchatUser) AVUser.getCurrentUser();
+        AVQuery<Moment> query = AVObject.getQuery(Moment.class);
+        query.orderByDescending("createAt");
+        query.include("user");
+        query.include("content");
+        query.include("position");
+        query.include("fileList");          //这里include一个类的数据，会自动填充
+        query.include("zan");
+        query.whereEqualTo("user", currentUser);
+        query.findInBackground(new FindCallback<Moment>() {
+            @Override
+            public void done(List<Moment> results, AVException e) {
+                if (e != null || results == null) {
+                    return;
+                }
+                for (Moment moment : results) {
+                    List<Image> imageList = moment.getFileList();
+                    //图片为空，略过
+                    if (imageList == null) {
+                        Log.e("fileList = ", "null");
+                        continue;
+                    }
+                    //获取图片urls
+                    ArrayList<String> imageUrls = new ArrayList<String>();
+                    for(Image image : imageList){
+                        imageUrls.add(image.getFile().getUrl());
+                        Log.e("itemEntitiesUrl", image.getFile().getUrl());
+                    }
+                    try {
+                        ItemEntity entity = new ItemEntity(
+                                currentUser.getAvatarUrl(),
+                                currentUser.getUsername(),
+                                moment.getContent(),
+                                imageUrls,
+                                "北京",
+                                new SimpleDateFormat("MM-dd HH:mm").format(moment.getCreatedAt()),
+                                -1
+                        );
+                        itemEntities.add(entity);
+                    }catch (Exception e2) {
+                        Log.d("pyt", "失败:" + e2.getMessage());
+                    }
+                }
+            }
+        });
+
     }
 }

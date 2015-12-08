@@ -18,6 +18,7 @@ import com.avoscloud.leanchatlib.model.LeanchatUser;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by lhq on 15/11/23.
@@ -38,10 +39,6 @@ public class Moment extends AVObject{
     public static final String comment = "comment"; //对应的评论关系
 
     public static final String images = "images";
-
-
-//    private String momentFileArray = "momentFileArray";         //对应图片的url
-    //    private String createdAt; 在AVObject已经存在
 
     public Moment(){}
 
@@ -69,21 +66,22 @@ public class Moment extends AVObject{
                 for (Moment moment : results) {
                     list.add(moment);
                     List<Image> fileList = moment.getFileList();
-                    if(fileList == null){
+                    if (fileList == null) {
                         Log.e("fileList = ", "null");
                         continue;
                     }
-                    for(Image file : fileList){
+                    for (Image file : fileList) {
                         Log.e("Image", "search start");
-                        if(file.getFile()!= null){
+                        if (file.getFile() != null) {
                             Log.e("fileUrl = ", file.getFile().getUrl());
-                        }else{
+                        } else {
                             Log.e("fileUrl = ", "null");
                         }
                     }
                 }
             }
         });
+        Log.e("Moment find", "list size = " + list.size());
         return list;
     }
 

@@ -134,25 +134,12 @@ public class PublishActivity extends Activity {
         setContentView(parentView);
         ButterKnife.inject(this);
         InitPopWindow();
-
-//        Moment moment = new Moment();
-//        moment.getFileList();
-        Moment.getMomentByUser(LeanchatUser.getCurrentUser());
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-//            case RESULT_OK:
-//                if (requestCode == IMAGE_PICK_REQUEST) {
-//                    Uri uri = data.getData();
-//                    picPath = PhotoUtils.getImageAbsolutePath(this, uri);
-//                    Log.e("picPath", picPath);
-//                    bitmap = PhotoUtils.getImageThumbnail(picPath, 300, 300);  //压缩图片,压缩比需要调整
-//                    Log.e("compress bitmap", "done");
-//                    imageView.setImageBitmap(bitmap);       //更新本地图片，这里没有更改压缩图片，下一步更新
-//                }
             case TAKE_PICTURE:
                 if (Bimp.tempSelectBitmap.size() < 9 && resultCode == RESULT_OK) {
 
@@ -275,23 +262,25 @@ public class PublishActivity extends Activity {
                                                         Log.e("image", "null");
                                                         return;
                                                     }
-                                                    moment.addFile(image);
-                                                    //保存Moment
-                                                    try {
-                                                        moment.saveInBackground(new SaveCallback() {
-                                                            @Override
-                                                            public void done(AVException e3) {
-                                                                if (null == e3) {
-                                                                    //保存成功
-                                                                    Log.e("Moment", "OK");
-                                                                } else {
-                                                                    //保存失败
-                                                                    Log.e("Moment", "No");
+                                                    synchronized (this) {
+                                                        moment.addFile(image);
+                                                        //保存Moment
+                                                        try {
+                                                            moment.saveInBackground(new SaveCallback() {
+                                                                @Override
+                                                                public void done(AVException e3) {
+                                                                    if (null == e3) {
+                                                                        //保存成功
+                                                                        Log.e("Moment", "OK");
+                                                                    } else {
+                                                                        //保存失败
+                                                                        Log.e("Moment", "No");
+                                                                    }
                                                                 }
-                                                            }
-                                                        });
-                                                    } catch (Exception e4) {
-                                                        e4.printStackTrace();
+                                                            });
+                                                        } catch (Exception e4) {
+                                                            e4.printStackTrace();
+                                                        }
                                                     }
                                                 }
                                             }
