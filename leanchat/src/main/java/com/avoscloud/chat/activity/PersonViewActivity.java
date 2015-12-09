@@ -25,12 +25,15 @@ import com.avoscloud.chat.fragment.ContactMainTabFragment;
 import com.avoscloud.chat.fragment.FriendMainTabFragment;
 import com.avoscloud.chat.model.Image;
 import com.avoscloud.chat.model.Moment;
+import com.avoscloud.chat.util.GetCity;
 import com.avoscloud.chat.util.ItemEntity;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
 
 /*
 *  Created by puyangsky 2015/11/18.
@@ -142,12 +145,29 @@ public class PersonViewActivity extends BaseActivity {
                         Log.e("itemEntitiesUrl", image.getFile().getUrl());
                     }
                     try {
+                        String city = "";
+                        final double lat = moment.getPosition().getLatitude();
+                        final double log = moment.getPosition().getLongitude();
+                        try {
+                            FutureTask<String> task = new FutureTask<String>(
+                                    new Callable<String>() {
+                                        @Override
+                                        public String call() throws Exception {
+                                            return GetCity.getCity(lat, log);
+                                        }
+                                    }
+                            );
+                            new Thread(task).start();
+                            city =  task.get();
+                        }catch (Exception e1) {
+                            Log.d("pyt", "ERROR城市：" + e1.getMessage());
+                        }
                         ItemEntity entity = new ItemEntity(
                                 currentUser.getAvatarUrl(),
                                 currentUser.getUsername(),
                                 moment.getContent(),
                                 imageUrls,
-                                "北京",
+                                city,
                                 new SimpleDateFormat("MM-dd HH:mm").format(moment.getCreatedAt()),
                                 -1
                         );

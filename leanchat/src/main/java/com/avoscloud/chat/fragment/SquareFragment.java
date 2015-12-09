@@ -20,6 +20,7 @@ import com.avoscloud.chat.adapter.ListItemAdapter;
 import com.avoscloud.chat.model.Image;
 import com.avoscloud.chat.model.Moment;
 import com.avoscloud.chat.service.CacheService;
+import com.avoscloud.chat.util.GetCity;
 import com.avoscloud.chat.util.ItemEntity;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 import com.avoscloud.leanchatlib.utils.AVUserCacheUtils;
@@ -27,7 +28,9 @@ import com.avoscloud.leanchatlib.utils.AVUserCacheUtils;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.FutureTask;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -47,49 +50,13 @@ public class SquareFragment extends BaseFragment{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mListView = (ListView) getView().findViewById(R.id.square_list_item);
-        initData1();
+        initData();
         mListView.setAdapter(new ListItemAdapter(getActivity(), itemEntities));
         headerLayout.showTitle(R.string.square_title);
     }
 
-    private void initData() {
-        itemEntities = new ArrayList<ItemEntity>();
 
-        ItemEntity entity1 = new ItemEntity(
-                "http://pic14.nipic.com/20110522/7411759_164157418126_2.jpg", "王尼玛", "我真的是无语了fuck uuuuuuuuuuuuuuuuuuuuuuuu", null,
-                "广州", "18:10", -1);
-        itemEntities.add(entity1);
-
-        ArrayList<String> urls_1 = new ArrayList<String>();
-        urls_1.add("http://pic.nipic.com/2007-11-09/2007119122519868_2.jpg");
-        ItemEntity entity2 = new ItemEntity(
-                "http://pic2.ooopic.com/01/03/51/25b1OOOPIC19.jpg", "王尼玛", "我真的是无语了fuck uuuuuuuuuuuuuuuuuuuuuuuu！！！", urls_1,
-                "上海", "17:10", -1);
-        itemEntities.add(entity2);
-
-        ArrayList<String> urls_2 = new ArrayList<String>();
-        urls_2.add("http://pic.nipic.com/2007-11-09/200711912453162_2.jpg");
-        urls_2.add("http://down.tutu001.com/d/file/20101129/2f5ca0f1c9b6d02ea87df74fcc_560.jpg");
-        urls_2.add("http://pica.nipic.com/2008-03-19/2008319183523380_2.jpg");
-        ItemEntity entity3 = new ItemEntity(
-                "http://pic.nipic.com/2007-11-09/200711912230489_2.jpg", "王尼玛", "我真的是无语了fuck uuuuuuuuuuuuuuuuuuuuuuuu~", urls_2,
-                "北京", "13:10", -1);
-        itemEntities.add(entity3);
-
-        ArrayList<String> urls_3 = new ArrayList<String>();
-        urls_3.add("http://www.photophoto.cn/m6/018/030/0180300271.jpg");
-        urls_3.add("http://pic24.nipic.com/20121022/9252150_193011306000_2.jpg");
-        urls_3.add("http://anquanweb.com/uploads/userup/913/1322O9102-2596.jpg");
-        urls_3.add("http://pic1.nipic.com/2008-08-12/200881211331729_2.jpg");
-        urls_3.add("http://imgsrc.baidu.com/forum/pic/item/3ac79f3df8dcd1004e9102b8728b4710b9122f1e.jpg");
-        urls_3.add("http://pica.nipic.com/2008-01-09/200819134250665_2.jpg");
-        ItemEntity entity4 = new ItemEntity(
-                "http://ppt360.com/background/UploadFiles_6733/201012/2010122016291897.jpg", "王尼玛", "我真的是无语了fuck uuuuuuuuuuuuuuuuuuuuuuuu", urls_3,
-                "长沙", "10:30", -1);
-        itemEntities.add(entity4);
-    }
-
-    public void initData1(){
+    public void initData(){
         itemEntities = new ArrayList<ItemEntity>();
         final LeanchatUser currentUser = (LeanchatUser) AVUser.getCurrentUser();
         AVQuery<Moment> query = AVObject.getQuery(Moment.class);
@@ -127,14 +94,29 @@ public class SquareFragment extends BaseFragment{
                         Log.e("itemEntitiesUrl", image.getFile().getUrl());
                     }
                     try {
+                        String city = "";
+                        final double lat = moment.getPosition().getLatitude();
+                        final double log = moment.getPosition().getLongitude();
+                        try {
+                            FutureTask<String> task = new FutureTask<String>(
+                                    new Callable<String>() {
+                                        @Override
+                                        public String call() throws Exception {
+                                            return GetCity.getCity(lat, log);
+                                        }
+                                    }
+                            );
+                            new Thread(task).start();
+                            city =  task.get();
+                        }catch (Exception e1) {
+                            Log.d("pyt", "ERROR城市：" + e1.getMessage());
+                        }
                         ItemEntity entity = new ItemEntity(
                                 moment.getUser().getAvatarUrl(),
-//                                currentUser.getAvatarUrl(),
-//                                currentUser.getUsername(),
                                 moment.getUser().getUsername(),
                                 moment.getContent(),
                                 imageUrls,
-                                "北京",
+                                city,
                                 new SimpleDateFormat("MM-dd HH:mm").format(moment.getCreatedAt()),
                                 -1
                         );
