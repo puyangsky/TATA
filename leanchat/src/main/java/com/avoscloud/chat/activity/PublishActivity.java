@@ -99,6 +99,13 @@ public class PublishActivity extends Activity {
     public void onPublish_Btn_Click() {
         //上传发布的信息
         uploade_publish_content();
+
+        //清空图片
+        Bimp.clearImage();
+
+        //清空文字
+        text = "";
+
         //结束发布activity，回到主界面
         for(Activity act : PublicWay.activityList){
             act.finish();
