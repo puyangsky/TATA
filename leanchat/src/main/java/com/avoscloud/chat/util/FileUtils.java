@@ -90,12 +90,12 @@ public class FileUtils {
 
 			//压缩到500k
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			int options = 100;
+			int options = 92;
 			bm.compress(Bitmap.CompressFormat.JPEG, options, baos);
 			Log.e("JPEG Options ", "" + baos.toByteArray().length / 1024);
-			while(baos.toByteArray().length / 1024 > 500){
+			while(baos.toByteArray().length / 1024 > 300){
 				baos.reset();
-				options -= 5;
+				options -= 2;
 				bm.compress(Bitmap.CompressFormat.JPEG, options, baos);
 				Log.e("JPEG Options ", "" + baos.toByteArray().length / 1024);
 			}
