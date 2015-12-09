@@ -1,8 +1,12 @@
 package com.avoscloud.chat.util;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Environment;
+import android.util.Log;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,6 +16,65 @@ public class FileUtils {
 	
 	public static String SDPATH = Environment.getExternalStorageDirectory()
 			+ "/Photo_LJ/";
+
+	public static String ORIGINPATH = Environment.getExternalStorageDirectory()
+			+ "/PHoto_ORI";
+
+	public static String originPicName = "originPicture";
+
+	public static String originPath = SDPATH + originPicName + ".JPEG";
+
+	public static String getOriginPath(){
+		String path = "";
+		try {
+			if (!isFileExist("")) {
+				File tempf = createSDDir("");
+			}
+			path = SDPATH + originPicName + ".JPEG";
+			File f = new File(SDPATH, originPicName + ".JPEG");
+			if (f.exists()) {
+				f.delete();
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return path;
+	}
+
+	public static Bitmap getBitmapFromUrl(String url, double width, double height){
+		Matrix matrix = new Matrix();
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		Bitmap bitmap = BitmapFactory.decodeFile(url);
+		options.inJustDecodeBounds = false;
+		int oldWidth = bitmap.getWidth();
+		int oldHeight = bitmap.getHeight();
+
+		if (width < 0 || height < 0){
+			return bitmap;
+		}else{
+//			float scaleWidth = 1;
+//			float scaleHeight = 1;
+//			if(oldWidth <= oldHeight){
+//				scaleWidth = (float)(width/oldWidth);
+//				scaleHeight = (float)(height/oldHeight);
+//			}else{
+//				scaleWidth = (float)(height/oldHeight);
+//				scaleHeight = (float)(width/oldWidth);
+//			}
+			//等比例压缩
+			float scale = 1;
+			if(oldWidth <= oldHeight){
+				scale = (float)(height / oldHeight);
+			}else{
+				scale = (float)(height / oldWidth);
+			}
+			matrix.postScale(scale, scale);
+		}
+		Bitmap nbitmap = Bitmap.createBitmap(bitmap, 0, 0, oldWidth, oldHeight, matrix, true);
+		bitmap.recycle();
+		return nbitmap;
+	}
 
 	public static String saveBitmap(Bitmap bm, String picName) {
 		String path = null;
@@ -24,8 +87,21 @@ public class FileUtils {
 			if (f.exists()) {
 				f.delete();
 			}
+
+			//压缩到500k
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			int options = 100;
+			bm.compress(Bitmap.CompressFormat.JPEG, options, baos);
+			Log.e("JPEG Options ", "" + baos.toByteArray().length / 1024);
+			while(baos.toByteArray().length / 1024 > 500){
+				baos.reset();
+				options -= 5;
+				bm.compress(Bitmap.CompressFormat.JPEG, options, baos);
+				Log.e("JPEG Options ", "" + baos.toByteArray().length / 1024);
+			}
+
 			FileOutputStream out = new FileOutputStream(f);
-			bm.compress(Bitmap.CompressFormat.JPEG, 90, out);
+			bm.compress(Bitmap.CompressFormat.JPEG, options, out);
 			out.flush();
 			out.close();
 		} catch (FileNotFoundException e) {
