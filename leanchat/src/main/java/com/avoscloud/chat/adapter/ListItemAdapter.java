@@ -8,9 +8,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.avoscloud.chat.activity.ImagePagerActivity;
+import com.avoscloud.chat.activity.PersonViewActivity;
+import com.avoscloud.chat.model.Image;
 import com.avoscloud.chat.util.ItemEntity;
 import com.avoscloud.chat.view.NoScrollGridView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -69,6 +73,10 @@ public class ListItemAdapter extends BaseAdapter {
                     .findViewById(R.id.tv_time);
             holder.iv_zan = (ImageView) convertView
                     .findViewById(R.id.iv_zan);
+            holder.iv_comment = (ImageView) convertView
+                    .findViewById(R.id.iv_comment);
+            holder.lv_commentList = (ListView) convertView
+                    .findViewById(R.id.commentList);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -97,7 +105,13 @@ public class ListItemAdapter extends BaseAdapter {
                 }
             }
         });
-
+        //点击评论按钮事件
+        holder.iv_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PersonViewActivity.showEditText(mContext);
+            }
+        });
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.ic)
                 .showImageOnFail(R.drawable.ic)
@@ -145,6 +159,8 @@ public class ListItemAdapter extends BaseAdapter {
         private TextView tv_time;
         private TextView tv_position;
         private ImageView iv_zan;
+        private ImageView iv_comment;
+        public ListView lv_commentList;
         private NoScrollGridView gridview;
     }
 }
