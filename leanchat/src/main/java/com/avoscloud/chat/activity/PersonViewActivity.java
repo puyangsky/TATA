@@ -156,7 +156,7 @@ public class PersonViewActivity extends BaseActivity {
     }
 
     public void initData1(){
-        itemEntities = new ArrayList<>();
+        itemEntities = new ArrayList<ItemEntity>();
         final LeanchatUser currentUser = (LeanchatUser) AVUser.getCurrentUser();
         AVQuery<Moment> query = AVObject.getQuery(Moment.class);
         query.orderByDescending("createdAt");
@@ -166,7 +166,10 @@ public class PersonViewActivity extends BaseActivity {
         query.include("position");
         query.include("fileList");          //这里include一个类的数据，会自动填充
         query.include("zan");
-        query.whereEqualTo("user", currentUser);
+        List<AVUser> friends = new ArrayList<AVUser>();
+        friends.add(currentUser);
+        query.whereContainedIn("user", friends);
+//        query.whereEqualTo("user", currentUser);
         query.findInBackground(new FindCallback<Moment>() {
             @Override
             public void done(List<Moment> results, AVException e) {

@@ -1,5 +1,7 @@
 package com.avoscloud.chat.service;
 
+import android.util.Log;
+
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
@@ -17,6 +19,8 @@ import java.util.Set;
  * Created by lzw on 14/12/19.
  * TODO 此类需要与 AVUserCacheUtils 合并
  */
+
+
 public class CacheService {
   private static volatile List<String> friendIds = new ArrayList<String>();
 
@@ -30,6 +34,7 @@ public class CacheService {
 
   public static void registerUsers(List<LeanchatUser> users) {
     for (LeanchatUser user : users) {
+      Log.e("registerUsers", user.getObjectId());
       registerUser(user);
     }
   }
@@ -53,7 +58,8 @@ public class CacheService {
       }
     }
     List<LeanchatUser> foundUsers = findUsers(new ArrayList<String>(uncachedIds));
-    registerUsers(foundUsers);
+    Log.e("foundUser", ""+foundUsers.size());
+    registerUsers(foundUsers);    //这里cache好友
   }
 
   public static List<LeanchatUser> findUsers(List<String> userIds) throws AVException {
@@ -62,8 +68,11 @@ public class CacheService {
     }
     AVQuery<LeanchatUser> q = AVUser.getQuery(LeanchatUser.class);
     q.whereContainedIn(Constants.OBJECT_ID, userIds);
-    q.setLimit(1000);
+    q.setLimit(10);
+//    q.setCachePolicy(AVQuery.CachePolicy.CACHE_ONLY);
     q.setCachePolicy(AVQuery.CachePolicy.NETWORK_ELSE_CACHE);
     return q.find();
   }
+
+
 }

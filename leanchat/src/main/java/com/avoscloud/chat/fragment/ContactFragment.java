@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -318,10 +319,12 @@ public class ContactFragment extends BaseFragment {
         userIds.add(user.getObjectId());
       }
       CacheService.setFriendIds(userIds);
-      CacheService.cacheUsers(userIds);
+      Log.e("setFriendIds", userIds.toString());
+      CacheService.cacheUsers(userIds);     //cache之后才能找得到
       List<AVUser> newFriends = new ArrayList<>();
       for (AVUser user : friends) {
-        newFriends.add(CacheService.lookupUser(user.getObjectId()));
+        Log.e("setFriends", user.getObjectId());
+        newFriends.add(CacheService.lookupUser(user.getObjectId()));  //之前先cache了
       }
       return newFriends;
     }

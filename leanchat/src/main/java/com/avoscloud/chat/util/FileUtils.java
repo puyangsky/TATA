@@ -82,7 +82,7 @@ public class FileUtils {
 				f.delete();
 			}
 
-			//压缩到500k
+			//压缩到300k
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			int options = 92;
 			bm.compress(Bitmap.CompressFormat.JPEG, options, baos);
