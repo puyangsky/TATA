@@ -100,7 +100,7 @@ public class PublishActivity extends Activity {
         //上传发布的信息
         uploade_publish_content();
 
-        //清空图片
+        //清空bitmap图片和JPEG图片
         Bimp.clearImage();
 
         //清空文字
@@ -139,13 +139,16 @@ public class PublishActivity extends Activity {
             case TAKE_PICTURE:
                 if (Bimp.tempSelectBitmap.size() < 9 && resultCode == RESULT_OK) {
                     String fileName = String.valueOf(System.currentTimeMillis());
+                    Log.e("originPath", FileUtils.originPath);
                     Bitmap bm = FileUtils.getBitmapFromUrl(FileUtils.originPath, 1280, 1280);
 //                    Bitmap bm = (Bitmap) data.getExtras().get("data");
                     Log.e("saveCamera", "start");
                     String filePath = FileUtils.saveBitmap(bm, fileName);
+                    Log.e("filePath", filePath);
                     ImageItem takePhoto = new ImageItem();
                     takePhoto.setBitmap(bm);
-                    takePhoto.setImagePath(filePath);
+                    takePhoto.setThumbnailPath(filePath);
+                    takePhoto.setImagePath(FileUtils.originPath);
                     Bimp.tempSelectBitmap.add(takePhoto);
                 }
                 break;
@@ -539,7 +542,8 @@ public class PublishActivity extends Activity {
     public void photo() {
         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         openCameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-        File out = new File(FileUtils.getOriginPath());
+        String fileName = String.valueOf(System.currentTimeMillis());
+        File out = new File(FileUtils.getOriginPath(fileName));
         Uri uri = Uri.fromFile(out);
         openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         saveOldConfigument();

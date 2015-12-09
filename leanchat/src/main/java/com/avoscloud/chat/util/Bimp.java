@@ -17,7 +17,15 @@ public class Bimp {
 	public static ArrayList<ImageItem> tempSelectBitmap = new ArrayList<ImageItem>();   //选择的图片的临时列表
 
 	public static void clearImage(){
-		tempSelectBitmap.clear();
+		for(ImageItem imageItem : tempSelectBitmap){
+			tempSelectBitmap.remove(imageItem);
+			imageItem.getBitmap().recycle();
+			//删除压缩文件
+			File f = new File(imageItem.getThumbnailPath());
+			if (f.exists()) {
+				f.delete();
+			}
+		}
 		max = 0;
 	}
 

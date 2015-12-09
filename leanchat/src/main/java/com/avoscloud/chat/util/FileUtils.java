@@ -17,28 +17,22 @@ public class FileUtils {
 	public static String SDPATH = Environment.getExternalStorageDirectory()
 			+ "/Photo_LJ/";
 
-	public static String ORIGINPATH = Environment.getExternalStorageDirectory()
-			+ "/PHoto_ORI";
+	public static String originPath = SDPATH + "originPic" + ".JPEG";
 
-	public static String originPicName = "originPicture";
-
-	public static String originPath = SDPATH + originPicName + ".JPEG";
-
-	public static String getOriginPath(){
-		String path = "";
+	public static String getOriginPath(String fileName){
 		try {
 			if (!isFileExist("")) {
 				File tempf = createSDDir("");
 			}
-			path = SDPATH + originPicName + ".JPEG";
-			File f = new File(SDPATH, originPicName + ".JPEG");
+			originPath = SDPATH + fileName + ".JPEG";
+			File f = new File(SDPATH, fileName + ".JPEG");
 			if (f.exists()) {
 				f.delete();
 			}
 		}catch (Exception e){
 			e.printStackTrace();
 		}
-		return path;
+		return originPath;
 	}
 
 	public static Bitmap getBitmapFromUrl(String url, double width, double height){
