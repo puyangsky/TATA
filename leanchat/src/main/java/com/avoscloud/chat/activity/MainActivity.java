@@ -7,6 +7,8 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.text.InputFilter;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +27,7 @@ import com.avoscloud.chat.service.UpdateService;
 import com.avoscloud.chat.event.LoginFinishEvent;
 import com.avoscloud.chat.fragment.ContactFragment;
 import com.avoscloud.chat.fragment.ConversationRecentFragment;
+import com.avoscloud.chat.util.GetCity;
 import com.avoscloud.chat.util.Logger;
 import com.avoscloud.chat.util.Utils;
 import com.avoscloud.leanchatlib.controller.ChatManager;
@@ -38,6 +41,10 @@ import com.baidu.location.LocationClientOption;
 import de.greenrobot.event.EventBus;
 
 import com.nineoldandroids.view.ViewHelper;
+
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
 
 /**
  * Created by lzw on 14-9-17.
@@ -100,7 +107,9 @@ public class MainActivity extends BaseActivity {
     conversationBtn.performClick();
     initBaiduLocClient();
 
-    CacheService.registerUser((LeanchatUser) AVUser.getCurrentUser());
+    CacheService.registerUser((LeanchatUser) AVUser.getCurrentUser());//缓存账号信息
+    cacheFriends(); //缓存好友信息
+
   }
 
   @Override
@@ -109,6 +118,25 @@ public class MainActivity extends BaseActivity {
     UpdateService updateService = UpdateService.getInstance(this);
     updateService.checkUpdate();
     recoverConfig();
+  }
+
+  private void cacheFriends() {
+    try {
+      FutureTask<String> task = new FutureTask<String>(
+              new Callable<String>() {
+                @Override
+                public String call() throws Exception {
+                    CacheService.findFriends();//缓存好友信息;
+                    return "";
+                }
+              }
+      );
+      new Thread(task).start();
+//      task.get();
+    }catch (Exception e1) {
+      Log.d("lhq", "ERROR cache friend：" + e1.getMessage());
+    }
+
   }
 
   private void initBaiduLocClient() {

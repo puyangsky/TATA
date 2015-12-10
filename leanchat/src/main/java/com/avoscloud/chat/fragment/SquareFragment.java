@@ -63,19 +63,15 @@ public class SquareFragment extends BaseFragment{
         final LeanchatUser currentUser = (LeanchatUser) AVUser.getCurrentUser();
         AVQuery<Moment> query = AVObject.getQuery(Moment.class);
         query.orderByDescending("createdAt");
-        query.setLimit(10);
+        query.setLimit(20);
         query.include("user");
         query.include("content");
         query.include("createdAt");
         query.include("position");
         query.include("fileList");          //这里include一个类的数据，会自动填充
         query.include("zan");
-        Log.e("friends", CacheService.getFriendIds().toString());
-        List<LeanchatUser> friends = new ArrayList<LeanchatUser>();
-        friends.add(currentUser);
-        for(String friendId : CacheService.getFriendIds()){
-            friends.add(CacheService.lookupUser(friendId));
-        }
+        List<LeanchatUser> friends = CacheService.getFriends();
+        Log.e("friends", friends.toString());
         query.whereContainedIn("user", friends );
         query.findInBackground(new FindCallback<Moment>() {
             @Override

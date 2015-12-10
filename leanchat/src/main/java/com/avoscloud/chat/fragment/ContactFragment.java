@@ -124,7 +124,7 @@ public class ContactFragment extends BaseFragment {
     });
   }
 
-  private List<SortUser> convertAVUser(List<AVUser> datas) {
+  private List<SortUser> convertAVUser(List<LeanchatUser> datas) {
     List<SortUser> sortUsers = new ArrayList<SortUser>();
     int total = datas.size();
     for (int i = 0; i < total; i++) {
@@ -154,7 +154,7 @@ public class ContactFragment extends BaseFragment {
     friendsList.init(new BaseListView.DataFactory<SortUser>() {
       @Override
       public List<SortUser> getDatasInBackground(int skip, int limit, List<SortUser> currentDatas) throws Exception {
-        return convertAVUser(findFriends());
+        return convertAVUser(CacheService.getFriends());
       }
     }, userAdapter);
 
@@ -295,40 +295,8 @@ public class ContactFragment extends BaseFragment {
     friendsList.onRefresh();
   }
 
-    public static List<AVUser> findFriends() throws Exception {
-    final List<AVUser> friends = new ArrayList<AVUser>();
-    final AVException[] es = new AVException[1];
-    final CountDownLatch latch = new CountDownLatch(1);
-      LeanchatUser.getCurrentUser(LeanchatUser.class).findFriendsWithCachePolicy(AVQuery.CachePolicy.CACHE_ELSE_NETWORK, new FindCallback<LeanchatUser>() {
-        @Override
-        public void done(List<LeanchatUser> avUsers, AVException e) {
-          if (e != null) {
-            es[0] = e;
-          } else {
-            friends.addAll(avUsers);
-          }
-          latch.countDown();
-        }
-      });
-    latch.await();
-    if (es[0] != null) {
-      throw es[0];
-    } else {
-      List<String> userIds = new ArrayList<String>();
-      for (AVUser user : friends) {
-        userIds.add(user.getObjectId());
-      }
-      CacheService.setFriendIds(userIds);
-      Log.e("setFriendIds", userIds.toString());
-      CacheService.cacheUsers(userIds);     //cache之后才能找得到
-      List<AVUser> newFriends = new ArrayList<>();
-      for (AVUser user : friends) {
-        Log.e("setFriends", user.getObjectId());
-        newFriends.add(CacheService.lookupUser(user.getObjectId()));  //之前先cache了
-      }
-      return newFriends;
-    }
-  }
+
+
 
   public void onEvent(ContactRefreshEvent event) {
     forceRefresh();

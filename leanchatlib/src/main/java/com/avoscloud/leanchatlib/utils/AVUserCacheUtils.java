@@ -18,7 +18,7 @@ import java.util.Set;
  */
 public class AVUserCacheUtils {
 
-  private static Map<String, LeanchatUser> userMap;
+  public static volatile Map<String, LeanchatUser> userMap;
 
   static {
     userMap = new HashMap<String, LeanchatUser>();
