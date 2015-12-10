@@ -41,6 +41,7 @@ import butterknife.OnClick;
 public class SquareFragment extends BaseFragment{
     private ListView mListView;
     private ArrayList<ItemEntity> itemEntities;
+    private ListItemAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.square_fragment, container, false);
@@ -51,7 +52,8 @@ public class SquareFragment extends BaseFragment{
         super.onActivityCreated(savedInstanceState);
         mListView = (ListView) getView().findViewById(R.id.square_list_item);
         initData();
-        mListView.setAdapter(new ListItemAdapter(getActivity(), itemEntities));
+        adapter = new ListItemAdapter(getActivity(), itemEntities);
+        mListView.setAdapter(adapter);
         headerLayout.showTitle(R.string.square_title);
     }
 
@@ -70,6 +72,7 @@ public class SquareFragment extends BaseFragment{
         query.include("zan");
         Log.e("friends", CacheService.getFriendIds().toString());
         List<LeanchatUser> friends = new ArrayList<LeanchatUser>();
+        friends.add(currentUser);
         for(String friendId : CacheService.getFriendIds()){
             friends.add(CacheService.lookupUser(friendId));
         }
@@ -125,6 +128,7 @@ public class SquareFragment extends BaseFragment{
                         Log.d("pyt", "失败:" + e2.getMessage());
                     }
                 }
+                adapter.notifyDataSetChanged();
             }
         });
 

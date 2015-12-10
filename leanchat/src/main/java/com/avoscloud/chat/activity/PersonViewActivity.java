@@ -48,6 +48,7 @@ public class PersonViewActivity extends BaseActivity {
     private FragmentPagerAdapter fAdapter;
     private List<Fragment> data;
     private ArrayList<ItemEntity> itemEntities;
+    private ListItemAdapter adapter;
     protected Context ctx;
 
     @Override
@@ -63,7 +64,8 @@ public class PersonViewActivity extends BaseActivity {
 
         listView = (ListView) findViewById(R.id.list_item);
         initData();
-        listView.setAdapter(new ListItemAdapter(ctx, itemEntities));
+        adapter = new ListItemAdapter(ctx, itemEntities);
+        listView.setAdapter(adapter);
 
         initView();
         initActionBar(R.string.profile_person);
@@ -121,10 +123,7 @@ public class PersonViewActivity extends BaseActivity {
         query.include("position");
         query.include("fileList");          //这里include一个类的数据，会自动填充
         query.include("zan");
-        List<AVUser> friends = new ArrayList<AVUser>();
-        friends.add(currentUser);
-        query.whereContainedIn("user", friends);
-//        query.whereEqualTo("user", currentUser);
+        query.whereEqualTo("user", currentUser);
         query.findInBackground(new FindCallback<Moment>() {
             @Override
             public void done(List<Moment> results, AVException e) {
@@ -176,6 +175,7 @@ public class PersonViewActivity extends BaseActivity {
                         Log.d("pyt", "失败:" + e2.getMessage());
                     }
                 }
+                adapter.notifyDataSetChanged();
             }
         });
     }
