@@ -21,6 +21,7 @@ import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
 import com.avoscloud.chat.R;
 import com.avoscloud.chat.adapter.ListItemAdapter;
+import com.avoscloud.chat.adapter.PersonviewItemAdapter;
 import com.avoscloud.chat.fragment.ChatMainTabFragment;
 import com.avoscloud.chat.fragment.ContactMainTabFragment;
 import com.avoscloud.chat.fragment.FriendMainTabFragment;
@@ -28,6 +29,7 @@ import com.avoscloud.chat.model.Image;
 import com.avoscloud.chat.model.Moment;
 import com.avoscloud.chat.util.GetCity;
 import com.avoscloud.chat.util.ItemEntity;
+import com.avoscloud.chat.util.PersonviewEntity;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 
 import java.text.SimpleDateFormat;
@@ -43,17 +45,11 @@ public class PersonViewActivity extends BaseActivity {
 
     private ListView listView;
     private ViewPager vp;
-    public static LinearLayout editCommentLayout;
-    public static EditText editText;
-    public static ImageView sendComment;
     private FragmentPagerAdapter fAdapter;
     private List<Fragment> data;
-    private ArrayList<ItemEntity> itemEntities;
-    private ListItemAdapter adapter;
+    private ArrayList<PersonviewEntity> itemEntities;
+    private PersonviewItemAdapter adapter;
     protected Context ctx;
-    public static int position;
-    public static ArrayAdapter mAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,29 +59,8 @@ public class PersonViewActivity extends BaseActivity {
 
         listView = (ListView) findViewById(R.id.moment_list_item);
         initData();
-        adapter = new ListItemAdapter(ctx, itemEntities);
+        adapter = new PersonviewItemAdapter(ctx, itemEntities);
         listView.setAdapter(adapter);
-
-        editCommentLayout = (LinearLayout) findViewById(R.id.editCommentLayout);
-        editText = (EditText) findViewById(R.id.editComment);
-        sendComment = (ImageView) findViewById(R.id.sendComment);
-        sendComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                listView.getItemAtPosition(PersonViewActivity.getPosition()).getClass().
-//                adapter.getItem(PersonViewActivity.getPosition()).
-                List<String> DATA = new ArrayList<>();
-                DATA.add(editText.getText().toString());
-                mAdapter = new ArrayAdapter(ctx, R.layout.comment_item, DATA);
-
-                Log.e("pyt", "点击了第" + PersonViewActivity.getPosition() + "个listview");
-                ListView commentListView = (ListView)listView.getChildAt(0).findViewById(R.id.commentList);
-                commentListView.setVisibility(View.VISIBLE);
-                commentListView.setAdapter(mAdapter);
-
-                mAdapter.notifyDataSetChanged();
-            }
-        });
 
         initView();
         initActionBar(R.string.profile_person);
@@ -131,14 +106,6 @@ public class PersonViewActivity extends BaseActivity {
         });
     }
 
-    public static int getPosition() {
-        return position;
-    }
-
-    public static void setPosition(int position) {
-        PersonViewActivity.position = position;
-    }
-
     public void initData(){
         itemEntities = new ArrayList<>();
         final LeanchatUser currentUser = (LeanchatUser) AVUser.getCurrentUser();
@@ -157,62 +124,34 @@ public class PersonViewActivity extends BaseActivity {
                 if (e != null || results == null) {
                     return;
                 }
+                Log.d("pyt", "找到了" + results.size() + "条记录");
                 for (Moment moment : results) {
+
                     List<Image> imageList = moment.getFileList();
                     //图片为空，略过
                     if (imageList == null) {
-                        Log.e("fileList = ", "null");
+                        Log.e("pyt", "fileList = null");
                         continue;
                     }
                     //获取图片urls
                     ArrayList<String> imageUrls = new ArrayList<String>();
                     for (Image image : imageList) {
                         imageUrls.add(image.getFile().getUrl());
-                        Log.e("itemEntitiesUrl", image.getFile().getUrl());
                     }
-                    try {
-                        String city = "";
-                        final double lat = moment.getPosition().getLatitude();
-                        final double log = moment.getPosition().getLongitude();
-                        try {
-                            FutureTask<String> task = new FutureTask<String>(
-                                    new Callable<String>() {
-                                        @Override
-                                        public String call() throws Exception {
-                                            return GetCity.getCity(lat, log);
-                                        }
-                                    }
-                            );
-                            new Thread(task).start();
-                            city =  task.get();
-                        }catch (Exception e1) {
-                            Log.d("pyt", "ERROR城市：" + e1.getMessage());
-                        }
-                        ItemEntity entity = new ItemEntity(
-                                currentUser.getAvatarUrl(),
-                                currentUser.getUsername(),
-                                moment.getContent(),
-                                imageUrls,
-                                city,
-                                new SimpleDateFormat("MM-dd HH:mm").format(moment.getCreatedAt()),
-                                -1
-                        );
-                        itemEntities.add(entity);
-                    } catch (Exception e2) {
-                        Log.d("pyt", "失败:" + e2.getMessage());
-                    }
+                    Log.d("pyt", "内容：" + moment.getContent() +
+                            "\nurl：" + imageUrls +
+                    "\ntime:" + new SimpleDateFormat("MM/dd").format(moment.getCreatedAt()));
+
+                    PersonviewEntity entity = new PersonviewEntity(
+                            new SimpleDateFormat("MM/dd").format(moment.getCreatedAt()),
+                            moment.getContent(),
+                            imageUrls
+                    );
+                    itemEntities.add(entity);
+                    Log.d("pyt", "通过！");
                 }
                 adapter.notifyDataSetChanged();
             }
         });
-    }
-
-    public static void showEditText(Context context, int position) {
-        editCommentLayout.setVisibility(View.VISIBLE);
-        editText.setText(null);
-        editText.setHint("请输入评论..");
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-        setPosition(position);
     }
 }

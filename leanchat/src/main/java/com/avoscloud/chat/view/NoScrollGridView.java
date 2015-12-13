@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.GridView;
 
 /**
- * Created by Administrator on 2015/11/22.
+ * Created by puyangsky on 2015/11/22.
  */
 public class NoScrollGridView extends GridView{
     public NoScrollGridView(Context context) {

@@ -14,7 +14,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.avoscloud.chat.activity.ImagePagerActivity;
+import com.avoscloud.chat.activity.MainActivity;
 import com.avoscloud.chat.activity.PersonViewActivity;
+import com.avoscloud.chat.fragment.SquareFragment;
 import com.avoscloud.chat.model.Image;
 import com.avoscloud.chat.util.ItemEntity;
 import com.avoscloud.chat.view.NoScrollGridView;
@@ -110,13 +112,13 @@ public class ListItemAdapter extends BaseAdapter {
         holder.iv_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PersonViewActivity.showEditText(mContext, position);
+                MainActivity.showEditText(mContext, position);
             }
         });
         //评论列表
 
         DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.ic)
+//                .showImageOnLoading(R.drawable.ic)
                 .showImageOnFail(R.drawable.ic)
                 .cacheOnDisk(true)
                 .bitmapConfig(Bitmap.Config.RGB_565)

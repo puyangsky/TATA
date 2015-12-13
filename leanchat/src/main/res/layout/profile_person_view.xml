@@ -27,25 +27,25 @@
         </LinearLayout>
 
         <!-- 点击评论按钮弹出编辑框和发送按钮 -->
-        <LinearLayout
-            android:id="@+id/editCommentLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:orientation="horizontal"
-            android:layout_alignParentBottom="true">
-            <EditText
-                android:id="@+id/editComment"
-                android:layout_weight="5"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:background="#FFFFFF"/>
-            <ImageView
-                android:id="@+id/sendComment"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/send_comment"/>
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:id="@+id/editCommentLayout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:visibility="invisible"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:background="#FFFFFF">-->
+            <!--<EditText-->
+                <!--android:id="@+id/editComment"-->
+                <!--android:layout_weight="5"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"/>-->
+            <!--<ImageView-->
+                <!--android:id="@+id/sendComment"-->
+                <!--android:layout_weight="1"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:src="@drawable/send_comment"/>-->
+        <!--</LinearLayout>-->
     </RelativeLayout>
 <!--</ScrollView>-->

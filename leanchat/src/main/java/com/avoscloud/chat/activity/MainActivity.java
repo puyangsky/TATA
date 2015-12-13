@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -11,8 +12,13 @@ import android.text.InputFilter;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVGeoPoint;
@@ -42,6 +48,7 @@ import de.greenrobot.event.EventBus;
 
 import com.nineoldandroids.view.ViewHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
@@ -79,6 +86,16 @@ public class MainActivity extends BaseActivity {
   Button[] tabs;
   View recentTips, contactTips;
   public static DrawerLayout mDrawerLayout;
+
+  public static LinearLayout editCommentLayout;
+  public static EditText editText;
+  public static ImageView sendComment;
+
+
+
+    public static int position;
+  public static ArrayAdapter mAdapter;
+
   public static void goMainActivityFromActivity(Activity fromActivity) {
     EventBus eventBus = EventBus.getDefault();
     eventBus.post(new LoginFinishEvent());
@@ -110,6 +127,26 @@ public class MainActivity extends BaseActivity {
     CacheService.registerUser((LeanchatUser) AVUser.getCurrentUser());//缓存账号信息
     cacheFriends(); //缓存好友信息
 
+      editCommentLayout = (LinearLayout) findViewById(R.id.editCommentLayout);
+      editText = (EditText) findViewById(R.id.editComment);
+      sendComment = (ImageView) findViewById(R.id.sendComment);
+      sendComment.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              List<String> DATA = new ArrayList<>();
+              DATA.add(AVUser.getCurrentUser().getUsername().toString() + ": " + editText.getText().toString());
+              mAdapter = new ArrayAdapter(ctx, R.layout.comment_item, DATA);
+
+              Log.e("pyt", "点击了第" + getPosition() + "个listview");
+              ListView commentListView = (ListView) squareFragment.mListView.getChildAt(getPosition()).findViewById(R.id.commentList);
+              commentListView.setVisibility(View.VISIBLE);
+              commentListView.setAdapter(mAdapter);
+
+              mAdapter.notifyDataSetChanged();
+
+              editCommentLayout.setVisibility(View.INVISIBLE);
+          }
+      });
   }
 
   @Override
@@ -294,57 +331,52 @@ public class MainActivity extends BaseActivity {
   private void initDrawer()
   {
     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-    mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener()
-    {
-      @Override
-      public void onDrawerStateChanged(int newState)
-      {
-      }
-
-      @Override
-      public void onDrawerSlide(View drawerView, float slideOffset)
-      {
-        View mContent = mDrawerLayout.getChildAt(0);
-        View mMenu = drawerView;
-        float scale = 1 - slideOffset;
-        float rightScale = 0.8f + scale * 0.2f;
-
-        if (drawerView.getTag().equals("LEFT"))
-        {
-
-          float leftScale = 1 - 0.3f * scale;
-
-          ViewHelper.setScaleX(mMenu, leftScale);
-          ViewHelper.setScaleY(mMenu, leftScale);
-          ViewHelper.setAlpha(mMenu, 0.6f + 0.4f * (1 - scale));
-          ViewHelper.setTranslationX(mContent,
-                  mMenu.getMeasuredWidth() * (1 - scale));
-          ViewHelper.setPivotX(mContent, 0);
-          ViewHelper.setPivotY(mContent,
-                  mContent.getMeasuredHeight() / 2);
-          mContent.invalidate();
-          ViewHelper.setScaleX(mContent, rightScale);
-          ViewHelper.setScaleY(mContent, rightScale);
-        } else
-        {
-          ViewHelper.setTranslationX(mContent,
-                  -mMenu.getMeasuredWidth() * slideOffset);
-          ViewHelper.setPivotX(mContent, mContent.getMeasuredWidth());
-          ViewHelper.setPivotY(mContent,
-                  mContent.getMeasuredHeight() / 2);
-          mContent.invalidate();
-          ViewHelper.setScaleX(mContent, rightScale);
-          ViewHelper.setScaleY(mContent, rightScale);
+    mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+        @Override
+        public void onDrawerStateChanged(int newState) {
         }
-      }
-      @Override
-      public void onDrawerOpened(View drawerView)
-      {
-      }
-      @Override
-      public void onDrawerClosed(View drawerView)
-      {
-      }
+
+        @Override
+        public void onDrawerSlide(View drawerView, float slideOffset) {
+            View mContent = mDrawerLayout.getChildAt(0);
+            View mMenu = drawerView;
+            float scale = 1 - slideOffset;
+            float rightScale = 0.8f + scale * 0.2f;
+
+            if (drawerView.getTag().equals("LEFT")) {
+
+                float leftScale = 1 - 0.3f * scale;
+
+                ViewHelper.setScaleX(mMenu, leftScale);
+                ViewHelper.setScaleY(mMenu, leftScale);
+                ViewHelper.setAlpha(mMenu, 0.6f + 0.4f * (1 - scale));
+                ViewHelper.setTranslationX(mContent,
+                        mMenu.getMeasuredWidth() * (1 - scale));
+                ViewHelper.setPivotX(mContent, 0);
+                ViewHelper.setPivotY(mContent,
+                        mContent.getMeasuredHeight() / 2);
+                mContent.invalidate();
+                ViewHelper.setScaleX(mContent, rightScale);
+                ViewHelper.setScaleY(mContent, rightScale);
+            } else {
+                ViewHelper.setTranslationX(mContent,
+                        -mMenu.getMeasuredWidth() * slideOffset);
+                ViewHelper.setPivotX(mContent, mContent.getMeasuredWidth());
+                ViewHelper.setPivotY(mContent,
+                        mContent.getMeasuredHeight() / 2);
+                mContent.invalidate();
+                ViewHelper.setScaleX(mContent, rightScale);
+                ViewHelper.setScaleY(mContent, rightScale);
+            }
+        }
+
+        @Override
+        public void onDrawerOpened(View drawerView) {
+        }
+
+        @Override
+        public void onDrawerClosed(View drawerView) {
+        }
     });
   }
   public void recoverConfig() {
@@ -366,4 +398,21 @@ public class MainActivity extends BaseActivity {
   public static void openDrawer() {
     mDrawerLayout.openDrawer(Gravity.LEFT);
   }
+
+    // Editted by pyt
+    public static void showEditText(Context context, int position) {
+        editCommentLayout.setVisibility(View.VISIBLE);
+        editText.setText(null);
+        editText.setHint("请输入评论..");
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        setPosition(position);
+    }
+    public static int getPosition() {
+        return position;
+    }
+
+    public static void setPosition(int position) {
+        MainActivity.position = position;
+    }
 }
