@@ -20,6 +20,7 @@
     <string name="entry_register_activity_password">密码</string>
     <string name="login">登录</string>
     <string name="publish">发布</string>
+    <string name="publish_note">写动态</string>
     <string name="conversation_messages">聊天</string>
     <string name="contact">联系人</string>
     <string name="profile_settings">Settings</string>
@@ -44,7 +45,6 @@
     <string name="registerFailed">注册失败。</string>
 
     <string name="not_have_account">还没有账号？</string>
-    <string name="publish_note">兄弟(闺蜜)的幸福就靠你啦！</string>
     <string name="register_rightnow">立即注册 &gt;</string>
     <string name="discover_metres">米</string>
     <string name="discover_unknown">未知</string>
