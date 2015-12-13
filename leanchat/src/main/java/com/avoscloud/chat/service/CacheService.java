@@ -79,7 +79,7 @@ public class CacheService {
   }
 
   /**
-   * 先查询，然后缓存好友id，然后再缓存好友
+   * 根据ID查询具体信息
    * @param userIds
    * @return
    * @throws AVException
@@ -95,42 +95,11 @@ public class CacheService {
     return q.find();
   }
 
-  /**
-   * 缓存好友列表
-   * @return
-   * @throws Exception
-   */
-//  public static List<LeanchatUser> findFriends() throws Exception {
-//    final List<LeanchatUser> friends = new ArrayList<LeanchatUser>();
-//    final AVException[] es = new AVException[1];
-//    final CountDownLatch latch = new CountDownLatch(1);
-//    LeanchatUser.getCurrentUser(LeanchatUser.class).findFriendsWithCachePolicy(AVQuery.CachePolicy.CACHE_ELSE_NETWORK, new FindCallback<LeanchatUser>() {
-//      @Override
-//      public void done(List<LeanchatUser> avUsers, AVException e) {
-//        if (e != null) {
-//          es[0] = e;
-//        } else {
-//          friends.addAll(avUsers);
-//        }
-//        latch.countDown();
-//      }
-//    });
-//    latch.await();
-//    if (es[0] != null) {
-//      throw es[0];
-//    } else {
-//      List<String> userIds = new ArrayList<String>();
-//      for (LeanchatUser user : friends) {
-//        userIds.add(user.getObjectId());
-////          Log.e("friend", user.getUsername());
-////        CacheService.registerUser(user);
-//      }
-//      CacheService.setFriendIds(userIds);
-//      CacheService.cacheUsers(userIds);     //cache之后才能找得到
-//        return getFriends();
-//    }
-//  }
-
+    /**
+     * 查询好友id，然后在查询数据
+     * @return
+     * @throws Exception
+     */
   public static List<LeanchatUser> findFriends() throws Exception {
       final List<LeanchatUser> friends = new ArrayList<LeanchatUser>();
       final AVException[] es = new AVException[1];

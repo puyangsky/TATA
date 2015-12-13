@@ -122,36 +122,4 @@ public class SquareFragment extends BaseFragment{
 
     }
 
-    public static List<AVUser> findFriends() throws Exception {
-        final List<AVUser> friends = new ArrayList<AVUser>();
-        final AVException[] es = new AVException[1];
-        final CountDownLatch latch = new CountDownLatch(1);
-        LeanchatUser.getCurrentUser(LeanchatUser.class).findFriendsWithCachePolicy(AVQuery.CachePolicy.CACHE_ELSE_NETWORK, new FindCallback<LeanchatUser>() {
-            @Override
-            public void done(List<LeanchatUser> avUsers, AVException e) {
-                if (e != null) {
-                    es[0] = e;
-                } else {
-                    friends.addAll(avUsers);
-                }
-                latch.countDown();
-            }
-        });
-        latch.await();
-        if (es[0] != null) {
-            throw es[0];
-        } else {
-            List<String> userIds = new ArrayList<String>();
-            for (AVUser user : friends) {
-                userIds.add(user.getObjectId());
-            }
-            CacheService.setFriendIds(userIds);
-            CacheService.cacheUsers(userIds);
-            List<AVUser> newFriends = new ArrayList<>();
-            for (AVUser user : friends) {
-                newFriends.add(CacheService.lookupUser(user.getObjectId()));
-            }
-            return newFriends;
-        }
-    }
 }

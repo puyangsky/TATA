@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,6 +61,7 @@ import android.util.Log;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
@@ -70,6 +72,9 @@ public class PublishActivity extends Activity {
     private static final int IMAGE_PICK_REQUEST = 1;
     private static final int CROP_REQUEST = 2;
     private static final int TAKE_PICTURE = 3;
+    
+    private static final int TYPE_PERSONAL = 4;
+    private static final int TYPE_OTHER = 5;
 
     //当前的activity为最开始的parent
     private View parentView;
@@ -82,6 +87,12 @@ public class PublishActivity extends Activity {
 
     //图片的url
     private String picPath = "";
+
+    private int type = TYPE_PERSONAL;
+    
+    //发布信息的类型
+    @InjectView(R.id.publish_type)
+    public ListView typeList;
 
     @InjectView(R.id.activity_publish_btn)
     public Button publish_btn;
@@ -105,6 +116,9 @@ public class PublishActivity extends Activity {
 
         //清空文字
         text = "";
+        
+        //确定发布类型
+        type = getPublishType();
 
         //结束发布activity，回到主界面
         for(Activity act : PublicWay.activityList){
@@ -130,6 +144,13 @@ public class PublishActivity extends Activity {
         setContentView(parentView);
         ButterKnife.inject(this);
         InitPopWindow();
+        InitPublishType();
+    }
+
+    private void InitPublishType() {
+        String[] types = {"好友", "说说"};
+        typeList.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_single_choice, types));
     }
 
     @Override
@@ -200,16 +221,6 @@ public class PublishActivity extends Activity {
         moment.setUser(LeanchatUser.getCurrentUser());//当前用户
         moment.setContent(publish_text.getText().toString());//文字信息
         moment.setPosition(LeanchatUser.getCurrentUser().getGeoPoint());//坐标
-
-        //本地存储照片，并释放bitmap内存
-//        String path = "";
-//        if (bitmap != null) {
-//            path = PathUtils.getAvatarCropPath();
-//            PhotoUtils.saveBitmap(path, bitmap);                //这里是压缩之后的bitmap
-//            if (bitmap != null && bitmap.isRecycled() == false) {
-//                bitmap.recycle();
-//            }
-//        }
 
         try {
             moment.save();
@@ -301,7 +312,7 @@ public class PublishActivity extends Activity {
         user.saveInBackground(new SaveCallback() {
             @Override
             public void done(AVException e) {
-                if(e != null){
+                if (e != null) {
                     Log.e("user num", "save error");
                     return;
                 }
@@ -414,6 +425,20 @@ public class PublishActivity extends Activity {
             }
         });
 
+    }
+
+    public int getPublishType() {
+        int position = typeList.getCheckedItemPosition();
+        int choice = TYPE_PERSONAL;
+        switch (position){
+            case 0:
+                choice = TYPE_PERSONAL;
+                break;
+            case 1:
+                choice = TYPE_OTHER;
+                break;
+        }
+        return choice;
     }
 
     @SuppressLint("HandlerLeak")
