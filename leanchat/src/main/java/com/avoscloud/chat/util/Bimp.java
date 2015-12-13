@@ -21,9 +21,11 @@ public class Bimp {
 			tempSelectBitmap.remove(imageItem);
 			imageItem.getBitmap().recycle();
 			//删除压缩文件
-			File f = new File(imageItem.getThumbnailPath());
-			if (f.exists()) {
-				f.delete();
+			if(imageItem != null){
+				File f = new File(imageItem.getThumbnailPath());
+				if (f.exists()) {
+					f.delete();
+				}
 			}
 		}
 		max = 0;

@@ -117,6 +117,7 @@ public class BitmapCache extends Activity {
 				options.inSampleSize = (int) Math.pow(2.0D, i);
 				options.inJustDecodeBounds = false;
 				bitmap = BitmapFactory.decodeStream(in, null, options);
+				in.close();
 				break;
 			}
 			i += 1;
@@ -125,7 +126,7 @@ public class BitmapCache extends Activity {
 	}
 
 	public interface ImageCallback {
-		public void imageLoad(ImageView imageView, Bitmap bitmap,
+		void imageLoad(ImageView imageView, Bitmap bitmap,
 							  Object... params);
 	}
 }

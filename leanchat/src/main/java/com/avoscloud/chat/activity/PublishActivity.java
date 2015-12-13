@@ -14,10 +14,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,7 +31,6 @@ import android.widget.EditText;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.LogUtil;
 import com.avos.avoscloud.SaveCallback;
 import com.avoscloud.chat.R;
 import com.avoscloud.chat.model.Image;
@@ -48,10 +45,6 @@ import com.avoscloud.chat.util.Res;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -65,7 +58,6 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
-import javax.security.auth.login.LoginException;
 
 public class PublishActivity extends Activity {
 
@@ -222,11 +214,16 @@ public class PublishActivity extends Activity {
         moment.setContent(publish_text.getText().toString());//文字信息
         moment.setPosition(LeanchatUser.getCurrentUser().getGeoPoint());//坐标
 
-        try {
-            moment.save();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    moment.save();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
         //添加图片文件
         for(final ImageItem item : Bimp.tempSelectBitmap){
