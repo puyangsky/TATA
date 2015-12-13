@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +24,7 @@ import com.avoscloud.chat.R;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Puyangsky on 2015/11/22.
@@ -31,7 +33,6 @@ public class ListItemAdapter extends BaseAdapter {
 
     private Context mContext;
     private ArrayList<ItemEntity> items;
-
     public ListItemAdapter(Context ctx, ArrayList<ItemEntity> items) {
         this.mContext = ctx;
         this.items = items;
@@ -53,7 +54,7 @@ public class ListItemAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
@@ -109,13 +110,14 @@ public class ListItemAdapter extends BaseAdapter {
         holder.iv_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PersonViewActivity.showEditText(mContext);
+                PersonViewActivity.showEditText(mContext, position);
             }
         });
+        //评论列表
+
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.ic)
                 .showImageOnFail(R.drawable.ic)
-                .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
