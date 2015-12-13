@@ -48,6 +48,7 @@ public class Bimp {
 				options.inSampleSize = (int) Math.pow(2.0D, i);
 				options.inJustDecodeBounds = false;
 				bitmap = BitmapFactory.decodeStream(in, null, options);
+				in.close();
 				break;
 			}
 			i += 1;

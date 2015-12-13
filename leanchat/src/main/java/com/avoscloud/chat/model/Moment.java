@@ -26,19 +26,14 @@ import java.util.concurrent.CountDownLatch;
 @AVClassName("Moment")
 public class Moment extends AVObject{
 
-//    private LeanchatUser user;    //存储user_key
-//    final AVUser user = AVUser.getCurrentUser();      //获取当前的user
 
     public static final String user = "user";       // 这里让AVUser自动转换成leanchatUser
     public static final String content = "content";
-//    private String imageUrls = "imageUrls";
     public static final String position = "position";
     public static final String fileList = "fileList";
     public static final String zan = "zan";
-
+    public static final String type = "type";
     public static final String comment = "comment"; //对应的评论关系
-
-    public static final String images = "images";
 
     public Moment(){}
 
@@ -105,20 +100,6 @@ public class Moment extends AVObject{
 
     public void addZan(){ increment(zan);}
 
-//    public List<AVFile> getFileList(){
-//        List<AVObject>list = getList(fileList);
-//        List<AVFile> fileList = new LinkedList<AVFile>();
-//        for(AVObject file : list){
-//            AVFile avFile = AVFile.withAVObject(file);
-//            fileList.add(avFile);
-//        }
-//        return fileList;
-//    }
-//
-//    public void setFileList(List<AVFile> list){
-//        addAll(fileList, list);
-//    }
-
     @SuppressWarnings("unchecked")
     public List<Image> getFileList(){
         return (List<Image>)getList(fileList);
@@ -131,38 +112,6 @@ public class Moment extends AVObject{
     public void addFile(Image image){
         add(fileList, image);
     }
-
-    public void setImages(List<Image> list){
-        addAll(images, list);
-    }
-
-    public void addImages(Image image){
-        add(images, image);
-    }
-
-//    public List<String> getFileList() {
-//        String s = getString(fileList);
-//        String[] array = s.split(",");
-//        List<String> list = new ArrayList<>();
-//        for(int i=0; i<array.length; i++){
-//            list.add(array[i]);
-//        }
-//        return list;
-//    }
-//
-//    public void setFileList(List<String> list){
-//        String urls = new String();
-//        boolean flag = true;
-//        for(String file : list){
-//            if(flag){
-//                urls += file;
-//                flag = false;
-//            }else{
-//                urls += ","+file;
-//            }
-//        }
-//        put(fileList, urls);
-//    }
 
     public LeanchatUser getUser() {
         return getAVUser(user);
@@ -180,14 +129,6 @@ public class Moment extends AVObject{
         put(content, publish_content);
     }
 
-//    public List<String> getImageUrls() {
-//        return getList(imageUrls);
-//    }
-//
-//    public void setImageUrls(List<String> images) {
-//        put(imageUrls, images);
-//    }
-
     public AVGeoPoint getPosition() {
         return getAVGeoPoint(position);
     }
@@ -196,4 +137,7 @@ public class Moment extends AVObject{
         put(position, point);
     }
 
+    public void setType(int ntype){ put(type, ntype); }
+
+    public int getType(){ return getInt(type); }
 }
