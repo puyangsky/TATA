@@ -154,7 +154,7 @@ public class ContactFragment extends BaseFragment {
     friendsList.init(new BaseListView.DataFactory<SortUser>() {
       @Override
       public List<SortUser> getDatasInBackground(int skip, int limit, List<SortUser> currentDatas) throws Exception {
-        return convertAVUser(CacheService.getFriends());
+        return convertAVUser(CacheService.findFriends());
       }
     }, userAdapter);
 

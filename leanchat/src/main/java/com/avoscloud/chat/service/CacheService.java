@@ -100,33 +100,67 @@ public class CacheService {
    * @return
    * @throws Exception
    */
-  public static void findFriends() throws Exception {
-    final List<LeanchatUser> friends = new ArrayList<LeanchatUser>();
-    final AVException[] es = new AVException[1];
-    final CountDownLatch latch = new CountDownLatch(1);
-    LeanchatUser.getCurrentUser(LeanchatUser.class).findFriendsWithCachePolicy(AVQuery.CachePolicy.CACHE_ELSE_NETWORK, new FindCallback<LeanchatUser>() {
-      @Override
-      public void done(List<LeanchatUser> avUsers, AVException e) {
-        if (e != null) {
-          es[0] = e;
-        } else {
-          friends.addAll(avUsers);
-        }
-        latch.countDown();
-      }
-    });
-    latch.await();
-    if (es[0] != null) {
-      throw es[0];
-    } else {
-      List<String> userIds = new ArrayList<String>();
-      Log.e("registerUser", "");
-      for (LeanchatUser user : friends) {
-        userIds.add(user.getObjectId());
-        CacheService.registerUser(user);
-      }
-      CacheService.setFriendIds(userIds);
+//  public static List<LeanchatUser> findFriends() throws Exception {
+//    final List<LeanchatUser> friends = new ArrayList<LeanchatUser>();
+//    final AVException[] es = new AVException[1];
+//    final CountDownLatch latch = new CountDownLatch(1);
+//    LeanchatUser.getCurrentUser(LeanchatUser.class).findFriendsWithCachePolicy(AVQuery.CachePolicy.CACHE_ELSE_NETWORK, new FindCallback<LeanchatUser>() {
+//      @Override
+//      public void done(List<LeanchatUser> avUsers, AVException e) {
+//        if (e != null) {
+//          es[0] = e;
+//        } else {
+//          friends.addAll(avUsers);
+//        }
+//        latch.countDown();
+//      }
+//    });
+//    latch.await();
+//    if (es[0] != null) {
+//      throw es[0];
+//    } else {
+//      List<String> userIds = new ArrayList<String>();
+//      for (LeanchatUser user : friends) {
+//        userIds.add(user.getObjectId());
+////          Log.e("friend", user.getUsername());
+////        CacheService.registerUser(user);
+//      }
+//      CacheService.setFriendIds(userIds);
 //      CacheService.cacheUsers(userIds);     //cache之后才能找得到
-    }
+//        return getFriends();
+//    }
+//  }
+
+  public static List<LeanchatUser> findFriends() throws Exception {
+      final List<LeanchatUser> friends = new ArrayList<LeanchatUser>();
+      final AVException[] es = new AVException[1];
+      final CountDownLatch latch = new CountDownLatch(1);
+      LeanchatUser.getCurrentUser(LeanchatUser.class).findFriendsWithCachePolicy(AVQuery.CachePolicy.CACHE_ELSE_NETWORK, new FindCallback<LeanchatUser>() {
+          @Override
+          public void done(List<LeanchatUser> avUsers, AVException e) {
+              if (e != null) {
+                  es[0] = e;
+              } else {
+                  friends.addAll(avUsers);
+              }
+              latch.countDown();
+          }
+      });
+      latch.await();
+      if (es[0] != null) {
+          throw es[0];
+      } else {
+          List<String> userIds = new ArrayList<String>();
+          for (LeanchatUser user : friends) {
+              userIds.add(user.getObjectId());
+          }
+          CacheService.setFriendIds(userIds);
+          CacheService.cacheUsers(userIds);
+          List<LeanchatUser> newFriends = new ArrayList<>();
+          for (LeanchatUser user : friends) {
+              newFriends.add(CacheService.lookupUser(user.getObjectId()));
+          }
+          return newFriends;
+      }
   }
 }
