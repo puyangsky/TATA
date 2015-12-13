@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,9 +36,9 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
-/*
-*  Created by puyangsky 2015/11/18.
-* */
+/**
+ * Created by Puyangsky on 2015/11/18.
+ */
 public class PersonViewActivity extends BaseActivity {
 
     private ListView listView;
@@ -50,6 +51,8 @@ public class PersonViewActivity extends BaseActivity {
     private ArrayList<ItemEntity> itemEntities;
     private ListItemAdapter adapter;
     protected Context ctx;
+    public static int position;
+    public static ArrayAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +61,31 @@ public class PersonViewActivity extends BaseActivity {
 
         ctx = PersonViewActivity.this;
 
-        editCommentLayout = (LinearLayout) findViewById(R.id.editCommentLayout);
-        editText = (EditText) findViewById(R.id.editComment);
-        sendComment = (ImageView) findViewById(R.id.sendComment);
-
-        listView = (ListView) findViewById(R.id.list_item);
+        listView = (ListView) findViewById(R.id.moment_list_item);
         initData();
         adapter = new ListItemAdapter(ctx, itemEntities);
         listView.setAdapter(adapter);
+
+        editCommentLayout = (LinearLayout) findViewById(R.id.editCommentLayout);
+        editText = (EditText) findViewById(R.id.editComment);
+        sendComment = (ImageView) findViewById(R.id.sendComment);
+        sendComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                listView.getItemAtPosition(PersonViewActivity.getPosition()).getClass().
+//                adapter.getItem(PersonViewActivity.getPosition()).
+                List<String> DATA = new ArrayList<>();
+                DATA.add(editText.getText().toString());
+                mAdapter = new ArrayAdapter(ctx, R.layout.comment_item, DATA);
+
+                Log.e("pyt", "点击了第" + PersonViewActivity.getPosition() + "个listview");
+                ListView commentListView = (ListView)listView.getChildAt(0).findViewById(R.id.commentList);
+                commentListView.setVisibility(View.VISIBLE);
+                commentListView.setAdapter(mAdapter);
+
+                mAdapter.notifyDataSetChanged();
+            }
+        });
 
         initView();
         initActionBar(R.string.profile_person);
@@ -111,6 +131,13 @@ public class PersonViewActivity extends BaseActivity {
         });
     }
 
+    public static int getPosition() {
+        return position;
+    }
+
+    public static void setPosition(int position) {
+        PersonViewActivity.position = position;
+    }
 
     public void initData(){
         itemEntities = new ArrayList<>();
@@ -180,11 +207,12 @@ public class PersonViewActivity extends BaseActivity {
         });
     }
 
-    public static void showEditText(Context context) {
+    public static void showEditText(Context context, int position) {
         editCommentLayout.setVisibility(View.VISIBLE);
         editText.setText(null);
         editText.setHint("请输入评论..");
         InputMethodManager imm = (InputMethodManager) context.getSystemService(INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        setPosition(position);
     }
 }
