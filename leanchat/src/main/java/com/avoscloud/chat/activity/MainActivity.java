@@ -119,8 +119,6 @@ public class MainActivity extends BaseActivity {
     initDrawer();
 
     onTabSelect(conversationBtn);
-    //mySpaceBtn.performClick();
-    //contactBtn.performClick();
     conversationBtn.performClick();
     initBaiduLocClient();
 
@@ -137,14 +135,17 @@ public class MainActivity extends BaseActivity {
               DATA.add(AVUser.getCurrentUser().getUsername().toString() + ": " + editText.getText().toString());
               mAdapter = new ArrayAdapter(ctx, R.layout.comment_item, DATA);
 
-              Log.e("pyt", "点击了第" + getPosition() + "个listview");
-              ListView commentListView = (ListView) squareFragment.mListView.getChildAt(getPosition()).findViewById(R.id.commentList);
+              Log.d("pyt", "点击了第" + getPosition() + "个listview");
+
+              ListView commentListView = (ListView) squareFragment.mListView.getSelectedView().findViewById(R.id.commentList);
+//              ListView commentListView = (ListView) squareFragment.mListView.getChildAt(4).findViewById(R.id.commentList);
+//              Log.d("pyt", "ViewGroup共有 " + squareFragment.mListView.getChildCount() + "个子节点");
               commentListView.setVisibility(View.VISIBLE);
               commentListView.setAdapter(mAdapter);
 
               mAdapter.notifyDataSetChanged();
 
-              editCommentLayout.setVisibility(View.INVISIBLE);
+              hideInputLayout();
           }
       });
   }
@@ -404,9 +405,20 @@ public class MainActivity extends BaseActivity {
         editCommentLayout.setVisibility(View.VISIBLE);
         editText.setText(null);
         editText.setHint("请输入评论..");
+        editText.requestFocus();
         InputMethodManager imm = (InputMethodManager) context.getSystemService(INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        imm.showSoftInput(editText, 0);
+//        toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         setPosition(position);
+    }
+
+    public static void closeSoftInput (Context context) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+
+    public static void hideInputLayout () {
+        editCommentLayout.setVisibility(View.INVISIBLE);
     }
     public static int getPosition() {
         return position;

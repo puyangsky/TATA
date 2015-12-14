@@ -34,7 +34,7 @@ import java.io.File;
 
 
 /**
- * Created by Administrator on 2015/11/30.
+ * Created by puyangsky on 2015/11/30.
  */
 public class MenuLeftFragment extends Fragment {
     private static final int IMAGE_PICK_REQUEST = 1;
@@ -124,7 +124,7 @@ public class MenuLeftFragment extends Fragment {
 
     private void refresh() {
         LeanchatUser curUser = (LeanchatUser)AVUser.getCurrentUser();
-        userNameView.setText(curUser.getUsername());
+        userNameView.setText(AVUser.getCurrentUser().getUsername());
         ImageLoader.getInstance().displayImage(curUser.getAvatarUrl(), personAvatarView, com.avoscloud.leanchatlib.utils.PhotoUtils.avatarImageOptions);
         Log.d("pyt", "头像url: " + curUser.getAvatarUrl());
     }

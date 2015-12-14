@@ -79,7 +79,7 @@ public class AVBaseActivity extends FragmentActivity {
   protected boolean filterException(Exception e) {
     if (e != null) {
       LogUtils.logException(e);
-      showToast(e.getMessage());
+      showToast("网络连接不可用");
       return false;
     } else {
       return true;

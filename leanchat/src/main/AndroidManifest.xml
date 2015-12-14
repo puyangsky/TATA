@@ -70,7 +70,8 @@
 
         <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="com.avos.leanchart.MAIN_ACTIVITY" />
 
