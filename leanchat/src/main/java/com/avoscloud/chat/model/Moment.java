@@ -137,7 +137,7 @@ public class Moment extends AVObject{
         put(position, point);
     }
 
-    public void setType(int ntype){ put(type, ntype); }
+    public void setType(int newType){ put(type, newType); }
 
     public int getType(){ return getInt(type); }
 }

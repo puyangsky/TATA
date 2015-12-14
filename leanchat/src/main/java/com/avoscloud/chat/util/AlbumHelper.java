@@ -186,6 +186,8 @@ public class AlbumHelper {
 			} while (cur.moveToNext());
 		}
 
+		cur.close();
+
 		Iterator<Entry<String, ImageBucket>> itr = bucketList.entrySet()
 				.iterator();
 		while (itr.hasNext()) {

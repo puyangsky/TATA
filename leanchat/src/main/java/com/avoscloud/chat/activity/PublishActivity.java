@@ -65,8 +65,8 @@ public class PublishActivity extends Activity {
     private static final int CROP_REQUEST = 4;
     private static final int TAKE_PICTURE = 5;
     
-    private static final int TYPE_PERSONAL = 1;
-    private static final int TYPE_OTHER = 2;
+    public static final int TYPE_PERSONAL = 1;
+    public static final int TYPE_OTHER = 2;
 
     //当前的activity为最开始的parent
     private View parentView;
