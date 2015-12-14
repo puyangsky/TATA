@@ -1,6 +1,7 @@
 package com.avoscloud.chat.activity;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
@@ -31,12 +33,16 @@ import com.avoscloud.chat.util.GetCity;
 import com.avoscloud.chat.util.ItemEntity;
 import com.avoscloud.chat.util.PersonviewEntity;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
+
+import me.relex.circleindicator.CircleIndicator;
 
 /**
  * Created by Puyangsky on 2015/11/18.
@@ -45,6 +51,7 @@ public class PersonViewActivity extends BaseActivity {
 
     private ListView listView;
     private ViewPager vp;
+    private CircleIndicator circleIndicator;
     private FragmentPagerAdapter fAdapter;
     private List<Fragment> data;
     private ArrayList<PersonviewEntity> itemEntities;
@@ -68,7 +75,11 @@ public class PersonViewActivity extends BaseActivity {
 
     private void initView() {
         vp = (ViewPager)findViewById(R.id.recommends);
-        data = new ArrayList<Fragment>();
+        circleIndicator = (CircleIndicator)findViewById(R.id.circleIndicator);
+        RelativeLayout layout = (RelativeLayout)findViewById(R.id.personRel);
+        layout.bringChildToFront(circleIndicator);
+
+//        data = new ArrayList<Fragment>();
         ChatMainTabFragment chatMainTabFragment = new ChatMainTabFragment();
         FriendMainTabFragment friendMainTabFragment = new FriendMainTabFragment();
         ContactMainTabFragment contactMainTabFragment = new ContactMainTabFragment();
@@ -104,10 +115,12 @@ public class PersonViewActivity extends BaseActivity {
             public void onPageScrollStateChanged(int i) {
             }
         });
+        circleIndicator.setViewPager(vp);
     }
 
     public void initData(){
         itemEntities = new ArrayList<>();
+        data = new ArrayList<Fragment>();
         final LeanchatUser currentUser = (LeanchatUser) AVUser.getCurrentUser();
         AVQuery<Moment> query = AVObject.getQuery(Moment.class);
         query.orderByDescending("createdAt");
@@ -140,7 +153,7 @@ public class PersonViewActivity extends BaseActivity {
                     }
                     Log.d("pyt", "内容：" + moment.getContent() +
                             "\nurl：" + imageUrls +
-                    "\ntime:" + new SimpleDateFormat("MM/dd").format(moment.getCreatedAt()));
+                            "\ntime:" + new SimpleDateFormat("MM/dd").format(moment.getCreatedAt()));
 
                     PersonviewEntity entity = new PersonviewEntity(
                             new SimpleDateFormat("MM/dd").format(moment.getCreatedAt()),
@@ -148,6 +161,18 @@ public class PersonViewActivity extends BaseActivity {
                             imageUrls
                     );
                     itemEntities.add(entity);
+
+                    //添加到好友推荐界面
+//                    if(moment.getType() == PublishActivity.TYPE_OTHER){
+//                        ContactMainTabFragment fragment = new ContactMainTabFragment();
+//                        ImageView imageView = (ImageView)fragment.getView().findViewById(R.id.tab_3_pic);
+//                        DisplayImageOptions options = new DisplayImageOptions.Builder()//
+//                                .cacheInMemory(true)//
+//                                .cacheOnDisk(true)//
+//                                .bitmapConfig(Bitmap.Config.RGB_565)//
+//                                .build();
+//                        ImageLoader.getInstance().displayImage(imageUrls.get(0), imageView, options);
+//                    }
                     Log.d("pyt", "通过！");
                 }
                 adapter.notifyDataSetChanged();

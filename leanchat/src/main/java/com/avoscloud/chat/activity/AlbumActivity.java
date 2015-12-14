@@ -230,9 +230,16 @@ public class AlbumActivity extends Activity {
 		return false;
 
 	}
-@Override
-protected void onRestart() {
-	isShowOkBt();
-	super.onRestart();
-}
+
+	@Override
+	protected void onRestart() {
+		isShowOkBt();
+		super.onRestart();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(broadcastReceiver);
+	}
 }

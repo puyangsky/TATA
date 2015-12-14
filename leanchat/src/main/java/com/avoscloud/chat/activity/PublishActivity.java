@@ -61,12 +61,12 @@ import android.widget.RelativeLayout;
 
 public class PublishActivity extends Activity {
 
-    private static final int IMAGE_PICK_REQUEST = 1;
-    private static final int CROP_REQUEST = 2;
-    private static final int TAKE_PICTURE = 3;
+    private static final int IMAGE_PICK_REQUEST = 3;
+    private static final int CROP_REQUEST = 4;
+    private static final int TAKE_PICTURE = 5;
     
-    private static final int TYPE_PERSONAL = 4;
-    private static final int TYPE_OTHER = 5;
+    public static final int TYPE_PERSONAL = 1;
+    public static final int TYPE_OTHER = 2;
 
     //当前的activity为最开始的parent
     private View parentView;
@@ -80,7 +80,11 @@ public class PublishActivity extends Activity {
     //图片的url
     private String picPath = "";
 
+    //类型
     private int type = TYPE_PERSONAL;
+
+    //位置
+    private static int pos = 0;
     
     //发布信息的类型
     @InjectView(R.id.publish_type)
@@ -100,6 +104,10 @@ public class PublishActivity extends Activity {
 
     @OnClick(R.id.activity_publish_btn)
     public void onPublish_Btn_Click() {
+
+        //确定发布类型
+        type = getPublishType();
+
         //上传发布的信息
         uploade_publish_content();
 
@@ -108,9 +116,6 @@ public class PublishActivity extends Activity {
 
         //清空文字
         text = "";
-        
-        //确定发布类型
-        type = getPublishType();
 
         //结束发布activity，回到主界面
         for(Activity act : PublicWay.activityList){
@@ -140,9 +145,16 @@ public class PublishActivity extends Activity {
     }
 
     private void InitPublishType() {
-        String[] types = {"好友", "说说"};
+        String[] types = {"说说", "好友" };
         typeList.setAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_single_choice, types));
+        typeList.setItemChecked(0, true);
+        typeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                pos = i;
+            }
+        });
     }
 
     @Override
@@ -213,6 +225,7 @@ public class PublishActivity extends Activity {
         moment.setUser(LeanchatUser.getCurrentUser());//当前用户
         moment.setContent(publish_text.getText().toString());//文字信息
         moment.setPosition(LeanchatUser.getCurrentUser().getGeoPoint());//坐标
+        moment.setType(type);//类型
 
         new Thread(new Runnable() {
             @Override
@@ -425,9 +438,8 @@ public class PublishActivity extends Activity {
     }
 
     public int getPublishType() {
-        int position = typeList.getCheckedItemPosition();
         int choice = TYPE_PERSONAL;
-        switch (position){
+        switch (pos){
             case 0:
                 choice = TYPE_PERSONAL;
                 break;
@@ -577,6 +589,7 @@ public class PublishActivity extends Activity {
     }
 
     public void recoverConfigument() {
+        typeList.setItemChecked(pos, true);
         publish_text.setText(text);
     }
 
