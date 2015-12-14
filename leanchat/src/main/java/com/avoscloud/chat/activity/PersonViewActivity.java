@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
@@ -38,6 +39,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
+import me.relex.circleindicator.CircleIndicator;
+
 /**
  * Created by Puyangsky on 2015/11/18.
  */
@@ -45,6 +48,7 @@ public class PersonViewActivity extends BaseActivity {
 
     private ListView listView;
     private ViewPager vp;
+    private CircleIndicator circleIndicator;
     private FragmentPagerAdapter fAdapter;
     private List<Fragment> data;
     private ArrayList<PersonviewEntity> itemEntities;
@@ -68,6 +72,10 @@ public class PersonViewActivity extends BaseActivity {
 
     private void initView() {
         vp = (ViewPager)findViewById(R.id.recommends);
+        circleIndicator = (CircleIndicator)findViewById(R.id.circleIndicator);
+        RelativeLayout layout = (RelativeLayout)findViewById(R.id.personRel);
+        layout.bringChildToFront(circleIndicator);
+
         data = new ArrayList<Fragment>();
         ChatMainTabFragment chatMainTabFragment = new ChatMainTabFragment();
         FriendMainTabFragment friendMainTabFragment = new FriendMainTabFragment();
@@ -104,6 +112,7 @@ public class PersonViewActivity extends BaseActivity {
             public void onPageScrollStateChanged(int i) {
             }
         });
+        circleIndicator.setViewPager(vp);
     }
 
     public void initData(){
