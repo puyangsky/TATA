@@ -27,6 +27,8 @@ import com.avos.avoscloud.SaveCallback;
 import com.avoscloud.chat.R;
 import com.avoscloud.chat.App;
 import com.avoscloud.chat.fragment.SquareFragment;
+import com.avoscloud.chat.model.Comment;
+import com.avoscloud.chat.model.Moment;
 import com.avoscloud.chat.service.CacheService;
 import com.avoscloud.chat.service.PreferenceMap;
 import com.avoscloud.chat.service.UpdateService;
@@ -90,11 +92,7 @@ public class MainActivity extends BaseActivity {
   public static LinearLayout editCommentLayout;
   public static EditText editText;
   public static ImageView sendComment;
-
-
-
-    public static int position;
-  public static ArrayAdapter mAdapter;
+  public static int position;
 
   public static void goMainActivityFromActivity(Activity fromActivity) {
     EventBus eventBus = EventBus.getDefault();
@@ -127,25 +125,41 @@ public class MainActivity extends BaseActivity {
 
       editCommentLayout = (LinearLayout) findViewById(R.id.editCommentLayout);
       editText = (EditText) findViewById(R.id.editComment);
+      //编辑框失去焦点，隐藏软键盘
+      editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+          @Override
+          public void onFocusChange(View v, boolean hasFocus) {
+              Log.d("pyt", "是否有焦点：" + (hasFocus ? "1" : "0"));
+              if (!hasFocus) {
+                  hideSoftInput(ctx);
+              }
+          }
+      });
       sendComment = (ImageView) findViewById(R.id.sendComment);
+      //点击发送按钮触发事件：上传评论并刷新评论列表
       sendComment.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              List<String> DATA = new ArrayList<>();
-              DATA.add(AVUser.getCurrentUser().getUsername().toString() + ": " + editText.getText().toString());
-              mAdapter = new ArrayAdapter(ctx, R.layout.comment_item, DATA);
+              String data;
+              data = (AVUser.getCurrentUser().getUsername().toString() + " : " + editText.getText().toString());
+              final Comment comment = new Comment();
+              Moment moment = SquareFragment.moments.get(getPosition());
+              comment.setContent(data);
+              comment.setMoment(moment);
+              new Thread(new Runnable() {
+                  @Override
+                  public void run() {
+                      try {
+                          comment.save();
+                      } catch (AVException e) {
+                          Log.e("pyt", e.getMessage());
+                      }
+                  }
+              }).start();
 
               Log.d("pyt", "点击了第" + getPosition() + "个listview");
 
-              ListView commentListView = (ListView) squareFragment.mListView.getSelectedView().findViewById(R.id.commentList);
-//              ListView commentListView = (ListView) squareFragment.mListView.getChildAt(4).findViewById(R.id.commentList);
-//              Log.d("pyt", "ViewGroup共有 " + squareFragment.mListView.getChildCount() + "个子节点");
-              commentListView.setVisibility(View.VISIBLE);
-              commentListView.setAdapter(mAdapter);
-
-              mAdapter.notifyDataSetChanged();
-
-              hideInputLayout();
+              hideSoftInput(ctx);
           }
       });
   }
@@ -170,7 +184,6 @@ public class MainActivity extends BaseActivity {
               }
       );
       new Thread(task).start();
-//      task.get();
     }catch (Exception e1) {
       Log.d("lhq", "ERROR cache friend：" + e1.getMessage());
     }
@@ -412,14 +425,12 @@ public class MainActivity extends BaseActivity {
         setPosition(position);
     }
 
-    public static void closeSoftInput (Context context) {
+    public static void hideSoftInput (Context context) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        editCommentLayout.setVisibility(View.GONE);
     }
 
-    public static void hideInputLayout () {
-        editCommentLayout.setVisibility(View.INVISIBLE);
-    }
     public static int getPosition() {
         return position;
     }

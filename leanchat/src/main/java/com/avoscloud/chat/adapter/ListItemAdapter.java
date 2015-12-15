@@ -35,9 +35,12 @@ public class ListItemAdapter extends BaseAdapter {
 
     private Context mContext;
     private ArrayList<ItemEntity> items;
-    public ListItemAdapter(Context ctx, ArrayList<ItemEntity> items) {
+    private ArrayList<ArrayList<String>> commentItems;
+    public ArrayAdapter mCommentAdapter;
+    public ListItemAdapter(Context ctx, ArrayList<ItemEntity> items, ArrayList<ArrayList<String>> commentItems) {
         this.mContext = ctx;
         this.items = items;
+        this.commentItems = commentItems;
     }
 
     @Override
@@ -53,6 +56,12 @@ public class ListItemAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+        mCommentAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -85,8 +94,13 @@ public class ListItemAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         final ItemEntity itemEntity = items.get(position);
+        ArrayList<String> commentItem = commentItems.get(position);
         holder.tv_username.setText(itemEntity.getUsername());
-        holder.tv_content.setText(itemEntity.getContent());
+        if(itemEntity.getContent().equals("") && itemEntity.getContent().length() == 0) {
+            holder.tv_content.setVisibility(View.GONE);
+        }else {
+            holder.tv_content.setText(itemEntity.getContent());
+        }
         holder.tv_position.setText(itemEntity.getPosition());
         holder.tv_time.setText(itemEntity.getPublishTime());
         if(itemEntity.getZanFlag() < 0)
@@ -106,6 +120,7 @@ public class ListItemAdapter extends BaseAdapter {
                     holder.iv_zan.setImageResource(R.drawable.zan);
                     itemEntity.setZanFlag(itemEntity.getZanFlag() * (-1));
                 }
+                MainActivity.hideSoftInput(mContext);
             }
         });
         //点击评论按钮事件
@@ -116,7 +131,10 @@ public class ListItemAdapter extends BaseAdapter {
             }
         });
         //评论列表
+        mCommentAdapter = new ArrayAdapter(mContext, R.layout.comment_item, commentItem);
+        holder.lv_commentList.setAdapter(mCommentAdapter);
 
+        //显示头像
         DisplayImageOptions options = new DisplayImageOptions.Builder()
 //                .showImageOnLoading(R.drawable.ic)
                 .showImageOnFail(R.drawable.ic)
@@ -140,6 +158,7 @@ public class ListItemAdapter extends BaseAdapter {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 imageBrower(position, imageUrls);
+                MainActivity.hideSoftInput(mContext);
             }
         });
         return convertView;

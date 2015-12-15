@@ -12,21 +12,22 @@ import com.avoscloud.leanchatlib.model.LeanchatUser;
 public class Comment extends AVObject{
     public static final String user = "user";
     public static final String content = "content";
-    public static final String reply = "reply";
+//    public static final String reply = "reply";
+    public static final String moment = "moment";
 
-    public AVRelation<Reply> getReply(){
-        return getRelation(reply);
-    }
-
-    public void addReply(Reply reply){
-        AVRelation<Reply> relation = getReply();
-        relation.add(reply);
-    }
-
-    public void removeReply(Reply reply){
-        AVRelation<Reply> relation = getReply();
-        relation.remove(reply);
-    }
+//    public AVRelation<Reply> getReply(){
+//        return getRelation(reply);
+//    }
+//
+//    public void addReply(Reply reply){
+//        AVRelation<Reply> relation = getReply();
+//        relation.add(reply);
+//    }
+//
+//    public void removeReply(Reply reply){
+//        AVRelation<Reply> relation = getReply();
+//        relation.remove(reply);
+//    }
 
     public LeanchatUser getUser() {
         return getAVUser(user);
@@ -42,5 +43,17 @@ public class Comment extends AVObject{
 
     public void setContent(String con){
         put(content, con);
+    }
+
+    public void setMoment(Moment newMoment){
+        put(moment, newMoment);
+    }
+    public Moment getMoment() {
+        try {
+            return getAVObject(moment, Moment.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

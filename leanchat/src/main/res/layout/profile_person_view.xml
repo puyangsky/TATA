@@ -1,66 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:layout_height="fill_parent"-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:scrollbars="none">-->
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent">
-        <LinearLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/personRel"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="180dp">
 
-            <RelativeLayout
-                android:id="@+id/personRel"
+            <me.relex.circleindicator.CircleIndicator
+                android:id="@+id/circleIndicator"
+                android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
-                android:layout_height="180dp">
+                android:layout_height="48dp">
+            </me.relex.circleindicator.CircleIndicator>
 
-                <me.relex.circleindicator.CircleIndicator
-                    android:id="@+id/circleIndicator"
-                    android:layout_alignParentBottom="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp">
-                </me.relex.circleindicator.CircleIndicator>
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/recommends"
-                    android:layout_width="wrap_content"
-                    android:layout_height="180dp" >
-                </android.support.v4.view.ViewPager>
-
-            </RelativeLayout>
-
-            <View style="@style/Divider"/>
-
-            <ListView
-                android:id="@+id/moment_list_item"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/recommends"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp" />
-        </LinearLayout>
+                android:layout_height="180dp" >
+            </android.support.v4.view.ViewPager>
 
-        <!-- 点击评论按钮弹出编辑框和发送按钮 -->
-        <!--<LinearLayout-->
-            <!--android:id="@+id/editCommentLayout"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:visibility="invisible"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:background="#FFFFFF">-->
-            <!--<EditText-->
-                <!--android:id="@+id/editComment"-->
-                <!--android:layout_weight="5"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="match_parent"/>-->
-            <!--<ImageView-->
-                <!--android:id="@+id/sendComment"-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:src="@drawable/send_comment"/>-->
-        <!--</LinearLayout>-->
-    </RelativeLayout>
-<!--</ScrollView>-->
+        </RelativeLayout>
+
+        <View style="@style/Divider"/>
+
+        <ListView
+            android:id="@+id/moment_list_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp" />
+    </LinearLayout>
+
+</RelativeLayout>

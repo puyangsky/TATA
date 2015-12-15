@@ -3,9 +3,11 @@ package com.avoscloud.chat.fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.avos.avoscloud.AVException;
@@ -15,11 +17,13 @@ import com.avos.avoscloud.FindCallback;
 import com.avoscloud.chat.R;
 import com.avoscloud.chat.activity.MainActivity;
 import com.avoscloud.chat.adapter.ListItemAdapter;
+import com.avoscloud.chat.model.Comment;
 import com.avoscloud.chat.model.Image;
 import com.avoscloud.chat.model.Moment;
 import com.avoscloud.chat.service.CacheService;
 import com.avoscloud.chat.util.GetCity;
 import com.avoscloud.chat.util.ItemEntity;
+import com.avoscloud.chat.view.XListView;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 
 import java.text.SimpleDateFormat;
@@ -34,7 +38,9 @@ import java.util.concurrent.FutureTask;
 public class SquareFragment extends BaseFragment{
     public ListView mListView;
     private ArrayList<ItemEntity> itemEntities;
+    public ArrayList<ArrayList<String>> commentItems;
     private ListItemAdapter adapter;
+    public static List<Moment> moments;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.square_fragment, container, false);
@@ -45,13 +51,17 @@ public class SquareFragment extends BaseFragment{
         super.onActivityCreated(savedInstanceState);
         mListView = (ListView) getView().findViewById(R.id.square_list_item);
         initData();
-        adapter = new ListItemAdapter(getActivity(), itemEntities);
+        adapter = new ListItemAdapter(getActivity(), itemEntities, commentItems);
         mListView.setAdapter(adapter);
-        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        mListView.setOnScrollListener(new XListView.OnXScrollListener() {
+            @Override
+            public void onXScrolling(View view) {
+                initData();
+            }
+
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                MainActivity.closeSoftInput(getActivity());
-                MainActivity.hideInputLayout();
+                MainActivity.hideSoftInput(getActivity());
             }
 
             @Override
@@ -59,14 +69,32 @@ public class SquareFragment extends BaseFragment{
 
             }
         });
+//        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(AbsListView view, int scrollState) {
+//                MainActivity.hideSoftInput(getActivity());
+//            }
+//
+//            @Override
+//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+//
+//            }
+//        });
+        mListView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                MainActivity.hideSoftInput(getActivity());
+                return false;
+            }
+        });
         headerLayout.showTitle(R.string.square_title);
     }
 
     public void initData(){
         itemEntities = new ArrayList<>();
+        commentItems = new ArrayList<>();
         AVQuery<Moment> query = AVObject.getQuery(Moment.class);
         query.orderByDescending("createdAt");
-        query.setLimit(20);
         query.include("user");
         query.include("content");
         query.include("createdAt");
@@ -75,13 +103,14 @@ public class SquareFragment extends BaseFragment{
         query.include("zan");
         List<LeanchatUser> friends = CacheService.getFriends();
         Log.e("friends", friends.toString());
-        query.whereContainedIn("user", friends );
+        query.whereContainedIn("user", friends);
         query.findInBackground(new FindCallback<Moment>() {
             @Override
             public void done(List<Moment> results, AVException e) {
                 if (e != null || results == null) {
                     return;
                 }
+                moments = results;
                 for (Moment moment : results) {
                     List<Image> imageList = moment.getFileList();
                     //图片为空，略过
@@ -109,8 +138,8 @@ public class SquareFragment extends BaseFragment{
                                     }
                             );
                             new Thread(task).start();
-                            city =  task.get();
-                        }catch (Exception e1) {
+                            city = task.get();
+                        } catch (Exception e1) {
                             Log.d("pyt", "ERROR城市：" + e1.getMessage());
                         }
                         ItemEntity entity = new ItemEntity(
@@ -126,11 +155,34 @@ public class SquareFragment extends BaseFragment{
                     } catch (Exception e2) {
                         Log.d("pyt", "失败:" + e2.getMessage());
                     }
+
+                    //查找每条moment对应的评论集合
+                    final ArrayList<String> commentItem = new ArrayList<>();
+                    AVQuery<Comment> commentQuery = AVObject.getQuery(Comment.class);
+                    commentQuery.orderByDescending("createdAt");
+                    commentQuery.include("content");
+                    commentQuery.include("moment");
+                    commentQuery.include("createdAt");
+                    commentQuery.include("user");
+                    commentQuery.whereEqualTo("moment", moment);
+                    commentQuery.findInBackground(new FindCallback<Comment>() {
+                        @Override
+                        public void done(List<Comment> commentList, AVException e) {
+                            if (e == null) {
+                                for (Comment comment : commentList) {
+                                    commentItem.add(comment.getContent());
+                                    Log.d("pyt", "评论内容：" + comment.getContent());
+                                }
+                            } else {
+                                Log.d("pyt", e.getMessage());
+                            }
+                        }
+                    });
+                    commentItems.add(commentItem);
                 }
                 adapter.notifyDataSetChanged();
             }
         });
-
     }
 
 }

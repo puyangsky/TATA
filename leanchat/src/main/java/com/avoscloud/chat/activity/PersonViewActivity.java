@@ -1,18 +1,11 @@
 package com.avoscloud.chat.activity;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -22,25 +15,18 @@ import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
 import com.avoscloud.chat.R;
-import com.avoscloud.chat.adapter.ListItemAdapter;
 import com.avoscloud.chat.adapter.PersonviewItemAdapter;
 import com.avoscloud.chat.fragment.ChatMainTabFragment;
 import com.avoscloud.chat.fragment.ContactMainTabFragment;
 import com.avoscloud.chat.fragment.FriendMainTabFragment;
 import com.avoscloud.chat.model.Image;
 import com.avoscloud.chat.model.Moment;
-import com.avoscloud.chat.util.GetCity;
-import com.avoscloud.chat.util.ItemEntity;
 import com.avoscloud.chat.util.PersonviewEntity;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -79,7 +65,6 @@ public class PersonViewActivity extends BaseActivity {
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.personRel);
         layout.bringChildToFront(circleIndicator);
 
-//        data = new ArrayList<Fragment>();
         ChatMainTabFragment chatMainTabFragment = new ChatMainTabFragment();
         FriendMainTabFragment friendMainTabFragment = new FriendMainTabFragment();
         ContactMainTabFragment contactMainTabFragment = new ContactMainTabFragment();
@@ -151,9 +136,9 @@ public class PersonViewActivity extends BaseActivity {
                     for (Image image : imageList) {
                         imageUrls.add(image.getFile().getUrl());
                     }
-                    Log.d("pyt", "内容：" + moment.getContent() +
-                            "\nurl：" + imageUrls +
-                            "\ntime:" + new SimpleDateFormat("MM/dd").format(moment.getCreatedAt()));
+//                    Log.d("pyt", "内容：" + moment.getContent() +
+//                            "\nurl：" + imageUrls +
+//                            "\ntime:" + new SimpleDateFormat("MM/dd").format(moment.getCreatedAt()));
 
                     PersonviewEntity entity = new PersonviewEntity(
                             new SimpleDateFormat("MM/dd").format(moment.getCreatedAt()),
@@ -173,7 +158,6 @@ public class PersonViewActivity extends BaseActivity {
 //                                .build();
 //                        ImageLoader.getInstance().displayImage(imageUrls.get(0), imageView, options);
 //                    }
-                    Log.d("pyt", "通过！");
                 }
                 adapter.notifyDataSetChanged();
             }

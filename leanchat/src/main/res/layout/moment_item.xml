@@ -96,6 +96,8 @@
             android:id="@+id/commentList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="invisible" />
+            android:padding="3dp"
+            android:layout_margin="3dp"
+            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>
