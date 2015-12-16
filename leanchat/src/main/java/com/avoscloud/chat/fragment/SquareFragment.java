@@ -23,6 +23,7 @@ import com.avoscloud.chat.model.Moment;
 import com.avoscloud.chat.service.CacheService;
 import com.avoscloud.chat.util.GetCity;
 import com.avoscloud.chat.util.ItemEntity;
+import com.avoscloud.chat.view.MomentListView;
 import com.avoscloud.chat.view.XListView;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 
@@ -36,7 +37,7 @@ import java.util.concurrent.FutureTask;
  * Created by puyangsky on 2015/12/3.
  */
 public class SquareFragment extends BaseFragment{
-    public ListView mListView;
+    public MomentListView mListView;
     private ArrayList<ItemEntity> itemEntities;
     public ArrayList<ArrayList<String>> commentItems;
     private ListItemAdapter adapter;
@@ -49,14 +50,15 @@ public class SquareFragment extends BaseFragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mListView = (ListView) getView().findViewById(R.id.square_list_item);
+        mListView = (MomentListView) getView().findViewById(R.id.square_list_item);
         initData();
         adapter = new ListItemAdapter(getActivity(), itemEntities, commentItems);
         mListView.setAdapter(adapter);
+        mListView.initMomentListView();
         mListView.setOnScrollListener(new XListView.OnXScrollListener() {
             @Override
             public void onXScrolling(View view) {
-                initData();
+//                initData();
             }
 
             @Override
@@ -183,6 +185,12 @@ public class SquareFragment extends BaseFragment{
                 adapter.notifyDataSetChanged();
             }
         });
+        Log.d("pyt", commentItems.toString());
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+//        initData();
+    }
 }

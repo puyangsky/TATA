@@ -3,6 +3,7 @@ package com.avoscloud.chat.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,6 +20,7 @@ import com.avoscloud.chat.activity.PersonViewActivity;
 import com.avoscloud.chat.fragment.SquareFragment;
 import com.avoscloud.chat.model.Image;
 import com.avoscloud.chat.util.ItemEntity;
+import com.avoscloud.chat.util.PixelUtils;
 import com.avoscloud.chat.view.NoScrollGridView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -66,6 +68,7 @@ public class ListItemAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+//        Log.d("pyt", "调用getView");
         final ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
@@ -96,11 +99,11 @@ public class ListItemAdapter extends BaseAdapter {
         final ItemEntity itemEntity = items.get(position);
         ArrayList<String> commentItem = commentItems.get(position);
         holder.tv_username.setText(itemEntity.getUsername());
-        if(itemEntity.getContent().equals("") && itemEntity.getContent().length() == 0) {
-            holder.tv_content.setVisibility(View.GONE);
-        }else {
-            holder.tv_content.setText(itemEntity.getContent());
-        }
+//        if(itemEntity.getContent().equals("") && itemEntity.getContent().length() == 0) {
+//            holder.tv_content.setVisibility(View.GONE);
+//        }else {
+        holder.tv_content.setText(itemEntity.getContent());
+//        }
         holder.tv_position.setText(itemEntity.getPosition());
         holder.tv_time.setText(itemEntity.getPublishTime());
         if(itemEntity.getZanFlag() < 0)
@@ -133,6 +136,7 @@ public class ListItemAdapter extends BaseAdapter {
         //评论列表
         mCommentAdapter = new ArrayAdapter(mContext, R.layout.comment_item, commentItem);
         holder.lv_commentList.setAdapter(mCommentAdapter);
+        holder.lv_commentList.setVisibility(commentItem.size() != 0 ? View.VISIBLE : View.GONE);
 
         //显示头像
         DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -147,7 +151,15 @@ public class ListItemAdapter extends BaseAdapter {
         //如果imageurls为空，不显示gridview
         if (imageUrls == null || imageUrls.size() == 0) {
             holder.gridview.setVisibility(View.GONE);
-        } else {
+        }
+//        else if(imageUrls.size() == 1) {
+//            holder.gridview.setNumColumns(1);
+//            holder.gridview.setColumnWidth(PixelUtils.dp2px(215));
+//        } else if (imageUrls.size() == 2) {
+//            holder.gridview.setNumColumns(2);
+//            holder.gridview.setColumnWidth(PixelUtils.dp2px(107));
+//        }
+        else {
             //给gridview设置NoScrollGridAdapter，赋值
             holder.gridview.setAdapter(new NoScrollGridAdapter(mContext,
                     imageUrls));

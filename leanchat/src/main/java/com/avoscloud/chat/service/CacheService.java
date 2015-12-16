@@ -9,6 +9,7 @@ import com.avos.avoscloud.FindCallback;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 import com.avoscloud.leanchatlib.utils.AVUserCacheUtils;
 import com.avoscloud.leanchatlib.utils.Constants;
+import com.baidu.mapapi.map.Stroke;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +26,7 @@ import java.util.concurrent.CountDownLatch;
 
 public class CacheService {
   private static volatile List<String> friendIds = new ArrayList<String>();     //加载时是最新的
-
+//    private static volatile List<String>
   public static LeanchatUser lookupUser(String userId) {
     return AVUserCacheUtils.getCachedUser(userId);
   }
