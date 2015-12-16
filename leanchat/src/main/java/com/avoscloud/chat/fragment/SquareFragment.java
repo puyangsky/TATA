@@ -23,13 +23,16 @@ import com.avoscloud.chat.model.Moment;
 import com.avoscloud.chat.service.CacheService;
 import com.avoscloud.chat.util.GetCity;
 import com.avoscloud.chat.util.ItemEntity;
+import com.avoscloud.chat.util.RefreshTask;
 import com.avoscloud.chat.view.MomentListView;
 import com.avoscloud.chat.view.XListView;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
@@ -50,31 +53,29 @@ public class SquareFragment extends BaseFragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mListView = (MomentListView) getView().findViewById(R.id.square_list_item);
+
         initData();
+        initView();
+
+        headerLayout.showTitle(R.string.square_title);
+    }
+
+    public void initView() {
+        mListView = (MomentListView) getView().findViewById(R.id.square_list_item);
+
         adapter = new ListItemAdapter(getActivity(), itemEntities, commentItems);
-        mListView.setAdapter(adapter);
-        mListView.initMomentListView();
-        mListView.setOnScrollListener(new XListView.OnXScrollListener() {
-            @Override
-            public void onXScrolling(View view) {
-//                initData();
-            }
+        mListView.initMomentListView(adapter);
 
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                MainActivity.hideSoftInput(getActivity());
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-            }
-        });
-//        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+//        mListView.setAdapter(adapter);
+//        mListView.setOnScrollListener(new XListView.OnXScrollListener() {
+//            @Override
+//            public void onXScrolling(View view) {
+////                initData();
+//            }
+//
 //            @Override
 //            public void onScrollStateChanged(AbsListView view, int scrollState) {
-//                MainActivity.hideSoftInput(getActivity());
+//
 //            }
 //
 //            @Override
@@ -82,15 +83,18 @@ public class SquareFragment extends BaseFragment{
 //
 //            }
 //        });
-        mListView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                MainActivity.hideSoftInput(getActivity());
-                return false;
-            }
-        });
-        headerLayout.showTitle(R.string.square_title);
+
+//        mListView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                MainActivity.hideSoftInput(getActivity());
+//                return false;
+//            }
+//        });
     }
+
+
+
 
     public void initData(){
         itemEntities = new ArrayList<>();
@@ -193,4 +197,6 @@ public class SquareFragment extends BaseFragment{
         super.onResume();
 //        initData();
     }
+
+
 }

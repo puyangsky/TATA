@@ -8,12 +8,11 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.markmao.pulltorefresh.R;
+
+import com.avoscloud.chat.R;
+
 
 /**
- * The footer view for {@link com.markmao.pulltorefresh.widget.XListView} and
- * {@link com.markmao.pulltorefresh.widget.XScrollView}
- *
  * @author markmjw
  * @date 2013-10-08
  */
@@ -99,14 +98,14 @@ public class XFooterView extends LinearLayout {
 //                if (mState == STATE_LOADING) {
 //                    mHintImage.clearAnimation();
 //                }
-                mHintView.setText(R.string.footer_hint_load_normal);
+                mHintView.setText("Load more");
                 break;
 
             case STATE_READY:
                 if (mState != STATE_READY) {
 //                    mHintImage.clearAnimation();
 //                    mHintImage.startAnimation(mRotateUpAnim);
-                    mHintView.setText(R.string.footer_hint_load_ready);
+                    mHintView.setText("Release to load more");
                 }
                 break;
 
