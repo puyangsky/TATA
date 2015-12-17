@@ -1,12 +1,11 @@
 package com.avoscloud.chat.view;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ListAdapter;
 
 import com.avoscloud.chat.activity.MainActivity;
 import com.avoscloud.chat.adapter.ListItemAdapter;
@@ -14,8 +13,6 @@ import com.avoscloud.chat.adapter.ListItemAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import android.os.Handler;
-import java.util.logging.LogRecord;
 
 /**
  * Created by puyangsky on 2015/12/16.
@@ -68,12 +65,28 @@ public class MomentListView extends MyXListView implements MyXListView.IXListVie
     @Override
     public void onRefresh() {
     // TODO: 2015/12/16  fresh the square
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
 
+                onLoad();
+            }
+        }, 2500);
     }
 
     @Override
     public void onLoadMore() {
-
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                onLoad();
+            }
+        }, 2500);
     }
 
+    private void onLoad() {
+        stopRefresh();
+        stopLoadMore();
+        setRefreshTime(getTime());
+    }
 }

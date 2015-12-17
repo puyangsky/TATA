@@ -12,14 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.markmao.pulltorefresh.R;
+import com.avoscloud.chat.R;
 
 /**
- * The header view for {@link com.markmao.pulltorefresh.widget.XListView} and
- * {@link com.markmao.pulltorefresh.widget.XScrollView}
- *
- * @author markmjw
- * @date 2013-10-08
+ * Created by puyangsky on 2015/12/16.
  */
 public class XHeaderView extends LinearLayout {
     public final static int STATE_NORMAL = 0;

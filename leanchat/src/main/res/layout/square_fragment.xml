@@ -9,9 +9,8 @@
 
     <com.avoscloud.chat.view.MomentListView
         android:id="@+id/square_list_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:scrollbars="none"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="#00000000"/>
 
 </LinearLayout>

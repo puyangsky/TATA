@@ -98,14 +98,14 @@ public class XFooterView extends LinearLayout {
 //                if (mState == STATE_LOADING) {
 //                    mHintImage.clearAnimation();
 //                }
-                mHintView.setText("Load more");
+                mHintView.setText(R.string.footer_hint_load_normal);
                 break;
 
             case STATE_READY:
                 if (mState != STATE_READY) {
 //                    mHintImage.clearAnimation();
 //                    mHintImage.startAnimation(mRotateUpAnim);
-                    mHintView.setText("Release to load more");
+                    mHintView.setText(R.string.footer_hint_load_ready);
                 }
                 break;
 

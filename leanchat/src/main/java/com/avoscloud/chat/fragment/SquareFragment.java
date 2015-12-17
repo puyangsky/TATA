@@ -3,19 +3,14 @@ package com.avoscloud.chat.fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
 import com.avoscloud.chat.R;
-import com.avoscloud.chat.activity.MainActivity;
 import com.avoscloud.chat.adapter.ListItemAdapter;
 import com.avoscloud.chat.model.Comment;
 import com.avoscloud.chat.model.Image;
@@ -23,16 +18,12 @@ import com.avoscloud.chat.model.Moment;
 import com.avoscloud.chat.service.CacheService;
 import com.avoscloud.chat.util.GetCity;
 import com.avoscloud.chat.util.ItemEntity;
-import com.avoscloud.chat.util.RefreshTask;
 import com.avoscloud.chat.view.MomentListView;
-import com.avoscloud.chat.view.XListView;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
