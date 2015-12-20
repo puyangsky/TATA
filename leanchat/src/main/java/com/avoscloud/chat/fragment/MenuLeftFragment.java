@@ -72,6 +72,10 @@ public class MenuLeftFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PersonViewActivity.class);
+                Bundle bundle = new Bundle();
+                AVUser user = LeanchatUser.getCurrentUser();
+                bundle.putParcelable("user", user);
+                intent.putExtras(bundle);
                 getActivity().startActivity(intent);
             }
         });

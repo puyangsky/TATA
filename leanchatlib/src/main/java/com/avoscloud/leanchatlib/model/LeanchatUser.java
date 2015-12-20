@@ -1,7 +1,7 @@
 package com.avoscloud.leanchatlib.model;
 
 
-import android.util.Log;
+import android.os.Parcelable;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  * Created by wli on 15/9/30.
  * 自定义的 AVUser
  */
-public class LeanchatUser extends AVUser {
+public class LeanchatUser extends AVUser implements Parcelable{
 
   public static final String USERNAME = "username";
   public static final String AVATAR = "avatar";

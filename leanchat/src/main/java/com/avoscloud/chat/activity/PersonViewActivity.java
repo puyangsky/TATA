@@ -24,6 +24,7 @@ import com.avoscloud.chat.model.Moment;
 import com.avoscloud.chat.util.PersonviewEntity;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 
+import java.nio.BufferUnderflowException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +44,18 @@ public class PersonViewActivity extends BaseActivity {
     private ArrayList<PersonviewEntity> itemEntities;
     private PersonviewItemAdapter adapter;
     protected Context ctx;
+    private AVUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_person_view);
+
+        try{
+            user = getIntent().getParcelableExtra("user");
+        }catch (ClassCastException e) {
+            Log.d("pyt", e.getMessage());
+            user = null;
+        }
 
         ctx = PersonViewActivity.this;
 
@@ -106,7 +115,8 @@ public class PersonViewActivity extends BaseActivity {
     public void initData(){
         itemEntities = new ArrayList<>();
         data = new ArrayList<Fragment>();
-        final LeanchatUser currentUser = (LeanchatUser) AVUser.getCurrentUser();
+//        final LeanchatUser currentUser = LeanchatUser.getCurrentUser();
+        final AVUser currentUser = user;
         AVQuery<Moment> query = AVObject.getQuery(Moment.class);
         query.orderByDescending("createdAt");
         query.include("user");
@@ -128,7 +138,7 @@ public class PersonViewActivity extends BaseActivity {
                     List<Image> imageList = moment.getFileList();
                     //图片为空，略过
                     if (imageList == null) {
-                        Log.e("pyt", "fileList = null");
+                        Log.d("pyt", "fileList = null");
                         continue;
                     }
                     //获取图片urls

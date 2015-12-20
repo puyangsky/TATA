@@ -3,6 +3,7 @@ package com.avoscloud.chat.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVUser;
 import com.avoscloud.chat.activity.ImagePagerActivity;
 import com.avoscloud.chat.activity.MainActivity;
 import com.avoscloud.chat.activity.PersonViewActivity;
@@ -25,7 +27,7 @@ import com.avoscloud.chat.view.NoScrollGridView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.avoscloud.chat.R;
-
+import com.avoscloud.leanchatlib.model.LeanchatUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,6 +149,17 @@ public class ListItemAdapter extends BaseAdapter {
                 .build();
         ImageLoader.getInstance().displayImage(itemEntity.getAvatar(),
                 holder.iv_avatar, options);
+        holder.iv_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, PersonViewActivity.class);
+                Bundle bundle = new Bundle();
+                AVUser user = SquareFragment.moments.get(position).getUser();
+                bundle.putParcelable("user", user);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
+            }
+        });
         final ArrayList<String> imageUrls = itemEntity.getImageUrls();
         //如果imageurls为空，不显示gridview
         if (imageUrls == null || imageUrls.size() == 0) {

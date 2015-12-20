@@ -56,36 +56,7 @@ public class SquareFragment extends BaseFragment{
 
         adapter = new ListItemAdapter(getActivity(), itemEntities, commentItems);
         mListView.initMomentListView(adapter);
-
-//        mListView.setAdapter(adapter);
-//        mListView.setOnScrollListener(new XListView.OnXScrollListener() {
-//            @Override
-//            public void onXScrolling(View view) {
-////                initData();
-//            }
-//
-//            @Override
-//            public void onScrollStateChanged(AbsListView view, int scrollState) {
-//
-//            }
-//
-//            @Override
-//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//
-//            }
-//        });
-
-//        mListView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                MainActivity.hideSoftInput(getActivity());
-//                return false;
-//            }
-//        });
     }
-
-
-
 
     public void initData(){
         itemEntities = new ArrayList<>();
@@ -108,18 +79,23 @@ public class SquareFragment extends BaseFragment{
                     return;
                 }
                 moments = results;
+                Log.d("pyt", "找到了" + results.size() + "条记录");
                 for (Moment moment : results) {
                     List<Image> imageList = moment.getFileList();
                     //图片为空，略过
-                    if (imageList == null) {
-                        Log.e("fileList = ", "null");
-                        continue;
-                    }
+//                    if (imageList == null) {
+//                        Log.e("fileList = ", "null");
+//                        continue;
+//                    }
                     //获取图片urls
                     ArrayList<String> imageUrls = new ArrayList<String>();
-                    for (Image image : imageList) {
-                        imageUrls.add(image.getFile().getUrl());
-                        Log.e("itemEntitiesUrl", image.getFile().getUrl());
+                    if(imageList == null) {
+                        imageUrls = null;
+                    }else {
+                        for (Image image : imageList) {
+                            imageUrls.add(image.getFile().getUrl());
+                            Log.d("itemEntitiesUrl", image.getFile().getUrl());
+                        }
                     }
                     try {
                         String city = "";
