@@ -57,6 +57,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 
 public class PublishActivity extends Activity {
@@ -104,6 +105,12 @@ public class PublishActivity extends Activity {
 
     @OnClick(R.id.activity_publish_btn)
     public void onPublish_Btn_Click() {
+
+        //判断文字是否为空
+        if(publish_text.getText().toString().isEmpty()){
+            Toast.makeText(PublishActivity.this, "输入内容为空", Toast.LENGTH_LONG).show();
+            return ;
+        }
 
         //确定发布类型
         type = getPublishType();
