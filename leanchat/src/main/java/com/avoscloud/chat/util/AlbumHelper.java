@@ -49,6 +49,7 @@ public class AlbumHelper {
 		Cursor cursor = cr.query(Thumbnails.EXTERNAL_CONTENT_URI, projection,
 				null, null, null);
 		getThumbnailColumnData(cursor);
+		cursor.close();
 	}
 
 	private void getThumbnailColumnData(Cursor cur) {

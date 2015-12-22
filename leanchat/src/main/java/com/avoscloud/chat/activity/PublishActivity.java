@@ -1,6 +1,7 @@
 package com.avoscloud.chat.activity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -56,6 +57,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -68,6 +70,9 @@ public class PublishActivity extends Activity {
     
     public static final int TYPE_PERSONAL = 1;
     public static final int TYPE_OTHER = 2;
+
+    int num = 0;
+    int totalNum = 0;
 
     //当前的activity为最开始的parent
     private View parentView;
@@ -103,6 +108,34 @@ public class PublishActivity extends Activity {
 
     private GridView noScrollgridview;
 
+    //进度条
+    private ProgressDialog progressDialog;
+
+    //更新进度条
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            //设置进度条的值
+            if(msg.arg1 == totalNum){
+                progressDialog.dismiss();
+
+                //清空bitmap图片和JPEG图片
+                Bimp.clearImage();
+
+                //清空文字
+                text = "";
+
+                //结束发布activity，回到主界面
+                for(Activity act : PublicWay.activityList){
+                    act.finish();
+                }
+
+            }else {
+                progressDialog.setProgress(msg.arg1);
+            }
+        }
+    };
+
     @OnClick(R.id.activity_publish_btn)
     public void onPublish_Btn_Click() {
 
@@ -118,16 +151,15 @@ public class PublishActivity extends Activity {
         //上传发布的信息
         uploade_publish_content();
 
-        //清空bitmap图片和JPEG图片
-        Bimp.clearImage();
+        //显示进度条
+        progressDialog = new ProgressDialog(PublishActivity.this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setMessage("正在上传");
+        progressDialog.setTitle("uploading");
+        progressDialog.setMax(totalNum);
+        progressDialog.setProgress(0);
+        progressDialog.show();
 
-        //清空文字
-        text = "";
-
-        //结束发布activity，回到主界面
-        for(Activity act : PublicWay.activityList){
-            act.finish();
-        }
     }
 
 
@@ -234,20 +266,13 @@ public class PublishActivity extends Activity {
         moment.setPosition(LeanchatUser.getCurrentUser().getGeoPoint());//坐标
         moment.setType(type);//类型
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    moment.save();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }).start();
 
+        num = 0;
+        totalNum = 0;
         //添加图片文件
         for(final ImageItem item : Bimp.tempSelectBitmap){
             if(item.getImagePath() != null){
+                totalNum ++;
                 final LeanchatUser user = (LeanchatUser)AVUser.getCurrentUser();
                 try {
                     String fileName = user.getUsername()+"publishPic"+".png";
@@ -281,27 +306,31 @@ public class PublishActivity extends Activity {
                                                 Log.e("image", "null");
                                                 return;
                                             }
-                                            synchronized (this) {
                                                 moment.addFile(image);
-                                                //保存Moment
+//                                               //保存Moment
                                                 try {
                                                     moment.saveInBackground(new SaveCallback() {
                                                         @Override
                                                         public void done(AVException e3) {
                                                             if (null == e3) {
                                                                 //保存成功
-                                                                Log.e("Moment", "OK");
+                                                                Log.e("Moment", " OK");
                                                             } else {
                                                                 //保存失败
                                                                 Log.e("Moment", "No");
                                                             }
+                                                            synchronized (PublishActivity.this){
+                                                                num ++;
+                                                            }
+                                                            Message msg = handler.obtainMessage();
+                                                            msg.arg1 = num;
+                                                            handler.sendMessage(msg);
                                                         }
                                                     });
                                                 } catch (Exception e4) {
                                                     e4.printStackTrace();
                                                 }
                                             }
-                                        }
                                     }
                                 });
                             } else {
