@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,6 +75,8 @@ public class PublishActivity extends Activity {
     int num = 0;
     int totalNum = 0;
 
+    public static int HEIGHT = 720;
+    public static int WEIGHT = 720;
     //当前的activity为最开始的parent
     private View parentView;
 
@@ -202,17 +205,15 @@ public class PublishActivity extends Activity {
         switch (requestCode) {
             case TAKE_PICTURE:
                 if (Bimp.tempSelectBitmap.size() < 9 && resultCode == RESULT_OK) {
+                    Bitmap bm = FileUtils.getBitmapFromUrl(FileUtils.lastPic, WEIGHT, HEIGHT);  //自定义设定了拍摄图片的存储路径,并使用像素压缩
                     String fileName = String.valueOf(System.currentTimeMillis());
-                    Log.e("originPath", FileUtils.originPath);
-                    Bitmap bm = FileUtils.getBitmapFromUrl(FileUtils.originPath, 1280, 1280);
-//                    Bitmap bm = (Bitmap) data.getExtras().get("data");
-                    Log.e("saveCamera", "start");
-                    String filePath = FileUtils.saveBitmap(bm, fileName);
-                    Log.e("filePath", filePath);
+                    String filePath = FileUtils.saveBitmap(bm, fileName);       //使用质量压缩图片，并使用当前时间存储
                     ImageItem takePhoto = new ImageItem();
                     takePhoto.setBitmap(bm);
                     takePhoto.setThumbnailPath(filePath);
-                    takePhoto.setImagePath(FileUtils.originPath);
+                    takePhoto.setImagePath(FileUtils.lastPic);
+                    Log.e("takePhoto", takePhoto.getThumbnailPath());
+                    Log.e("takePhoto", takePhoto.getImagePath());
                     Bimp.tempSelectBitmap.add(takePhoto);
                 }
                 break;
@@ -265,24 +266,36 @@ public class PublishActivity extends Activity {
         moment.setContent(publish_text.getText().toString());//文字信息
         moment.setPosition(LeanchatUser.getCurrentUser().getGeoPoint());//坐标
         moment.setType(type);//类型
-
-
         num = 0;
         totalNum = 0;
         //添加图片文件
         for(final ImageItem item : Bimp.tempSelectBitmap){
-            if(item.getImagePath() != null){
+            if(!TextUtils.isEmpty(item.getImagePath())){
                 totalNum ++;
+                String path = "";
                 final LeanchatUser user = (LeanchatUser)AVUser.getCurrentUser();
                 try {
-                    String fileName = user.getUsername()+"publishPic"+".png";
-                    String path = "";
-                    if(item.getThumbnailPath() != null){
-                        path = item.getThumbnailPath();
-                    }else{
-                        path = item.getImagePath();
+                    String fileNameLocal = String.valueOf(System.currentTimeMillis());
+                    String fileNameRemote = user.getUsername()+String.valueOf(System.currentTimeMillis());
+                    boolean flag = true;
+                    if (!TextUtils.isEmpty(item.getThumbnailPath())) {      //如果压缩文件存在
+                        try {
+                            File file = new File(item.getThumbnailPath());
+                            if (file.exists()) {
+                                path = item.getThumbnailPath();
+                                flag = false;
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
-                    final AVFile avfile = AVFile.withAbsoluteLocalPath(fileName, path);
+                    if(flag){
+                        path = item.getImagePath();
+                        Bitmap bm = FileUtils.getBitmapFromUrl(path, WEIGHT, HEIGHT); //像素压缩
+                        path = FileUtils.saveBitmap(bm, fileNameLocal);       //质量压缩
+                    }
+                    Log.e("path", path);
+                    final AVFile avfile = AVFile.withAbsoluteLocalPath(fileNameRemote, path);
                     avfile.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(AVException e1) {
@@ -309,6 +322,7 @@ public class PublishActivity extends Activity {
                                                 moment.addFile(image);
 //                                               //保存Moment
                                                 try {
+                                                    synchronized (PublishActivity.this){
                                                     moment.saveInBackground(new SaveCallback() {
                                                         @Override
                                                         public void done(AVException e3) {
@@ -319,14 +333,14 @@ public class PublishActivity extends Activity {
                                                                 //保存失败
                                                                 Log.e("Moment", "No");
                                                             }
-                                                            synchronized (PublishActivity.this){
+                                                                Log.e("num", ""+num);
                                                                 num ++;
+                                                                Message msg = handler.obtainMessage();
+                                                                msg.arg1 = num;
+                                                                handler.sendMessage(msg);
                                                             }
-                                                            Message msg = handler.obtainMessage();
-                                                            msg.arg1 = num;
-                                                            handler.sendMessage(msg);
-                                                        }
-                                                    });
+                                                        });
+                                                    }
                                                 } catch (Exception e4) {
                                                     e4.printStackTrace();
                                                 }
@@ -339,6 +353,7 @@ public class PublishActivity extends Activity {
                         }
                     });
                 } catch (Exception e5) {
+                    Log.e("AVFile", "error  thumb "+ item.getThumbnailPath() + " path "+item.getImagePath());
                     e5.printStackTrace();
                 }
             }
@@ -612,8 +627,9 @@ public class PublishActivity extends Activity {
     public void photo() {
         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         openCameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-        String fileName = String.valueOf(System.currentTimeMillis());
-        File out = new File(FileUtils.getOriginPath(fileName));
+
+        File out = new File(FileUtils.getCameraPath());
+        Log.e("CameraPath", FileUtils.lastPic);
         Uri uri = Uri.fromFile(out);
         openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         saveOldConfigument();

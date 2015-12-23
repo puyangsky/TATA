@@ -20,6 +20,8 @@ public class Bimp {
 		for(ImageItem imageItem : tempSelectBitmap){
 			//删除压缩文件
 //			if(imageItem != null){
+//				if(imageItem.getThumbnailPath() == null) continue;
+//
 //				File f = new File(imageItem.getThumbnailPath());
 //				if (f.exists()) {
 //					f.delete();

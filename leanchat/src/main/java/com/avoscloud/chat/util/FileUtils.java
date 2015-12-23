@@ -17,23 +17,48 @@ public class FileUtils {
 	public static String SDPATH = Environment.getExternalStorageDirectory()
 			+ "/Photo_LJ/";
 
-	public static String originPath = SDPATH + "originPic" + ".JPEG";
+	public static String cameraPath = SDPATH + "camera/" ;	//维护上次拍照后的图片存储路径
 
-	public static String getOriginPath(String fileName){
-		try {
-			if (!isFileExist("")) {
-				File tempf = createSDDir("");
+	public static String lastPic ;
+
+	public static String getCameraPath(){
+		String fileName = String.valueOf(System.currentTimeMillis());
+
+		if(!isFileExist("")){
+			try {
+				File temp1 = createSDDir("");
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			originPath = SDPATH + fileName + ".JPEG";
-			File f = new File(SDPATH, fileName + ".JPEG");
-			if (f.exists()) {
-				f.delete();
-			}
-		}catch (Exception e){
-			e.printStackTrace();
 		}
-		return originPath;
+
+		if (!isCameraFileExist("")) {			//如果文件夹不存在
+			try {
+				File temp2 = createCameraDir("");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		lastPic = cameraPath + fileName + ".JPEG";
+		return lastPic;
 	}
+
+
+//	public static String getOriginPath(String fileName){
+//		try {
+//			if (!isFileExist("")) {
+//				File tempf = createSDDir("");
+//			}
+//			originPath = SDPATH + fileName + ".JPEG";
+//			File f = new File(SDPATH, fileName + ".JPEG");
+//			if (f.exists()) {
+//				f.delete();
+//			}
+//		}catch (Exception e){
+//			e.printStackTrace();
+//		}
+//		return originPath;
+//	}
 
 	public static Bitmap getBitmapFromUrl(String url, double width, double height){
 		Matrix matrix = new Matrix();
@@ -116,13 +141,29 @@ public class FileUtils {
 		}
 		return dir;
 	}
+	public static File createCameraDir(String dirName) throws IOException {
+		File dir = new File(cameraPath + dirName);
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
+
+			System.out.println("createSDDir:" + dir.getAbsolutePath());
+			System.out.println("createSDDir:" + dir.mkdir());
+		}
+		return dir;
+	}
 
 	public static boolean isFileExist(String fileName) {
 		File file = new File(SDPATH + fileName);
 		file.isFile();
 		return file.exists();
 	}
-	
+
+	public static boolean isCameraFileExist(String fileName) {
+		File file = new File(cameraPath + fileName);
+		file.isFile();
+		return file.exists();
+	}
+
 	public static void delFile(String fileName){
 		File file = new File(SDPATH + fileName);
 		if(file.isFile()){

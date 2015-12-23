@@ -133,8 +133,8 @@ public class AlbumActivity extends Activity {
 		helper = AlbumHelper.getHelper();
 		helper.init(getApplicationContext());
 		
-		contentList = helper.getImagesBucketList(false);
-		dataList = new ArrayList<ImageItem>();
+		contentList = helper.getImagesBucketList(false);		//获取压缩图片列表
+		dataList = new ArrayList<ImageItem>();					//id imagePath ThumbnailPath
 		for(int i = 0; i<contentList.size(); i++){
 			dataList.addAll( contentList.get(i).imageList );
 		}
