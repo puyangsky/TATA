@@ -85,7 +85,7 @@ public class AlbumHelper {
 		Cursor cursor = cr.query(Albums.EXTERNAL_CONTENT_URI, projection, null,
 				null, null);
 		getAlbumColumnData(cursor);
-
+		cursor.close();
 	}
 
 	private void getAlbumColumnData(Cursor cur) {
@@ -136,7 +136,7 @@ public class AlbumHelper {
 	void buildImagesBucketList() {
 		long startTime = System.currentTimeMillis();
 
-		getThumbnail();
+		getThumbnail();			//获取的所有图片的缩略图 id ThumbnailPath
 
 		String columns[] = new String[] { Media._ID, Media.BUCKET_ID,
 				Media.PICASA_ID, Media.DATA, Media.DISPLAY_NAME, Media.TITLE,
@@ -211,6 +211,7 @@ public class AlbumHelper {
 
 	public List<ImageBucket> getImagesBucketList(boolean refresh) {
 		if (refresh || (!refresh && !hasBuildImagesBucketList)) {
+			Log.e("buildImagesBucket", "yes");
 			buildImagesBucketList();
 		}
 		List<ImageBucket> tmpList = new ArrayList<ImageBucket>();
@@ -235,6 +236,7 @@ public class AlbumHelper {
 			path = cursor.getString(cursor.getColumnIndex(Media.DATA));
 
 		}
+		cursor.close();
 		return path;
 	}
 

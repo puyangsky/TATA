@@ -18,16 +18,18 @@ public class Bimp {
 
 	public static void clearImage(){
 		for(ImageItem imageItem : tempSelectBitmap){
-			tempSelectBitmap.remove(imageItem);
-			imageItem.getBitmap().recycle();
 			//删除压缩文件
-			if(imageItem != null){
-				File f = new File(imageItem.getThumbnailPath());
-				if (f.exists()) {
-					f.delete();
-				}
-			}
+//			if(imageItem != null){
+//				if(imageItem.getThumbnailPath() == null) continue;
+//
+//				File f = new File(imageItem.getThumbnailPath());
+//				if (f.exists()) {
+//					f.delete();
+//				}
+//			}
+			imageItem.getBitmap().recycle();
 		}
+		tempSelectBitmap.clear();
 		max = 0;
 	}
 
