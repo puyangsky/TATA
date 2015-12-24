@@ -174,6 +174,7 @@ public class ListItemAdapter extends BaseAdapter {
 //        }
         else {
             //给gridview设置NoScrollGridAdapter，赋值
+            holder.gridview.setVisibility(View.VISIBLE);
             holder.gridview.setAdapter(new NoScrollGridAdapter(mContext,
                     imageUrls));
         }

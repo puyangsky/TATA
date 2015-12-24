@@ -137,15 +137,19 @@ public class PersonViewActivity extends BaseActivity {
 
                     List<Image> imageList = moment.getFileList();
                     //图片为空，略过
-                    if (imageList == null) {
-                        Log.d("pyt", "fileList = null");
-                        continue;
-                    }
+
                     //获取图片urls
                     ArrayList<String> imageUrls = new ArrayList<String>();
-                    for (Image image : imageList) {
-                        imageUrls.add(image.getFile().getUrl());
+                    if (imageList == null) {
+                        Log.d("pyt", "fileList = null");
+//                        continue;
+                        imageUrls = null;
+                    }else{
+                        for (Image image : imageList) {
+                            imageUrls.add(image.getFile().getUrl());
+                        }
                     }
+
 //                    Log.d("pyt", "内容：" + moment.getContent() +
 //                            "\nurl：" + imageUrls +
 //                            "\ntime:" + new SimpleDateFormat("MM/dd").format(moment.getCreatedAt()));
