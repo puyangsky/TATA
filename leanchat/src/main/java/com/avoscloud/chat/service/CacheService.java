@@ -6,6 +6,8 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
+import com.avoscloud.chat.model.Moment;
+import com.avoscloud.chat.util.MomentCacheUtils;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 import com.avoscloud.leanchatlib.utils.AVUserCacheUtils;
 import com.avoscloud.leanchatlib.utils.Constants;
@@ -26,10 +28,15 @@ import java.util.concurrent.CountDownLatch;
 
 public class CacheService {
   private static volatile List<String> friendIds = new ArrayList<String>();     //加载时是最新的
-//    private static volatile List<String>
+	private static volatile List<String> momentIds = new ArrayList<>();
+
   public static LeanchatUser lookupUser(String userId) {
     return AVUserCacheUtils.getCachedUser(userId);
   }
+
+	public static Moment lookupMoment(String momentId) {
+		return MomentCacheUtils.getCachedMoment(momentId);
+	}
 
   /**
    * 获取好友列表

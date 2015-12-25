@@ -165,13 +165,7 @@ public class ListItemAdapter extends BaseAdapter {
         if (imageUrls == null || imageUrls.size() == 0) {
             holder.gridview.setVisibility(View.GONE);
         }
-//        else if(imageUrls.size() == 1) {
-//            holder.gridview.setNumColumns(1);
-//            holder.gridview.setColumnWidth(PixelUtils.dp2px(215));
-//        } else if (imageUrls.size() == 2) {
-//            holder.gridview.setNumColumns(2);
-//            holder.gridview.setColumnWidth(PixelUtils.dp2px(107));
-//        }
+
         else {
             //给gridview设置NoScrollGridAdapter，赋值
             holder.gridview.setVisibility(View.VISIBLE);
