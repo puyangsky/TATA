@@ -1,11 +1,16 @@
 package com.avoscloud.chat.util;
 
+import android.util.Log;
+
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
 import com.avoscloud.chat.activity.PersonViewActivity;
+import com.avoscloud.chat.fragment.SquareFragment;
 import com.avoscloud.chat.model.Moment;
+import com.avoscloud.chat.service.CacheService;
+import com.avoscloud.leanchatlib.model.LeanchatUser;
 import com.avoscloud.leanchatlib.utils.Constants;
 
 import java.util.ArrayList;
@@ -34,15 +39,49 @@ public class MomentCacheUtils {
 		for (String key : momentMap.keySet()) {
 			list.add(momentMap.get(key));
 		}
+		Log.d("pyt", "momentMap 大小 ：" + String.valueOf(momentMap.size()) + "\nlist大小 :" + list.size());
 		return list.isEmpty() ? null : list;
 	}
-	public static void registerMoments(List<Moment> moments) {
-		cacheMoment();
-	}
-    public static void cacheMoment(String momentId, Moment moment) {
-        momentMap.put(momentId, moment);
-    }
 
+    public static void cacheMoment(String momentId, Moment moment) {
+	    if (!momentMap.containsKey(momentId)) {
+		    momentMap.put(momentId, moment);
+	    }
+    }
+	public static void registerMoments() {
+		AVQuery<Moment> query = AVObject.getQuery(Moment.class);
+		query.orderByDescending("createdAt");
+		query.include("user");
+		query.include("content");
+		query.include("createdAt");
+		query.include("position");
+		query.include("fileList");          //这里include一个类的数据，会自动填充
+		query.include("zan");
+		List<LeanchatUser> friends = new ArrayList<>();
+		try {
+			friends = CacheService.findFriends();
+			friends = CacheService.getFriends();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Log.d("pyt", "friends 大小：" + friends.size());
+		query.whereContainedIn("user", friends);
+		query.findInBackground(new FindCallback<Moment>() {
+			@Override
+			public void done(List<Moment> results, AVException e) {
+				if (e != null || results == null) {
+					return;
+				} else {
+					SquareFragment.moments = results;
+					for (Moment moment : results) {
+						cacheMoment(moment.getObjectId(), moment);
+					}
+				}
+				Log.d("pyt", "缓存之后的map大小：" + momentMap.size());
+			}
+		});
+
+	}
     public static void cacheMoments(List<String> ids, final CacheMomentCallback cacheMomentCallback) {
         //use set for none-repeat Object id
         Set<String> uncachedIds = new HashSet<String>();

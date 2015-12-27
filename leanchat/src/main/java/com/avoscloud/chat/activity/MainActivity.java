@@ -37,6 +37,7 @@ import com.avoscloud.chat.fragment.ContactFragment;
 import com.avoscloud.chat.fragment.ConversationRecentFragment;
 import com.avoscloud.chat.util.GetCity;
 import com.avoscloud.chat.util.Logger;
+import com.avoscloud.chat.util.MomentCacheUtils;
 import com.avoscloud.chat.util.Utils;
 import com.avoscloud.leanchatlib.controller.ChatManager;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
@@ -123,46 +124,63 @@ public class MainActivity extends BaseActivity {
     CacheService.registerUser((LeanchatUser) AVUser.getCurrentUser());//缓存账号信息
     cacheFriends(); //缓存好友信息
 
-      editCommentLayout = (LinearLayout) findViewById(R.id.editCommentLayout);
-      editText = (EditText) findViewById(R.id.editComment);
-      //编辑框失去焦点，隐藏软键盘
-      editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-          @Override
-          public void onFocusChange(View v, boolean hasFocus) {
-              Log.d("pyt", "是否有焦点：" + (hasFocus ? "1" : "0"));
-              if (!hasFocus) {
-                  hideSoftInput(ctx);
-              }
-          }
-      });
-      sendComment = (ImageView) findViewById(R.id.sendComment);
-      //点击发送按钮触发事件：上传评论并刷新评论列表
-      sendComment.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              String data;
-              data = (AVUser.getCurrentUser().getUsername().toString() + " : " + editText.getText().toString());
-              final Comment comment = new Comment();
-              Moment moment = SquareFragment.moments.get(getPosition());
-              comment.setContent(data);
-              comment.setMoment(moment);
-              new Thread(new Runnable() {
-                  @Override
-                  public void run() {
-                      try {
-                          comment.save();
-                      } catch (AVException e) {
-                          Log.e("pyt", e.getMessage());
-                      }
-                  }
-              }).start();
+    cacheMoments();
 
-              Log.d("pyt", "点击了第" + getPosition() + "个listview");
+    editCommentLayout = (LinearLayout) findViewById(R.id.editCommentLayout);
+    editText = (EditText) findViewById(R.id.editComment);
+     //编辑框失去焦点，隐藏软键盘
+    editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+	    @Override
+	    public void onFocusChange(View v, boolean hasFocus) {
+		    Log.d("pyt", "是否有焦点：" + (hasFocus ? "1" : "0"));
+		    if (!hasFocus) {
+			    hideSoftInput(ctx);
+		    }
+	    }
+    });
+    sendComment = (ImageView) findViewById(R.id.sendComment);
+	//点击发送按钮触发事件：上传评论并刷新评论列表
+	sendComment.setOnClickListener(new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			String data;
+			data = (AVUser.getCurrentUser().getUsername().toString() + " : " + editText.getText().toString());
+			final Comment comment = new Comment();
+			Moment moment = SquareFragment.moments.get(getPosition());
+			comment.setContent(data);
+			comment.setMoment(moment);
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						comment.save();
+					} catch (AVException e) {
+						Log.e("pyt", e.getMessage());
+					}
+				}
+			}).start();
 
-              hideSoftInput(ctx);
-          }
-      });
+			Log.d("pyt", "点击了第" + getPosition() + "个listview");
+
+			hideSoftInput(ctx);
+		}
+	});
   }
+
+	public void cacheMoments() {
+		try{
+			FutureTask<String> task = new FutureTask<String>(new Callable<String>() {
+				@Override
+				public String call() throws Exception {
+					MomentCacheUtils.registerMoments();
+					return null;
+				}
+			});
+			new Thread(task).start();
+		}catch (Exception e) {
+			Log.d("pyt", e.getMessage());
+		}
+	}
 
   @Override
   protected void onResume() {

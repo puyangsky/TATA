@@ -28,15 +28,10 @@ import java.util.concurrent.CountDownLatch;
 
 public class CacheService {
   private static volatile List<String> friendIds = new ArrayList<String>();     //加载时是最新的
-	private static volatile List<String> momentIds = new ArrayList<>();
 
   public static LeanchatUser lookupUser(String userId) {
     return AVUserCacheUtils.getCachedUser(userId);
   }
-
-	public static Moment lookupMoment(String momentId) {
-		return MomentCacheUtils.getCachedMoment(momentId);
-	}
 
   /**
    * 获取好友列表

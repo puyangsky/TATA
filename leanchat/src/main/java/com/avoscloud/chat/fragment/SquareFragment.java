@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.FutureTask;
 
 /**
@@ -46,8 +47,12 @@ public class SquareFragment extends BaseFragment{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        initData();
-        initView();
+	    try {
+		    initData();
+	    } catch (Exception e) {
+		    Log.d("pyt", "initData : " + e.getMessage());
+	    }
+	    initView();
 
         headerLayout.showTitle(R.string.square_title);
     }
@@ -56,120 +61,59 @@ public class SquareFragment extends BaseFragment{
         mListView = (MomentListView) getView().findViewById(R.id.square_list_item);
 
         adapter = new ListItemAdapter(getActivity(), itemEntities, commentItems);
+//	    Log.d("pyt", "INIT VIEW: itemEntities size = " + itemEntities.size());
         mListView.initMomentListView(adapter);
     }
 
-    public void initData(){
-        itemEntities = new ArrayList<>();
-        commentItems = new ArrayList<>();
+    public void initData() throws Exception {
+
 	    //若缓存中为空，则需要初始化。导致第一次加载会很慢。
 		if (MomentCacheUtils.getCachedMoments() == null) {
 			//获取所有的moments并存入缓存中
-			MomentCacheUtils.registerMoment();
+			getMomentsFromServer();
+			Log.d("pyt", "Cache is NULL!");
 		}else {
-			//直接从缓存中取
-			initItem(MomentCacheUtils.getCachedMoments());
+			//从缓存中取
+			try {
+				Log.d("pyt", "Hit Moment Cache!");
+				initItem(MomentCacheUtils.getCachedMoments());
+			} catch (Exception e) {
+				Log.d("pyt", e.getMessage());
+			}
 		}
-        AVQuery<Moment> query = AVObject.getQuery(Moment.class);
-	    query.orderByDescending("createdAt");
-	    query.include("user");
-	    query.include("content");
-	    query.include("createdAt");
-	    query.include("position");
-	    query.include("fileList");          //这里include一个类的数据，会自动填充
-	    query.include("zan");
-	    List<LeanchatUser> friends = CacheService.getFriends();
-        Log.e("friends", friends.toString());
-        query.whereContainedIn("user", friends);
-        query.findInBackground(new FindCallback<Moment>() {
-            @Override
-            public void done(List<Moment> results, AVException e) {
-                if (e != null || results == null) {
-                    return;
-                }
-                moments = results;
-                Log.d("pyt", "找到了" + results.size() + "条记录");
-                for (Moment moment : results) {
-                    List<Image> imageList = moment.getFileList();
-                    //图片为空，略过
-//                    if (imageList == null) {
-//                        Log.e("fileList = ", "null");
-//                        continue;
-//                    }
-                    //获取图片urls
-                    ArrayList<String> imageUrls = new ArrayList<String>();
-                    if(imageList == null) {
-                        imageUrls = null;
-                    }else {
-                        for (Image image : imageList) {
-                            imageUrls.add(image.getFile().getUrl());
-                            Log.d("itemEntitiesUrl", image.getFile().getUrl());
-                        }
-                    }
-                    try {
-                        String city = "";
-                        final double lat = moment.getPosition().getLatitude();
-                        final double log = moment.getPosition().getLongitude();
-                        try {
-                            FutureTask<String> task = new FutureTask<String>(
-                                    new Callable<String>() {
-                                        @Override
-                                        public String call() throws Exception {
-                                            return GetCity.getCity(lat, log);
-                                        }
-                                    }
-                            );
-                            new Thread(task).start();
-                            city = task.get();
-                        } catch (Exception e1) {
-                            Log.d("pyt", "ERROR城市：" + e1.getMessage());
-                        }
-                        ItemEntity entity = new ItemEntity(
-                                moment.getUser().getAvatarUrl(),
-                                moment.getUser().getUsername(),
-                                moment.getContent(),
-                                imageUrls,
-                                city,
-                                new SimpleDateFormat("MM-dd HH:mm").format(moment.getCreatedAt()),
-                                -1
-                        );
-                        itemEntities.add(entity);
-                    } catch (Exception e2) {
-                        Log.d("pyt", "失败:" + e2.getMessage());
-                    }
-
-                    //查找每条moment对应的评论集合
-                    final ArrayList<String> commentItem = new ArrayList<>();
-                    AVQuery<Comment> commentQuery = AVObject.getQuery(Comment.class);
-                    commentQuery.orderByDescending("createdAt");
-                    commentQuery.include("content");
-                    commentQuery.include("moment");
-                    commentQuery.include("createdAt");
-                    commentQuery.include("user");
-                    commentQuery.whereEqualTo("moment", moment);
-                    commentQuery.findInBackground(new FindCallback<Comment>() {
-                        @Override
-                        public void done(List<Comment> commentList, AVException e) {
-                            if (e == null) {
-                                for (Comment comment : commentList) {
-                                    commentItem.add(comment.getContent());
-                                    Log.d("pyt", "评论内容：" + comment.getContent());
-                                }
-                            } else {
-                                Log.d("pyt", e.getMessage());
-                            }
-                        }
-                    });
-                    commentItems.add(commentItem);
-                }
-                adapter.notifyDataSetChanged();
-            }
-        });
-        Log.d("pyt", commentItems.toString());
     }
+	public void getMomentsFromServer() throws Exception{
+		moments = new ArrayList<>();
+		AVQuery<Moment> query = AVObject.getQuery(Moment.class);
+		query.orderByDescending("createdAt");
+		query.include("user");
+		query.include("content");
+		query.include("createdAt");
+		query.include("position");
+		query.include("fileList");          //这里include一个类的数据，会自动填充
+		query.include("zan");
+		List<LeanchatUser> friends = CacheService.getFriends();
+		query.whereContainedIn("user", friends);
+		query.findInBackground(new FindCallback<Moment>() {
+			@Override
+			public void done(List<Moment> results, AVException e) {
+				if (e != null || results == null) {
+					return;
+				}
+				moments = results;
+				initItem(results);
+				Log.d("pyt", "找到了" + moments.size() + "条记录");
+			}
+		});
+	}
 
 	public void initItem(List<Moment> results) {
+		itemEntities = new ArrayList<>();
+		commentItems = new ArrayList<>();
+//		Log.d("pyt", "initItem ..." + results.size());
 		for (Moment moment : results) {
+			Log.d("pys", "cache moment ...");
+			MomentCacheUtils.cacheMoment(moment.getObjectId(), moment);
 			List<Image> imageList = moment.getFileList();
 			ArrayList<String> imageUrls = new ArrayList<String>();
 			if (imageList == null) {
@@ -177,7 +121,7 @@ public class SquareFragment extends BaseFragment{
 			} else {
 				for (Image image : imageList) {
 					imageUrls.add(image.getFile().getUrl());
-					Log.d("itemEntitiesUrl", image.getFile().getUrl());
+//					Log.d("pya", "itemEntitiesUrl" + image.getFile().getUrl());
 				}
 			}
 			try {
@@ -196,7 +140,7 @@ public class SquareFragment extends BaseFragment{
 					new Thread(task).start();
 					city = task.get();
 				} catch (Exception e1) {
-					Log.d("pyt", "ERROR城市：" + e1.getMessage());
+					Log.d("pyt", "ERROR: 城市：" + e1.getMessage());
 				}
 				ItemEntity entity = new ItemEntity(
 						moment.getUser().getAvatarUrl(),
@@ -211,7 +155,33 @@ public class SquareFragment extends BaseFragment{
 			} catch (Exception e2) {
 				Log.d("pyt", "失败:" + e2.getMessage());
 			}
+			//查找每条moment对应的评论集合
+			final ArrayList<String> commentItem = new ArrayList<>();
+			AVQuery<Comment> commentQuery = AVObject.getQuery(Comment.class);
+			commentQuery.orderByDescending("createdAt");
+			commentQuery.include("content");
+			commentQuery.include("moment");
+			commentQuery.include("createdAt");
+			commentQuery.include("user");
+			commentQuery.whereEqualTo("moment", moment);
+			commentQuery.findInBackground(new FindCallback<Comment>() {
+				@Override
+				public void done(List<Comment> commentList, AVException e) {
+					if (e == null) {
+						for (Comment comment : commentList) {
+							commentItem.add(comment.getContent());
+//							Log.d("pyt", "评论内容：" + comment.getContent());
+						}
+					} else {
+						Log.d("pyt", e.getMessage());
+					}
+				}
+			});
+			commentItems.add(commentItem);
 		}
+		Log.d("pyt", "itemEntities size = " + itemEntities.size());
+		Log.d("pyt", "MAP SIZE = " + MomentCacheUtils.momentMap.size());
+//		adapter.notifyDataSetChanged();
 	}
 
 
@@ -221,18 +191,4 @@ public class SquareFragment extends BaseFragment{
 //        initData();
     }
 
-	public void cacheMoment() {
-		try{
-			FutureTask<String > task = new FutureTask<String>(new Callable<String>() {
-				@Override
-				public String call() throws Exception {
-
-					return null;
-				}
-			});
-			new Thread(task).start();
-		}catch (Exception e) {
-			Log.e("pyt", e.getMessage());
-		}
-	}
 }
