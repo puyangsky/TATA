@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVUser;
@@ -39,7 +40,8 @@ import java.io.File;
 public class MenuLeftFragment extends Fragment {
     private static final int IMAGE_PICK_REQUEST = 1;
     private static final int CROP_REQUEST = 2;
-    private TextView logoutView, checkUpdateView, personProfileView, settingsView, userNameView;
+	private TextView userNameView;
+	private RelativeLayout logoutView, checkUpdateView, personProfileView, settingsView;
     private ImageView personAvatarView;
     ChatManager chatManager;
 
@@ -67,7 +69,7 @@ public class MenuLeftFragment extends Fragment {
         userNameView = (TextView) getView().findViewById(R.id.tv_current_username);
 
         //person profile
-        personProfileView = (TextView) getView().findViewById(R.id.tv_profile_person);
+        personProfileView = (RelativeLayout) getView().findViewById(R.id.profile_person);
         personProfileView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +83,7 @@ public class MenuLeftFragment extends Fragment {
         });
 
         //log out
-        logoutView = (TextView) getView().findViewById(R.id.tv_log_out);
+        logoutView = (RelativeLayout) getView().findViewById(R.id.layout_log_out);
         chatManager = ChatManager.getInstance();
         logoutView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +102,7 @@ public class MenuLeftFragment extends Fragment {
         });
 
         //check update
-        checkUpdateView = (TextView) getView().findViewById(R.id.tv_check_update);
+        checkUpdateView = (RelativeLayout) getView().findViewById(R.id.layout_check_update);
         checkUpdateView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +112,7 @@ public class MenuLeftFragment extends Fragment {
         });
 
         //settings
-        settingsView = (TextView) getView().findViewById(R.id.tv_settings);
+        settingsView = (RelativeLayout) getView().findViewById(R.id.layout_settings);
         settingsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,11 +131,12 @@ public class MenuLeftFragment extends Fragment {
     private void refresh() {
         LeanchatUser curUser = (LeanchatUser)AVUser.getCurrentUser();
         userNameView.setText(AVUser.getCurrentUser().getUsername());
+
         ImageLoader.getInstance().displayImage(curUser.getAvatarUrl(), personAvatarView, com.avoscloud.leanchatlib.utils.PhotoUtils.avatarImageOptions);
-        Log.d("pyt", "头像url: " + curUser.getAvatarUrl());
+	    Log.d("pyt", "头像url: " + curUser.getAvatarUrl());
     }
 
-    @Override
+	@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {

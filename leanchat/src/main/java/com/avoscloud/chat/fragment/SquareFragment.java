@@ -1,6 +1,9 @@
 package com.avoscloud.chat.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,11 +33,14 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.FutureTask;
 
+import java.util.logging.LogRecord;
+
 /**
  * Created by puyangsky on 2015/12/3.
  */
 public class SquareFragment extends BaseFragment{
-    public MomentListView mListView;
+	private static final int COMPLETED = 0;
+	public MomentListView mListView;
     private ArrayList<ItemEntity> itemEntities;
     public ArrayList<ArrayList<String>> commentItems;
     private ListItemAdapter adapter;
@@ -43,17 +49,32 @@ public class SquareFragment extends BaseFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.square_fragment, container, false);
     }
+	private Handler handler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			if(msg.what == COMPLETED) {
+				initView();
+			}
+		}
+	};
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-	    try {
-		    initData();
-	    } catch (Exception e) {
-		    Log.d("pyt", "initData : " + e.getMessage());
-	    }
-	    initView();
+		
+	    new Thread(new Runnable() {
+		    @Override
+		    public void run() {
+			    try {
+				    initData();
+			    } catch (Exception e) {
+				    Log.d("pyt", "initData : " + e.getMessage());
+			    }
+			    Message message = new Message();
+			    message.what = COMPLETED;
+			    handler.sendMessage(message);
+		    }
+	    }).start();
 
         headerLayout.showTitle(R.string.square_title);
     }

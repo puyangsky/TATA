@@ -32,7 +32,7 @@
             android:shadowDy="1.0"
             android:shadowRadius="1.0"
             android:textColorHint="#ffdddddd"
-            android:background="#d1e7190e" />
+            android:background="#FFFFFF" />
 
         <EditText
             android:id="@+id/activity_login_et_password"
@@ -45,7 +45,7 @@
             android:inputType="textPassword"
             android:paddingLeft="15dip"
             android:textColorHint="#ffdddddd"
-            android:background="#d1e7191f"
+            android:background="#FFFFFF"
             android:layout_marginTop="5dp" />
 
         <Button

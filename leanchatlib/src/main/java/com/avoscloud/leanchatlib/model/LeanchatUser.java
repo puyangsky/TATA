@@ -29,11 +29,9 @@ public class LeanchatUser extends AVUser implements Parcelable{
   public static final String LOCATION = "location";
   public static final String INSTALLATION = "installation";
   public static final String publishPicNum = "publishPicNum";
-
   public  int getPublishPicNum() {
     return getInt(publishPicNum);
   }
-
   public void setPublishPicNum (int num){
     put(publishPicNum, num);
   }
@@ -42,7 +40,6 @@ public class LeanchatUser extends AVUser implements Parcelable{
     AVFile avatar = getAVFile(AVATAR);
     if (avatar != null) {
       return avatar.getUrl();
-
     } else {
       return null;
     }

@@ -70,7 +70,7 @@
 
             <TextView
                 android:id="@+id/tv_profile_person"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
@@ -86,6 +86,7 @@
             android:background="#ff3e3e3e"/>
 
         <RelativeLayout
+            android:id="@+id/layout_settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -100,7 +101,7 @@
 
             <TextView
                 android:id="@+id/tv_settings"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
@@ -111,6 +112,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/layout_check_update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -125,7 +127,7 @@
 
             <TextView
                 android:id="@+id/tv_check_update"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
@@ -142,6 +144,7 @@
             android:background="#ff3e3e3e"/>
 
         <RelativeLayout
+            android:id="@+id/layout_log_out"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -156,7 +159,7 @@
 
             <TextView
                 android:id="@+id/tv_log_out"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
