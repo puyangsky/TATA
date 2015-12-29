@@ -78,6 +78,7 @@ public class RoomsTable {
       rooms.add(room);
     }
     c.close();
+    db.close();
     return rooms;
   }
 

@@ -14,7 +14,6 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
 import com.avoscloud.chat.R;
-import com.avoscloud.chat.activity.MainActivity;
 import com.avoscloud.chat.adapter.ListItemAdapter;
 import com.avoscloud.chat.model.Comment;
 import com.avoscloud.chat.model.Image;
@@ -30,10 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.FutureTask;
-
-import java.util.logging.LogRecord;
 
 /**
  * Created by puyangsky on 2015/12/3.
@@ -61,7 +57,7 @@ public class SquareFragment extends BaseFragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-		
+	    final ProgressDialog dialog = showSpinnerDialog();
 	    new Thread(new Runnable() {
 		    @Override
 		    public void run() {
@@ -73,6 +69,7 @@ public class SquareFragment extends BaseFragment{
 			    Message message = new Message();
 			    message.what = COMPLETED;
 			    handler.sendMessage(message);
+			    dialog.dismiss();
 		    }
 	    }).start();
 
