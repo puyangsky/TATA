@@ -11,6 +11,7 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
 import com.avoscloud.chat.R;
+import com.avoscloud.chat.activity.MainActivity;
 import com.avoscloud.chat.adapter.ListItemAdapter;
 import com.avoscloud.chat.model.Comment;
 import com.avoscloud.chat.model.Image;
@@ -76,7 +77,7 @@ public class SquareFragment extends BaseFragment{
 			//从缓存中取
 			try {
 				Log.d("pyt", "Hit Moment Cache!");
-				initItem(MomentCacheUtils.getCachedMoments());
+				initItem(MomentCacheUtils.getCachedMoments(), 10);
 			} catch (Exception e) {
 				Log.d("pyt", e.getMessage());
 			}
@@ -101,17 +102,18 @@ public class SquareFragment extends BaseFragment{
 					return;
 				}
 				moments = results;
-				initItem(results);
+				initItem(results, 10);
 				Log.d("pyt", "找到了" + moments.size() + "条记录");
 			}
 		});
 	}
 
-	public void initItem(List<Moment> results) {
+	public void initItem(List<Moment> results, int size) {
 		itemEntities = new ArrayList<>();
 		commentItems = new ArrayList<>();
-//		Log.d("pyt", "initItem ..." + results.size());
+		int i = 0;
 		for (Moment moment : results) {
+			i++;
 			Log.d("pys", "cache moment ...");
 			MomentCacheUtils.cacheMoment(moment.getObjectId(), moment);
 			List<Image> imageList = moment.getFileList();
@@ -178,6 +180,9 @@ public class SquareFragment extends BaseFragment{
 				}
 			});
 			commentItems.add(commentItem);
+			if (i >= size) {
+				break;
+			}
 		}
 		Log.d("pyt", "itemEntities size = " + itemEntities.size());
 		Log.d("pyt", "MAP SIZE = " + MomentCacheUtils.momentMap.size());

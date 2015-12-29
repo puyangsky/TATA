@@ -28,7 +28,7 @@ public class HeaderLayout extends LinearLayout {
     init();
   }
 
-  private void init() {
+  protected void init() {
     mInflater = LayoutInflater.from(getContext());
     header = (RelativeLayout) mInflater.inflate(R.layout.chat_common_base_header, null, false);
     titleView = (TextView) header.findViewById(R.id.titleView);

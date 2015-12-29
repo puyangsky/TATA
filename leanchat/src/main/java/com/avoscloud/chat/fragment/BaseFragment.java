@@ -4,19 +4,28 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 import com.avoscloud.chat.R;
+import com.avoscloud.chat.activity.MainActivity;
 import com.avoscloud.chat.view.HeaderLayout;
+import com.avoscloud.chat.view.MyHeadLayout;
 
 public class BaseFragment extends Fragment {
-  protected HeaderLayout headerLayout;
+  protected MyHeadLayout headerLayout;
   protected Context ctx;
 
   @Override
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     ctx = getActivity();
-    headerLayout = (HeaderLayout) getView().findViewById(R.id.headerLayout);
+    headerLayout = (MyHeadLayout) getView().findViewById(R.id.headerLayout);
+	  headerLayout.showLeftBackButton(new View.OnClickListener() {
+		  @Override
+		  public void onClick(View v) {
+			  MainActivity.openDrawer();
+		  }
+	  });
   }
 
   protected void toast(String str) {
