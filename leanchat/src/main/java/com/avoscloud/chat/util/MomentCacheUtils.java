@@ -30,9 +30,6 @@ public class MomentCacheUtils {
         momentMap = new HashMap<String, Moment>();
     }
 
-    public static Moment getCachedMoment(String momentId) {
-        return momentMap.get(momentId);
-    }
 	//获取缓存中所有的moment
 	public static List<Moment> getCachedMoments() {
 		List<Moment> list = new ArrayList<>();
@@ -41,6 +38,9 @@ public class MomentCacheUtils {
 		}
 		Log.d("pyt", "momentMap 大小 ：" + String.valueOf(momentMap.size()) + "\nlist大小 :" + list.size());
 		return list.isEmpty() ? null : list;
+	}
+	public static Moment getCachedMoment(String momentId) {
+		return momentMap.get(momentId);
 	}
 
     public static void cacheMoment(String momentId, Moment moment) {

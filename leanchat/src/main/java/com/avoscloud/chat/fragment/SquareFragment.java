@@ -95,7 +95,7 @@ public class SquareFragment extends BaseFragment{
 			//从缓存中取
 			try {
 				Log.d("pyt", "Hit Moment Cache!");
-				initItem(MomentCacheUtils.getCachedMoments(), 10);
+				initItem(MomentCacheUtils.getCachedMoments(), 20);
 			} catch (Exception e) {
 				Log.d("pyt", e.getMessage());
 			}
@@ -120,7 +120,7 @@ public class SquareFragment extends BaseFragment{
 					return;
 				}
 				moments = results;
-				initItem(results, 10);
+				initItem(results, 20);
 				Log.d("pyt", "找到了" + moments.size() + "条记录");
 			}
 		});
